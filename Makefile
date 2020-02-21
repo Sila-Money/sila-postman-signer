@@ -5,7 +5,7 @@ SHELL = /bin/bash
 # VIRTUAL_ENV_DIR: name of the virtual env file to create in root directory.
 VIRTUAL_ENV_DIR := env
 
-# port: configurable local port on which to run forwarder server.
+# port: configurable local port on which to run this proxy server.
 port ?= 8181
 
 # venv creates a virtual environment for containing versioned dependencies.

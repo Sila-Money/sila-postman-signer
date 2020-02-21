@@ -12,6 +12,7 @@ handler404 = views.handler404
 handler500 = views.handler500
 
 urlpatterns = [
+    path('get_current_epoch', views.current_epoch_view),
     path('generate_private_key', views.generate_private_key_view),
     path('generate_signature', views.generate_signature_view),
     path('forward', views.forwarder_view),
