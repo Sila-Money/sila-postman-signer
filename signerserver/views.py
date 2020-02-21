@@ -88,8 +88,9 @@ def forwarder_view(request, *args, **kwargs):
     if set_epoch:
         try:
             json_dict = json.loads(original_request_body)
-            if type(json_dict.get("header")) == dict:
-                json_dict["header"]["created"] = int(django_time.now().timestamp())
+            if type(json_dict.get("header")) != dict:
+                json_dict["header"] = {}
+            json_dict["header"]["created"] = int(django_time.now().timestamp())
             request_body = json.dumps(json_dict)
         except Exception as exc:
             return create_json_response(
