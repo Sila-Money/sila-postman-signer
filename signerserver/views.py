@@ -80,6 +80,7 @@ def forwarder_view(request, *args, **kwargs):
         Generates AUTHSIGNATURE and USERSIGNATURE headers
         if X-AUTH-PRIVATE-KEY and X-USER-PRIVATE-KEY are set, respectively.
     """
+    is_debug = request.GET.get("debug")
     original_request_body = request.body.decode('utf-8')
     request_body = original_request_body
 
@@ -95,7 +96,7 @@ def forwarder_view(request, *args, **kwargs):
         except Exception as exc:
             return create_json_response(
                 {
-                    "message": f"Could not parse request body as JSON to set epoch: {str(exc)}"
+                    "message": f"Could not parse request body as JSON to set epoch: {str(exc)} (proxy error)"
                 },
                 status=400,
             )
@@ -128,7 +129,17 @@ def forwarder_view(request, *args, **kwargs):
     else:
         proxy_response_dict["message"] = "No forwarding URL in header X-FORWARD-TO-URL, so did not forward request."
         
-    return create_json_response(proxy_response_dict)
+    if is_debug or 'response' not in proxy_response_dict:
+        return create_json_response(proxy_response_dict)
+
+    return create_json_response(
+        proxy_response_dict["response"]["content"],
+        status=proxy_response_dict["response"]["status_code"],
+        headers={
+            "FORWARDED": f"url={target_url}",
+            **proxy_response_dict["response"]["headers"]
+        }
+    )
 
 
 def handler404(request, exception):
