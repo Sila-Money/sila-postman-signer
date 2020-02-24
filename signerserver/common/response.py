@@ -1,4 +1,5 @@
 import json
+import wsgiref
 
 from django.http import HttpResponse
 
@@ -15,5 +16,6 @@ def create_json_response(response_body, content_type=DEFAULT_CONTENT_TYPE, statu
     response = HttpResponse(response_body, content_type=content_type, status=status, **kwargs)
     if type(headers) == dict:
         for header in headers:
-            response[header] = headers[header]
+            if not wsgiref.util.is_hop_by_hop(header):
+                response[header] = headers[header]
     return response
