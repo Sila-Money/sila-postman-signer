@@ -23,7 +23,8 @@ def generate_private_key_view(request, *args, **kwargs):
     return create_json_response(
         {
             "private_key": private_key,
-            "address": address
+            "address": address,
+            "wallet_verification_signature": ethkeys.sign_message(address.encode('utf-8'), private_key),
         },
         status=200
     )
@@ -45,7 +46,8 @@ def generate_signature_view(request, *args, **kwargs):
     return create_json_response(
         {
             "signature": signature,
-            "raw_message": request_body.decode('utf-8')
+            "raw_message": request_body.decode('utf-8'),
+            "address": ethkeys.get_private_key_address(private_key),
         },
         status=200
     )
@@ -53,16 +55,18 @@ def generate_signature_view(request, *args, **kwargs):
 
 def current_epoch_view(request, *args, **kwargs):
     """ Returns current epoch timestamp data. """
-    requested_timezone = request.GET.get("timezone", default="UTC")
+    requested_timezone = request.GET.get("timezone", default=None)
     try:
-        timezone = django_time.pytz.timezone(requested_timezone)
-        now = django_time.now().astimezone(timezone)
+        now = django_time.now()
+        if requested_timezone is not None:
+            timezone = django_time.pytz.timezone(requested_timezone)
+            now = now.astimezone(timezone)
         return create_json_response(
             {
                 "now_epoch_secs": int(now.timestamp()),
                 "now_epoch_millisecs": int(now.timestamp() * 1000),
                 "now_iso": now.isoformat(),
-                "timezone": requested_timezone,
+                "timezone": (str(now.tzinfo)),
             }
         )
     except django_time.pytz.UnknownTimeZoneError as exc:

@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "v0.2",
+			"name": "v0.2 (proxied)",
 			"item": [
 				{
 					"name": "Check Handle",
@@ -51,7 +51,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"user\"\n    }\n}",
+							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -67,6 +67,13 @@
 							"port": "{{proxy_port}}",
 							"path": [
 								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"disabled": true
+								}
 							]
 						},
 						"description": "Checks for availability of a user handle."
@@ -1129,31 +1136,31 @@
 	},
 	"variable": [
 		{
-			"id": "8a09077d-eb8e-4e9c-9817-c884016de0a5",
+			"id": "7b92bb73-ea39-4d5d-9698-bf70d284bb0a",
 			"key": "X-AUTH-PRIVATE-KEY",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "66948a4f-672d-4789-8a38-2932f3f956fb",
+			"id": "95dd7eeb-ea2d-40d9-a958-e568e704c40a",
 			"key": "X-USER-PRIVATE-KEY",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "3c9a247e-1190-4fca-bd44-6a1a99670f61",
+			"id": "aaa863bc-9285-4506-9d6f-19b360b4f172",
 			"key": "auth_handle",
 			"value": "dev",
 			"type": "string"
 		},
 		{
-			"id": "4de5a0a0-4422-4fe4-a15b-f96c098e731e",
+			"id": "20e0fe28-e381-4c0d-8cdb-436e1162ba16",
 			"key": "user_handle",
 			"value": "user",
 			"type": "string"
 		},
 		{
-			"id": "c35299b4-8382-4aeb-a766-aaf3d9c4a7b4",
+			"id": "b4445ad6-5764-4684-8232-cd0869fb1d20",
 			"key": "X-FORWARD-TO-URL",
 			"value": "http://localhost:8000/0.2/check_handle",
 			"type": "string"
