@@ -59,7 +59,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward",
+							"raw": "http://localhost:{{proxy_port}}/forward?label=check_handle",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -72,7 +72,13 @@
 								{
 									"key": "debug",
 									"value": "true",
+									"description": "If this parameter is sent, returns debugging information in the response body rather than treating the proxy server as a simple pass-through.",
 									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "check_handle",
+									"description": "No functional utility (just for logging)"
 								}
 							]
 						},
@@ -117,7 +123,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward",
+							"raw": "http://localhost:{{proxy_port}}/forward?label=register",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -125,6 +131,18 @@
 							"port": "{{proxy_port}}",
 							"path": [
 								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "register",
+									"description": "No functional utility (just for logging)"
+								}
 							]
 						},
 						"description": "Registers a new user with the user_handle sent in the request."
@@ -181,7 +199,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward",
+							"raw": "http://localhost:{{proxy_port}}/forward?label=request_kyc",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -189,6 +207,17 @@
 							"port": "{{proxy_port}}",
 							"path": [
 								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "request_kyc"
+								}
 							]
 						},
 						"description": "Checks for availability of a user handle."
@@ -245,7 +274,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward",
+							"raw": "http://localhost:{{proxy_port}}/forward?label=check_kyc",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -253,6 +282,17 @@
 							"port": "{{proxy_port}}",
 							"path": [
 								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "check_kyc"
+								}
 							]
 						},
 						"description": "Checks for availability of a user handle."
@@ -309,7 +349,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward",
+							"raw": "http://localhost:{{proxy_port}}/forward?label=get_wallets",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -317,9 +357,94 @@
 							"port": "{{proxy_port}}",
 							"path": [
 								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "get_wallets"
+								}
 							]
 						},
 						"description": "Checks for availability of a user handle."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Wallet",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}"
+							},
+							{
+								"description": "URL to which to forward request",
+								"key": "X-FORWARD-TO-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/get_wallet"
+							},
+							{
+								"key": "X-SET-EPOCH",
+								"type": "text",
+								"value": "header.created"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=get_wallet",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "get_wallet"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -429,7 +554,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"nickname\": \"default_wallet\",\n    \"default\": true\n}",
+							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"nickname\": \"default_wallet\",\n    \"default\": false\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -437,7 +562,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward",
+							"raw": "http://localhost:{{proxy_port}}/forward?label=update_wallet",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -445,6 +570,17 @@
 							"port": "{{proxy_port}}",
 							"path": [
 								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "update_wallet"
+								}
 							]
 						}
 					},
@@ -563,7 +699,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward",
+							"raw": "http://localhost:{{proxy_port}}/forward?label=get_accounts",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -571,6 +707,17 @@
 							"port": "{{proxy_port}}",
 							"path": [
 								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "get_accounts"
+								}
 							]
 						},
 						"description": "Checks for availability of a user handle."
@@ -627,7 +774,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward",
+							"raw": "http://localhost:{{proxy_port}}/forward?label=get_account_balance",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -635,6 +782,17 @@
 							"port": "{{proxy_port}}",
 							"path": [
 								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "get_account_balance"
+								}
 							]
 						},
 						"description": "Checks for availability of a user handle."
@@ -691,7 +849,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward",
+							"raw": "http://localhost:{{proxy_port}}/forward?label=link_account_numbers",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -699,6 +857,17 @@
 							"port": "{{proxy_port}}",
 							"path": [
 								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "link_account_numbers"
+								}
 							]
 						},
 						"description": "Checks for availability of a user handle."
@@ -755,7 +924,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward",
+							"raw": "http://localhost:{{proxy_port}}/forward?label=link_account_plaid",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -763,6 +932,17 @@
 							"port": "{{proxy_port}}",
 							"path": [
 								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "link_account_plaid"
+								}
 							]
 						},
 						"description": "Checks for availability of a user handle."
@@ -819,7 +999,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward",
+							"raw": "http://localhost:{{proxy_port}}/forward?label=get_transactions",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -827,6 +1007,17 @@
 							"port": "{{proxy_port}}",
 							"path": [
 								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "get_transactions"
+								}
 							]
 						},
 						"description": "Checks for availability of a user handle."
@@ -883,7 +1074,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward",
+							"raw": "http://localhost:{{proxy_port}}/forward?label=issue_sila",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -891,6 +1082,17 @@
 							"port": "{{proxy_port}}",
 							"path": [
 								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "issue_sila"
+								}
 							]
 						},
 						"description": "Checks for availability of a user handle."
@@ -947,7 +1149,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward",
+							"raw": "http://localhost:{{proxy_port}}/forward?label=redeem_sila",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -955,6 +1157,17 @@
 							"port": "{{proxy_port}}",
 							"path": [
 								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "redeem_sila"
+								}
 							]
 						},
 						"description": "Checks for availability of a user handle."
@@ -1011,7 +1224,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward",
+							"raw": "http://localhost:{{proxy_port}}/forward?label=transfer_sila",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1019,9 +1232,77 @@
 							"port": "{{proxy_port}}",
 							"path": [
 								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "transfer_sila"
+								}
 							]
 						},
 						"description": "Checks for availability of a user handle."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Sila Balance (Proxy)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "X-FORWARD-TO-URL",
+								"value": "{{host}}/0.2/get_sila_balance",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"blockchain_address\": \"{{user_address}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=get_sila_balance",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "address",
+									"value": "{{user_address}}",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "get_sila_balance"
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Simple request requiring no authentication. Can be a POST or a GET. Either POST an \"address\" in a JSON request body or put it in a query parameter in a GET request."
 					},
 					"response": []
 				}
@@ -1112,6 +1393,56 @@
 			],
 			"description": "These are functions on the local proxy server to be used as helpers. They can generate signatures and private keys and spit out current epoch.",
 			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Get Sila Balance",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/0.2/get_sila_balance?blockchain_address={{user_address}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"0.2",
+						"get_sila_balance"
+					],
+					"query": [
+						{
+							"key": "blockchain_address",
+							"value": "{{user_address}}"
+						},
+						{
+							"key": "address",
+							"value": "{{user_address}}",
+							"description": "You can use \"address\" or \"blockchain_address\" to make this request.",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Simple request to get token balance at a blockchain address. Requires no authentication. Can be a POST or a GET. Either POST an \"address\"/\"blockchain_address\" in a JSON request body or put it in a query parameter in a GET request."
+			},
+			"response": []
 		}
 	],
 	"auth": {
@@ -1136,31 +1467,31 @@
 	},
 	"variable": [
 		{
-			"id": "7b92bb73-ea39-4d5d-9698-bf70d284bb0a",
+			"id": "7300d88d-abc1-4311-85a9-ec2b8c4129ed",
 			"key": "X-AUTH-PRIVATE-KEY",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "95dd7eeb-ea2d-40d9-a958-e568e704c40a",
+			"id": "ef5d1f17-2365-41c0-8532-1792c0c73494",
 			"key": "X-USER-PRIVATE-KEY",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "aaa863bc-9285-4506-9d6f-19b360b4f172",
+			"id": "e1dd7825-d7dc-4d5d-a0b3-a6c0a213eaa4",
 			"key": "auth_handle",
 			"value": "dev",
 			"type": "string"
 		},
 		{
-			"id": "20e0fe28-e381-4c0d-8cdb-436e1162ba16",
+			"id": "f9a3d2f6-05cf-434f-9384-2b6a993a18ec",
 			"key": "user_handle",
 			"value": "user",
 			"type": "string"
 		},
 		{
-			"id": "b4445ad6-5764-4684-8232-cd0869fb1d20",
+			"id": "7a9bed64-2f83-4d77-8214-4a8bd100f061",
 			"key": "X-FORWARD-TO-URL",
 			"value": "http://localhost:8000/0.2/check_handle",
 			"type": "string"
