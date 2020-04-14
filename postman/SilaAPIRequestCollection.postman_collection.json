@@ -10,6 +10,231 @@
 			"name": "v0.2 (proxied)",
 			"item": [
 				{
+					"name": "Get NAICS Categories",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "private-key; authsignature={{auth_private_key}}"
+							},
+							{
+								"description": "URL to which to forward request",
+								"key": "X-FORWARD-TO-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/get_naics_categories"
+							},
+							{
+								"key": "X-SET-EPOCH",
+								"type": "text",
+								"value": "header.created"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{auth_handle}}\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=get_naics_categories",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "get_naics_categories"
+								}
+							]
+						},
+						"description": "Checks for availability of a user handle."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Business Types",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}"
+							},
+							{
+								"description": "URL to which to forward request",
+								"key": "X-FORWARD-TO-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/get_business_types"
+							},
+							{
+								"key": "X-SET-EPOCH",
+								"type": "text",
+								"value": "header.created"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=get_business_types",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "get_business_types"
+								}
+							]
+						},
+						"description": "Checks for availability of a user handle."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Business Roles",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}"
+							},
+							{
+								"description": "URL to which to forward request",
+								"key": "X-FORWARD-TO-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/get_business_roles"
+							},
+							{
+								"key": "X-SET-EPOCH",
+								"type": "text",
+								"value": "header.created"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=get_business_roles",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "get_business_roles"
+								}
+							]
+						},
+						"description": "Checks for availability of a user handle."
+					},
+					"response": []
+				},
+				{
 					"name": "Check Handle",
 					"event": [
 						{
@@ -78,6 +303,83 @@
 								{
 									"key": "label",
 									"value": "check_handle",
+									"description": "No functional utility (just for logging)"
+								}
+							]
+						},
+						"description": "Checks for availability of a user handle."
+					},
+					"response": []
+				},
+				{
+					"name": "Get User (in progress)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}",
+								"type": "text"
+							},
+							{
+								"key": "X-FORWARD-TO-URL",
+								"value": "{{host}}/0.2/get_user",
+								"description": "URL to which to forward request",
+								"type": "text"
+							},
+							{
+								"key": "X-SET-EPOCH",
+								"value": "header.created",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=get_user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "If this parameter is sent, returns debugging information in the response body rather than treating the proxy server as a simple pass-through.",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "get_user",
 									"description": "No functional utility (just for logging)"
 								}
 							]
@@ -1338,7 +1640,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8181/get_current_epoch?",
+							"raw": "http://localhost:8181/get_current_epoch",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1467,31 +1769,31 @@
 	},
 	"variable": [
 		{
-			"id": "7300d88d-abc1-4311-85a9-ec2b8c4129ed",
+			"id": "84a9a027-c202-460b-8831-fade4517cd63",
 			"key": "X-AUTH-PRIVATE-KEY",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "ef5d1f17-2365-41c0-8532-1792c0c73494",
+			"id": "47a79295-36b3-4ef0-975e-af0159977598",
 			"key": "X-USER-PRIVATE-KEY",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "e1dd7825-d7dc-4d5d-a0b3-a6c0a213eaa4",
+			"id": "36d2aa9a-1c00-40ac-96e1-2d4bd20b3650",
 			"key": "auth_handle",
 			"value": "dev",
 			"type": "string"
 		},
 		{
-			"id": "f9a3d2f6-05cf-434f-9384-2b6a993a18ec",
+			"id": "4dfd5d88-193b-4820-948d-6bd276bf6859",
 			"key": "user_handle",
 			"value": "user",
 			"type": "string"
 		},
 		{
-			"id": "7a9bed64-2f83-4d77-8214-4a8bd100f061",
+			"id": "cae5fabe-3f0d-4533-98d2-37e1acbce567",
 			"key": "X-FORWARD-TO-URL",
 			"value": "http://localhost:8000/0.2/check_handle",
 			"type": "string"
