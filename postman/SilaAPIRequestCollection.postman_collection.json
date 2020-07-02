@@ -10,1603 +10,2391 @@
 			"name": "v0.2 (proxied)",
 			"item": [
 				{
-					"name": "Get NAICS Categories",
-					"event": [
+					"name": "Business Parameter Getters",
+					"item": [
 						{
-							"listen": "prerequest",
-							"script": {
-								"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
-								"exec": [
-									""
+							"name": "Get NAICS Categories",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "private-key; authsignature={{auth_private_key}}"
+									},
+									{
+										"description": "URL to which to forward request",
+										"key": "X-FORWARD-TO-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/get_naics_categories"
+									},
+									{
+										"key": "X-SET-EPOCH",
+										"type": "text",
+										"value": "header.created"
+									}
 								],
-								"type": "text/javascript"
-							}
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=get_naics_categories",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "get_naics_categories"
+										}
+									]
+								},
+								"description": "Checks for availability of a user handle."
+							},
+							"response": []
+						},
+						{
+							"name": "Get Business Types",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}"
+									},
+									{
+										"description": "URL to which to forward request",
+										"key": "X-FORWARD-TO-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/get_business_types"
+									},
+									{
+										"key": "X-SET-EPOCH",
+										"type": "text",
+										"value": "header.created"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=get_business_types",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "get_business_types"
+										}
+									]
+								},
+								"description": "Checks for availability of a user handle."
+							},
+							"response": []
+						},
+						{
+							"name": "Get Business Roles",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}"
+									},
+									{
+										"description": "URL to which to forward request",
+										"key": "X-FORWARD-TO-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/get_business_roles"
+									},
+									{
+										"key": "X-SET-EPOCH",
+										"type": "text",
+										"value": "header.created"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=get_business_roles",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "get_business_roles"
+										}
+									]
+								},
+								"description": "Checks for availability of a user handle."
+							},
+							"response": []
 						}
 					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "private-key; authsignature={{auth_private_key}}"
-							},
-							{
-								"description": "URL to which to forward request",
-								"key": "X-FORWARD-TO-URL",
-								"type": "text",
-								"value": "{{host}}/0.2/get_naics_categories"
-							},
-							{
-								"key": "X-SET-EPOCH",
-								"type": "text",
-								"value": "header.created"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{auth_handle}}\"\n    }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward?label=get_naics_categories",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{proxy_port}}",
-							"path": [
-								"forward"
-							],
-							"query": [
-								{
-									"key": "debug",
-									"value": "true",
-									"disabled": true
-								},
-								{
-									"key": "label",
-									"value": "get_naics_categories"
-								}
-							]
-						},
-						"description": "Checks for availability of a user handle."
-					},
-					"response": []
+					"description": "These endpoints list values that can be used as API inputs for certain other endpoints.",
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
 				},
 				{
-					"name": "Get Business Types",
-					"event": [
+					"name": "End-User Endpoints",
+					"item": [
 						{
-							"listen": "prerequest",
-							"script": {
-								"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
-								"exec": [
-									""
+							"name": "Check Handle",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "private-key; authsignature={{auth_private_key}}",
+										"type": "text"
+									},
+									{
+										"key": "X-FORWARD-TO-URL",
+										"value": "{{host}}/0.2/check_handle",
+										"description": "URL to which to forward request",
+										"type": "text"
+									},
+									{
+										"key": "X-SET-EPOCH",
+										"value": "header.created",
+										"type": "text"
+									}
 								],
-								"type": "text/javascript"
-							}
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=check_handle",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "If this parameter is sent, returns debugging information in the response body rather than treating the proxy server as a simple pass-through.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "check_handle",
+											"description": "No functional utility (just for logging)"
+										}
+									]
+								},
+								"description": "Checks for availability of a user handle."
+							},
+							"response": []
+						},
+						{
+							"name": "Register",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "private-key; authsignature={{auth_private_key}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-FORWARD-TO-URL",
+										"value": "{{host}}/0.2/register",
+										"type": "text"
+									},
+									{
+										"key": "X-SET-EPOCH",
+										"value": "header.created",
+										"type": "text"
+									},
+									{
+										"key": "X-SET-REGISTER-ADDRESS",
+										"value": "crypto_entry.crypto_address",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"header\": {\n\t\t\"auth_handle\": \"{{auth_handle}}\",\n\t\t\"user_handle\": \"{{user_handle}}\"\n\t},\n\t\"address\": {\n\t\t\"address_alias\": \"Office\",\n\t\t\"street_address_1\": \"920 SW 6th Ave.\",\n\t\t\"city\": \"Portland\",\n\t\t\"state\": \"OR\",\n\t\t\"country\": \"US\",\n\t\t\"postal_code\": \"97204\"\n\t},\n\t\"identity\": {\n\t\t\"identity_alias\": \"SSN\",\n\t\t\"identity_value\": \"123-45-2222\"\n\t},\n\t\"entity\": {\n\t\t\"entity_name\": \"Postman User\",\n\t\t\"first_name\": \"Postman\",\n\t\t\"last_name\": \"User\",\n\t\t\"birthdate\": \"1990-08-31\"\n\t},\n\t\"contact\": {\n\t\t\"email\": \"molly@silamoney.com\",\n\t\t\"phone\": \"1231231234\"\n\t},\n\t\"crypto_entry\": {\n\t\t\"crypto_code\": \"ETH\",\n\t\t\"crypto_address\": \"{{user_address}}\"\n\t}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=register",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "register",
+											"description": "No functional utility (just for logging)"
+										}
+									]
+								},
+								"description": "Registers a new user with the user_handle sent in the request."
+							},
+							"response": []
+						},
+						{
+							"name": "Register (Business)",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "private-key; authsignature={{auth_private_key}}"
+									},
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "X-FORWARD-TO-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/register"
+									},
+									{
+										"key": "X-SET-EPOCH",
+										"type": "text",
+										"value": "header.created"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"header\": {\n\t\t\"auth_handle\": \"{{auth_handle}}\",\n\t\t\"user_handle\": \"{{business_handle}}\"\n\t},\n\t\"identity\": {\n\t\t\"identity_alias\": \"EIN\",\n\t\t\"identity_value\": \"320567252\"\n\t},\n\t\"address\": {\n\t\t\"address_alias\": \"Office\",\n\t\t\"street_address_1\": \"920 SW 6th Ave.\",\n\t\t\"city\": \"Portland\",\n\t\t\"state\": \"OR\",\n\t\t\"country\": \"US\",\n\t\t\"postal_code\": \"97204\"\n\t},\n\t\"contact\": {\n\t\t\"phone\": \"1231231234\",\n\t\t\"email\": \"molly@silamoney.com\"\n\t},\n\t\"entity\": {\n\t\t\"type\": \"Business\",\n\t\t\"entity_name\": \"Sila, Inc.\",\n\t\t\"business_type\": \"corporation\",\n\t\t\"business_website\": \"https://www.silamoney.com\",\n\t\t\"doing_business_as\": \"Sila\",\n\t\t\"naics_code\": 721\n\t},\n\t\"crypto_entry\": {\n\t\t\"crypto_code\": \"ETH\",\n\t\t\"crypto_address\": \"{{business_address}}\"\n\t}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=register",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "register",
+											"description": "No functional utility (just for logging)"
+										}
+									]
+								},
+								"description": "Registers a new user with the user_handle sent in the request."
+							},
+							"response": []
+						},
+						{
+							"name": "Documents",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "fa801425-060c-4459-a95c-58213c5b9540",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}"
+									},
+									{
+										"description": "URL to which to forward request",
+										"key": "X-FORWARD-TO-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/documents"
+									},
+									{
+										"key": "X-SET-EPOCH",
+										"type": "text",
+										"value": "header.created"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=documents",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "documents"
+										}
+									]
+								},
+								"description": "Allows upload of KYC documents."
+							},
+							"response": []
+						},
+						{
+							"name": "Get Entity",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}",
+										"type": "text"
+									},
+									{
+										"key": "X-FORWARD-TO-URL",
+										"value": "{{host}}/0.2/get_entity?pretty_dates=true",
+										"description": "URL to which to forward request",
+										"type": "text"
+									},
+									{
+										"key": "X-SET-EPOCH",
+										"value": "header.created",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=get_entity",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "If this parameter is sent, returns debugging information in the response body rather than treating the proxy server as a simple pass-through.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "get_entity"
+										}
+									]
+								},
+								"description": "Checks for availability of a user handle."
+							},
+							"response": []
+						},
+						{
+							"name": "Get Entity (Business)",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "private-key; authsignature={{auth_private_key}}; usersignature={{business_private_key}}",
+										"type": "text"
+									},
+									{
+										"key": "X-FORWARD-TO-URL",
+										"value": "{{host}}/0.2/get_entity?pretty_dates=true",
+										"description": "URL to which to forward request",
+										"type": "text"
+									},
+									{
+										"key": "X-SET-EPOCH",
+										"value": "header.created",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{business_handle}}\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=get_entity",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "If this parameter is sent, returns debugging information in the response body rather than treating the proxy server as a simple pass-through.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "get_entity"
+										}
+									]
+								},
+								"description": "Checks for availability of a user handle."
+							},
+							"response": []
+						},
+						{
+							"name": "Update Entity",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "d7124e3f-e744-4465-8232-036a355c383c",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}",
+										"type": "text"
+									},
+									{
+										"key": "X-FORWARD-TO-URL",
+										"value": "{{host}}/0.2/get_entity?pretty_dates=true",
+										"description": "URL to which to forward request",
+										"type": "text"
+									},
+									{
+										"key": "X-SET-EPOCH",
+										"value": "header.created",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=get_entity",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "If this parameter is sent, returns debugging information in the response body rather than treating the proxy server as a simple pass-through.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "get_entity"
+										}
+									]
+								},
+								"description": "Checks for availability of a user handle."
+							},
+							"response": []
+						},
+						{
+							"name": "Link Business Member",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}; businesssignature={{business_private_key}}"
+									},
+									{
+										"description": "URL to which to forward request",
+										"key": "X-FORWARD-TO-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/link_business_member"
+									},
+									{
+										"key": "X-SET-EPOCH",
+										"type": "text",
+										"value": "header.created"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\",\n        \"business_handle\": \"{{business_handle}}\"\n    },\n    \"role\": \"controlling_officer\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=link_business_member",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "If this parameter is sent, returns debugging information in the response body rather than treating the proxy server as a simple pass-through.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "link_business_member"
+										}
+									]
+								},
+								"description": "Checks for availability of a user handle."
+							},
+							"response": []
+						},
+						{
+							"name": "Unlink Business Member",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}; businesssignature={{business_private_key}}"
+									},
+									{
+										"description": "URL to which to forward request",
+										"key": "X-FORWARD-TO-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/unlink_business_member"
+									},
+									{
+										"key": "X-SET-EPOCH",
+										"type": "text",
+										"value": "header.created"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\",\n        \"business_handle\": \"{{business_handle}}\"\n    },\n    \"role\": \"controlling_officer\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=unlink_business_member",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "If this parameter is sent, returns debugging information in the response body rather than treating the proxy server as a simple pass-through.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "unlink_business_member"
+										}
+									]
+								},
+								"description": "Checks for availability of a user handle."
+							},
+							"response": []
+						},
+						{
+							"name": "Request KYC",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}"
+									},
+									{
+										"description": "URL to which to forward request",
+										"key": "X-FORWARD-TO-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/request_kyc"
+									},
+									{
+										"key": "X-SET-EPOCH",
+										"type": "text",
+										"value": "header.created"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=request_kyc",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "request_kyc"
+										}
+									]
+								},
+								"description": "Checks for availability of a user handle."
+							},
+							"response": []
+						},
+						{
+							"name": "Request Business KYC",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3300dc73-c2a9-4086-8ce4-ac3e8273cbda",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "private-key; authsignature={{auth_private_key}}; usersignature={{business_private_key}}"
+									},
+									{
+										"description": "URL to which to forward request",
+										"key": "X-FORWARD-TO-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/request_kyc"
+									},
+									{
+										"key": "X-SET-EPOCH",
+										"type": "text",
+										"value": "header.created"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{business_handle}}\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=request_kyc",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "request_kyc"
+										}
+									]
+								},
+								"description": "Checks for availability of a user handle."
+							},
+							"response": []
+						},
+						{
+							"name": "Check KYC",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "private-key; authsignature={{auth_private_key}}"
+									},
+									{
+										"description": "URL to which to forward request",
+										"key": "X-FORWARD-TO-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/check_kyc"
+									},
+									{
+										"key": "X-SET-EPOCH",
+										"type": "text",
+										"value": "header.created"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=check_kyc",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "check_kyc"
+										}
+									]
+								},
+								"description": "Checks for availability of a user handle."
+							},
+							"response": []
+						},
+						{
+							"name": "Check Business KYC",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "aab82076-f3d3-4d2b-ba53-2f00e9b54e56",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "private-key; authsignature={{auth_private_key}}"
+									},
+									{
+										"description": "URL to which to forward request",
+										"key": "X-FORWARD-TO-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/check_kyc"
+									},
+									{
+										"key": "X-SET-EPOCH",
+										"type": "text",
+										"value": "header.created"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{business_handle}}\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=check_kyc",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "check_kyc"
+										}
+									]
+								},
+								"description": "Checks for availability of a user handle."
+							},
+							"response": []
+						},
+						{
+							"name": "Certify Beneficial Owner",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "7e309e4e-425b-496f-9ee0-e718320896bb",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}; businesssignature={{business_private_key}}"
+									},
+									{
+										"description": "URL to which to forward request",
+										"key": "X-FORWARD-TO-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/certify_beneficial_owner"
+									},
+									{
+										"key": "X-SET-EPOCH",
+										"type": "text",
+										"value": "header.created"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\",\n        \"business_handle\": \"{{business_handle}}\"\n    },\n    \"member_handle\": \"{{user_handle}}\",\n    \"certification_token\": \"faketoken\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=certify_beneficial_owner",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "If this parameter is sent, returns debugging information in the response body rather than treating the proxy server as a simple pass-through.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "certify_beneficial_owner"
+										}
+									]
+								},
+								"description": "Checks for availability of a user handle."
+							},
+							"response": []
+						},
+						{
+							"name": "Certify Business",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "910ffb98-3a66-4208-873c-291f99bba015",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}; businesssignature={{business_private_key}}"
+									},
+									{
+										"description": "URL to which to forward request",
+										"key": "X-FORWARD-TO-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/certify_business"
+									},
+									{
+										"key": "X-SET-EPOCH",
+										"type": "text",
+										"value": "header.created"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\",\n        \"business_handle\": \"{{business_handle}}\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=certify_business",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "If this parameter is sent, returns debugging information in the response body rather than treating the proxy server as a simple pass-through.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "certify_business"
+										}
+									]
+								},
+								"description": "Checks for availability of a user handle."
+							},
+							"response": []
 						}
 					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}"
-							},
-							{
-								"description": "URL to which to forward request",
-								"key": "X-FORWARD-TO-URL",
-								"type": "text",
-								"value": "{{host}}/0.2/get_business_types"
-							},
-							{
-								"key": "X-SET-EPOCH",
-								"type": "text",
-								"value": "header.created"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward?label=get_business_types",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{proxy_port}}",
-							"path": [
-								"forward"
-							],
-							"query": [
-								{
-									"key": "debug",
-									"value": "true",
-									"disabled": true
-								},
-								{
-									"key": "label",
-									"value": "get_business_types"
-								}
-							]
-						},
-						"description": "Checks for availability of a user handle."
-					},
-					"response": []
+					"description": "These endpoints manage creating, getting, updating end-users.",
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
 				},
 				{
-					"name": "Get Business Roles",
-					"event": [
+					"name": "Wallet Endpoints",
+					"item": [
 						{
-							"listen": "prerequest",
-							"script": {
-								"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
-								"exec": [
-									""
+							"name": "Get Wallets",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}"
+									},
+									{
+										"description": "URL to which to forward request",
+										"key": "X-FORWARD-TO-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/get_wallets"
+									},
+									{
+										"key": "X-SET-EPOCH",
+										"type": "text",
+										"value": "header.created"
+									}
 								],
-								"type": "text/javascript"
-							}
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=get_wallets",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "get_wallets"
+										}
+									]
+								},
+								"description": "Checks for availability of a user handle."
+							},
+							"response": []
+						},
+						{
+							"name": "Get Wallet",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}"
+									},
+									{
+										"description": "URL to which to forward request",
+										"key": "X-FORWARD-TO-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/get_wallet"
+									},
+									{
+										"key": "X-SET-EPOCH",
+										"type": "text",
+										"value": "header.created"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=get_wallet",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "get_wallet"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Register Wallet",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}"
+									},
+									{
+										"description": "URL to which to forward request",
+										"key": "X-FORWARD-TO-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/register_wallet"
+									},
+									{
+										"key": "X-SET-EPOCH",
+										"type": "text",
+										"value": "header.created"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"wallet_verification_signature\": \"\",\n    \"wallet\": {\n    \t\"blockchain_address\": \"\",\n    \t\"nickname\": \"Second Wallet\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									]
+								},
+								"description": "Checks for availability of a user handle."
+							},
+							"response": []
+						},
+						{
+							"name": "Update Wallet",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}"
+									},
+									{
+										"description": "URL to which to forward request",
+										"key": "X-FORWARD-TO-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/update_wallet"
+									},
+									{
+										"key": "X-SET-EPOCH",
+										"type": "text",
+										"value": "header.created"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"nickname\": \"default_wallet\",\n    \"default\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=update_wallet",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "update_wallet"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Wallet",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}"
+									},
+									{
+										"description": "URL to which to forward request",
+										"key": "X-FORWARD-TO-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/delete_wallet"
+									},
+									{
+										"key": "X-SET-EPOCH",
+										"type": "text",
+										"value": "header.created"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Sila Balance (Proxy)",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "X-FORWARD-TO-URL",
+										"value": "{{host}}/0.2/get_sila_balance",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"blockchain_address\": \"{{user_address}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=get_sila_balance",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "address",
+											"value": "{{user_address}}",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "get_sila_balance"
+										},
+										{
+											"key": "debug",
+											"value": "true",
+											"disabled": true
+										}
+									]
+								},
+								"description": "Simple request requiring no authentication. Can be a POST or a GET. Either POST an \"address\" in a JSON request body or put it in a query parameter in a GET request."
+							},
+							"response": []
 						}
 					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}"
-							},
-							{
-								"description": "URL to which to forward request",
-								"key": "X-FORWARD-TO-URL",
-								"type": "text",
-								"value": "{{host}}/0.2/get_business_roles"
-							},
-							{
-								"key": "X-SET-EPOCH",
-								"type": "text",
-								"value": "header.created"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward?label=get_business_roles",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{proxy_port}}",
-							"path": [
-								"forward"
-							],
-							"query": [
-								{
-									"key": "debug",
-									"value": "true",
-									"disabled": true
-								},
-								{
-									"key": "label",
-									"value": "get_business_roles"
-								}
-							]
-						},
-						"description": "Checks for availability of a user handle."
-					},
-					"response": []
+					"description": "These endpoints exclusively center around managing end-user wallets.",
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
 				},
 				{
-					"name": "Check Handle",
-					"event": [
+					"name": "Bank Account Endpoints.",
+					"item": [
 						{
-							"listen": "prerequest",
-							"script": {
-								"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
-								"exec": [
-									""
+							"name": "Get Accounts",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}"
+									},
+									{
+										"description": "URL to which to forward request",
+										"key": "X-FORWARD-TO-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/get_accounts"
+									},
+									{
+										"key": "X-SET-EPOCH",
+										"type": "text",
+										"value": "header.created"
+									}
 								],
-								"type": "text/javascript"
-							}
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=get_accounts",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "get_accounts"
+										}
+									]
+								},
+								"description": "Checks for availability of a user handle."
+							},
+							"response": []
+						},
+						{
+							"name": "Get Account Balance",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}"
+									},
+									{
+										"description": "URL to which to forward request",
+										"key": "X-FORWARD-TO-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/get_account_balance"
+									},
+									{
+										"key": "X-SET-EPOCH",
+										"type": "text",
+										"value": "header.created"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"account_name\": \"Plaid-linked account\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=get_account_balance",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "get_account_balance"
+										}
+									]
+								},
+								"description": "Checks for availability of a user handle."
+							},
+							"response": []
+						},
+						{
+							"name": "Link Account (Account/Routing)",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}"
+									},
+									{
+										"description": "URL to which to forward request",
+										"key": "X-FORWARD-TO-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/link_account"
+									},
+									{
+										"key": "X-SET-EPOCH",
+										"type": "text",
+										"value": "header.created"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"account_name\": \"Main Chase Account\",\n    \"account_type\": \"CHECKING\",\n    \"account_number\": \"123456789012\",\n    \"routing_number\": \"123456789\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=link_account_numbers",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "link_account_numbers"
+										}
+									]
+								},
+								"description": "Checks for availability of a user handle."
+							},
+							"response": []
+						},
+						{
+							"name": "Link Account (Plaid)",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}"
+									},
+									{
+										"description": "URL to which to forward request",
+										"key": "X-FORWARD-TO-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/link_account"
+									},
+									{
+										"key": "X-SET-EPOCH",
+										"type": "text",
+										"value": "header.created"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"account_name\": \"Plaid-linked account\",\n\t\"public_token\": \"sandbox\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=link_account_plaid",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "link_account_plaid"
+										}
+									]
+								},
+								"description": "Checks for availability of a user handle."
+							},
+							"response": []
 						}
 					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "Authorization",
-								"value": "private-key; authsignature={{auth_private_key}}",
-								"type": "text"
-							},
-							{
-								"key": "X-FORWARD-TO-URL",
-								"value": "{{host}}/0.2/check_handle",
-								"description": "URL to which to forward request",
-								"type": "text"
-							},
-							{
-								"key": "X-SET-EPOCH",
-								"value": "header.created",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward?label=check_handle",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{proxy_port}}",
-							"path": [
-								"forward"
-							],
-							"query": [
-								{
-									"key": "debug",
-									"value": "true",
-									"description": "If this parameter is sent, returns debugging information in the response body rather than treating the proxy server as a simple pass-through.",
-									"disabled": true
-								},
-								{
-									"key": "label",
-									"value": "check_handle",
-									"description": "No functional utility (just for logging)"
-								}
-							]
-						},
-						"description": "Checks for availability of a user handle."
-					},
-					"response": []
+					"description": "Enables management of end-user bank accounts (adding, checking, getting, etc.).",
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
 				},
 				{
-					"name": "Get User (in progress)",
-					"event": [
+					"name": "Transaction Endpoints",
+					"item": [
 						{
-							"listen": "prerequest",
-							"script": {
-								"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
-								"exec": [
-									""
+							"name": "Get Transactions",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "private-key; authsignature={{auth_private_key}}; usersignature={{business_private_key}}"
+									},
+									{
+										"description": "URL to which to forward request",
+										"key": "X-FORWARD-TO-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/get_transactions"
+									},
+									{
+										"key": "X-SET-EPOCH",
+										"type": "text",
+										"value": "header.created"
+									}
 								],
-								"type": "text/javascript"
-							}
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"search_filters\": {\n    \t\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=get_transactions",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "get_transactions"
+										}
+									]
+								},
+								"description": "Checks for availability of a user handle."
+							},
+							"response": []
+						},
+						{
+							"name": "Issue Sila",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "private-key; authsignature={{auth_private_key}}; usersignature={{business_private_key}}"
+									},
+									{
+										"description": "URL to which to forward request",
+										"key": "X-FORWARD-TO-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/issue_sila"
+									},
+									{
+										"key": "X-SET-EPOCH",
+										"type": "text",
+										"value": "header.created"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"account_name\": \"Main Chase Account\",\n    \"amount\": 1000\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=issue_sila",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "issue_sila"
+										}
+									]
+								},
+								"description": "Checks for availability of a user handle."
+							},
+							"response": []
+						},
+						{
+							"name": "Redeem Sila",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}"
+									},
+									{
+										"description": "URL to which to forward request",
+										"key": "X-FORWARD-TO-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/redeem_sila"
+									},
+									{
+										"key": "X-SET-EPOCH",
+										"type": "text",
+										"value": "header.created"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"account_name\": \"Main Chase Account\",\n    \"amount\": 100\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=redeem_sila",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "redeem_sila"
+										}
+									]
+								},
+								"description": "Checks for availability of a user handle."
+							},
+							"response": []
+						},
+						{
+							"name": "Transfer Sila",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}"
+									},
+									{
+										"description": "URL to which to forward request",
+										"key": "X-FORWARD-TO-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/transfer_sila"
+									},
+									{
+										"key": "X-SET-EPOCH",
+										"type": "text",
+										"value": "header.created"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"amount\": 100,\n    \"destination_handle\": \"user\",\n    \"destination_address\": \"{{user_address}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=transfer_sila",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "transfer_sila"
+										}
+									]
+								},
+								"description": "Checks for availability of a user handle."
+							},
+							"response": []
 						}
 					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "Authorization",
-								"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}",
-								"type": "text"
-							},
-							{
-								"key": "X-FORWARD-TO-URL",
-								"value": "{{host}}/0.2/get_user",
-								"description": "URL to which to forward request",
-								"type": "text"
-							},
-							{
-								"key": "X-SET-EPOCH",
-								"value": "header.created",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward?label=get_user",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{proxy_port}}",
-							"path": [
-								"forward"
-							],
-							"query": [
-								{
-									"key": "debug",
-									"value": "true",
-									"description": "If this parameter is sent, returns debugging information in the response body rather than treating the proxy server as a simple pass-through.",
-									"disabled": true
-								},
-								{
-									"key": "label",
-									"value": "get_user",
-									"description": "No functional utility (just for logging)"
-								}
-							]
-						},
-						"description": "Checks for availability of a user handle."
-					},
-					"response": []
-				},
-				{
-					"name": "Register",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "private-key; authsignature={{auth_private_key}}",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "X-FORWARD-TO-URL",
-								"value": "{{host}}/0.2/register",
-								"type": "text"
-							},
-							{
-								"key": "X-SET-EPOCH",
-								"value": "header.created",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"header\": {\n\t\t\"auth_handle\": \"{{auth_handle}}\",\n\t\t\"user_handle\": \"{{user_handle}}\"\n\t},\n\t\"address\": {\n\t\t\"address_alias\": \"Office\",\n\t\t\"street_address_1\": \"920 SW 6th Ave.\",\n\t\t\"city\": \"Portland\",\n\t\t\"state\": \"OR\",\n\t\t\"country\": \"US\",\n\t\t\"postal_code\": \"97204\"\n\t},\n\t\"identity\": {\n\t\t\"identity_alias\": \"SSN\",\n\t\t\"identity_value\": \"123-45-2222\"\n\t},\n\t\"entity\": {\n\t\t\"entity_name\": \"Postman User\",\n\t\t\"first_name\": \"Postman\",\n\t\t\"last_name\": \"User\",\n\t\t\"birthdate\": \"1990-08-31\"\n\t},\n\t\"contact\": {\n\t\t\"email\": \"molly@silamoney.com\",\n\t\t\"phone\": \"1231231234\"\n\t},\n\t\"crypto_entry\": {\n\t\t\"crypto_code\": \"ETH\",\n\t\t\"crypto_address\": \"{{user_address}}\"\n\t}\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward?label=register",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{proxy_port}}",
-							"path": [
-								"forward"
-							],
-							"query": [
-								{
-									"key": "debug",
-									"value": "true",
-									"disabled": true
-								},
-								{
-									"key": "label",
-									"value": "register",
-									"description": "No functional utility (just for logging)"
-								}
-							]
-						},
-						"description": "Registers a new user with the user_handle sent in the request."
-					},
-					"response": []
-				},
-				{
-					"name": "Request KYC",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}"
-							},
-							{
-								"description": "URL to which to forward request",
-								"key": "X-FORWARD-TO-URL",
-								"type": "text",
-								"value": "{{host}}/0.2/request_kyc"
-							},
-							{
-								"key": "X-SET-EPOCH",
-								"type": "text",
-								"value": "header.created"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward?label=request_kyc",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{proxy_port}}",
-							"path": [
-								"forward"
-							],
-							"query": [
-								{
-									"key": "debug",
-									"value": "true",
-									"disabled": true
-								},
-								{
-									"key": "label",
-									"value": "request_kyc"
-								}
-							]
-						},
-						"description": "Checks for availability of a user handle."
-					},
-					"response": []
-				},
-				{
-					"name": "Check KYC",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}"
-							},
-							{
-								"description": "URL to which to forward request",
-								"key": "X-FORWARD-TO-URL",
-								"type": "text",
-								"value": "{{host}}/0.2/check_kyc"
-							},
-							{
-								"key": "X-SET-EPOCH",
-								"type": "text",
-								"value": "header.created"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward?label=check_kyc",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{proxy_port}}",
-							"path": [
-								"forward"
-							],
-							"query": [
-								{
-									"key": "debug",
-									"value": "true",
-									"disabled": true
-								},
-								{
-									"key": "label",
-									"value": "check_kyc"
-								}
-							]
-						},
-						"description": "Checks for availability of a user handle."
-					},
-					"response": []
-				},
-				{
-					"name": "Get Wallets",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}"
-							},
-							{
-								"description": "URL to which to forward request",
-								"key": "X-FORWARD-TO-URL",
-								"type": "text",
-								"value": "{{host}}/0.2/get_wallets"
-							},
-							{
-								"key": "X-SET-EPOCH",
-								"type": "text",
-								"value": "header.created"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward?label=get_wallets",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{proxy_port}}",
-							"path": [
-								"forward"
-							],
-							"query": [
-								{
-									"key": "debug",
-									"value": "true",
-									"disabled": true
-								},
-								{
-									"key": "label",
-									"value": "get_wallets"
-								}
-							]
-						},
-						"description": "Checks for availability of a user handle."
-					},
-					"response": []
-				},
-				{
-					"name": "Get Wallet",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}"
-							},
-							{
-								"description": "URL to which to forward request",
-								"key": "X-FORWARD-TO-URL",
-								"type": "text",
-								"value": "{{host}}/0.2/get_wallet"
-							},
-							{
-								"key": "X-SET-EPOCH",
-								"type": "text",
-								"value": "header.created"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward?label=get_wallet",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{proxy_port}}",
-							"path": [
-								"forward"
-							],
-							"query": [
-								{
-									"key": "debug",
-									"value": "true",
-									"disabled": true
-								},
-								{
-									"key": "label",
-									"value": "get_wallet"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Register Wallet",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}"
-							},
-							{
-								"description": "URL to which to forward request",
-								"key": "X-FORWARD-TO-URL",
-								"type": "text",
-								"value": "{{host}}/0.2/register_wallet"
-							},
-							{
-								"key": "X-SET-EPOCH",
-								"type": "text",
-								"value": "header.created"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"wallet_verification_signature\": \"\",\n    \"wallet\": {\n    \t\"blockchain_address\": \"\",\n    \t\"nickname\": \"Second Wallet\"\n    }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{proxy_port}}",
-							"path": [
-								"forward"
-							]
-						},
-						"description": "Checks for availability of a user handle."
-					},
-					"response": []
-				},
-				{
-					"name": "Update Wallet",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}"
-							},
-							{
-								"description": "URL to which to forward request",
-								"key": "X-FORWARD-TO-URL",
-								"type": "text",
-								"value": "{{host}}/0.2/update_wallet"
-							},
-							{
-								"key": "X-SET-EPOCH",
-								"type": "text",
-								"value": "header.created"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"nickname\": \"default_wallet\",\n    \"default\": false\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward?label=update_wallet",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{proxy_port}}",
-							"path": [
-								"forward"
-							],
-							"query": [
-								{
-									"key": "debug",
-									"value": "true",
-									"disabled": true
-								},
-								{
-									"key": "label",
-									"value": "update_wallet"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Wallet",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}"
-							},
-							{
-								"description": "URL to which to forward request",
-								"key": "X-FORWARD-TO-URL",
-								"type": "text",
-								"value": "{{host}}/0.2/delete_wallet"
-							},
-							{
-								"key": "X-SET-EPOCH",
-								"type": "text",
-								"value": "header.created"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{proxy_port}}",
-							"path": [
-								"forward"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Accounts",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}"
-							},
-							{
-								"description": "URL to which to forward request",
-								"key": "X-FORWARD-TO-URL",
-								"type": "text",
-								"value": "{{host}}/0.2/get_accounts"
-							},
-							{
-								"key": "X-SET-EPOCH",
-								"type": "text",
-								"value": "header.created"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward?label=get_accounts",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{proxy_port}}",
-							"path": [
-								"forward"
-							],
-							"query": [
-								{
-									"key": "debug",
-									"value": "true",
-									"disabled": true
-								},
-								{
-									"key": "label",
-									"value": "get_accounts"
-								}
-							]
-						},
-						"description": "Checks for availability of a user handle."
-					},
-					"response": []
-				},
-				{
-					"name": "Get Account Balance",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}"
-							},
-							{
-								"description": "URL to which to forward request",
-								"key": "X-FORWARD-TO-URL",
-								"type": "text",
-								"value": "{{host}}/0.2/get_account_balance"
-							},
-							{
-								"key": "X-SET-EPOCH",
-								"type": "text",
-								"value": "header.created"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"account_name\": \"Plaid-linked account\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward?label=get_account_balance",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{proxy_port}}",
-							"path": [
-								"forward"
-							],
-							"query": [
-								{
-									"key": "debug",
-									"value": "true",
-									"disabled": true
-								},
-								{
-									"key": "label",
-									"value": "get_account_balance"
-								}
-							]
-						},
-						"description": "Checks for availability of a user handle."
-					},
-					"response": []
-				},
-				{
-					"name": "Link Account (Account/Routing)",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}"
-							},
-							{
-								"description": "URL to which to forward request",
-								"key": "X-FORWARD-TO-URL",
-								"type": "text",
-								"value": "{{host}}/0.2/link_account"
-							},
-							{
-								"key": "X-SET-EPOCH",
-								"type": "text",
-								"value": "header.created"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"account_name\": \"Main Chase Account\",\n    \"account_type\": \"CHECKING\",\n    \"account_number\": \"123456789012\",\n    \"routing_number\": \"123456789\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward?label=link_account_numbers",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{proxy_port}}",
-							"path": [
-								"forward"
-							],
-							"query": [
-								{
-									"key": "debug",
-									"value": "true",
-									"disabled": true
-								},
-								{
-									"key": "label",
-									"value": "link_account_numbers"
-								}
-							]
-						},
-						"description": "Checks for availability of a user handle."
-					},
-					"response": []
-				},
-				{
-					"name": "Link Account (Plaid)",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}"
-							},
-							{
-								"description": "URL to which to forward request",
-								"key": "X-FORWARD-TO-URL",
-								"type": "text",
-								"value": "{{host}}/0.2/link_account"
-							},
-							{
-								"key": "X-SET-EPOCH",
-								"type": "text",
-								"value": "header.created"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"account_name\": \"Plaid-linked account\",\n\t\"public_token\": \"sandbox\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward?label=link_account_plaid",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{proxy_port}}",
-							"path": [
-								"forward"
-							],
-							"query": [
-								{
-									"key": "debug",
-									"value": "true",
-									"disabled": true
-								},
-								{
-									"key": "label",
-									"value": "link_account_plaid"
-								}
-							]
-						},
-						"description": "Checks for availability of a user handle."
-					},
-					"response": []
-				},
-				{
-					"name": "Get Transactions",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}"
-							},
-							{
-								"description": "URL to which to forward request",
-								"key": "X-FORWARD-TO-URL",
-								"type": "text",
-								"value": "{{host}}/0.2/get_transactions"
-							},
-							{
-								"key": "X-SET-EPOCH",
-								"type": "text",
-								"value": "header.created"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"search_filters\": {\n    \t\n    }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward?label=get_transactions",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{proxy_port}}",
-							"path": [
-								"forward"
-							],
-							"query": [
-								{
-									"key": "debug",
-									"value": "true",
-									"disabled": true
-								},
-								{
-									"key": "label",
-									"value": "get_transactions"
-								}
-							]
-						},
-						"description": "Checks for availability of a user handle."
-					},
-					"response": []
-				},
-				{
-					"name": "Issue Sila",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}"
-							},
-							{
-								"description": "URL to which to forward request",
-								"key": "X-FORWARD-TO-URL",
-								"type": "text",
-								"value": "{{host}}/0.2/issue_sila"
-							},
-							{
-								"key": "X-SET-EPOCH",
-								"type": "text",
-								"value": "header.created"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"account_name\": \"Main Chase Account\",\n    \"amount\": 100\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward?label=issue_sila",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{proxy_port}}",
-							"path": [
-								"forward"
-							],
-							"query": [
-								{
-									"key": "debug",
-									"value": "true",
-									"disabled": true
-								},
-								{
-									"key": "label",
-									"value": "issue_sila"
-								}
-							]
-						},
-						"description": "Checks for availability of a user handle."
-					},
-					"response": []
-				},
-				{
-					"name": "Redeem Sila",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}"
-							},
-							{
-								"description": "URL to which to forward request",
-								"key": "X-FORWARD-TO-URL",
-								"type": "text",
-								"value": "{{host}}/0.2/redeem_sila"
-							},
-							{
-								"key": "X-SET-EPOCH",
-								"type": "text",
-								"value": "header.created"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"account_name\": \"Main Chase Account\",\n    \"amount\": 100\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward?label=redeem_sila",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{proxy_port}}",
-							"path": [
-								"forward"
-							],
-							"query": [
-								{
-									"key": "debug",
-									"value": "true",
-									"disabled": true
-								},
-								{
-									"key": "label",
-									"value": "redeem_sila"
-								}
-							]
-						},
-						"description": "Checks for availability of a user handle."
-					},
-					"response": []
-				},
-				{
-					"name": "Transfer Sila",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "3490c2b3-d95c-4f74-8d96-2cdce8d4e282",
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "private-key; authsignature={{auth_private_key}}; usersignature={{user_private_key}}"
-							},
-							{
-								"description": "URL to which to forward request",
-								"key": "X-FORWARD-TO-URL",
-								"type": "text",
-								"value": "{{host}}/0.2/transfer_sila"
-							},
-							{
-								"key": "X-SET-EPOCH",
-								"type": "text",
-								"value": "header.created"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{auth_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"amount\": 100,\n    \"destination_handle\": \"user\",\n    \"destination_address\": \"{{user_address}}\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward?label=transfer_sila",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{proxy_port}}",
-							"path": [
-								"forward"
-							],
-							"query": [
-								{
-									"key": "debug",
-									"value": "true",
-									"disabled": true
-								},
-								{
-									"key": "label",
-									"value": "transfer_sila"
-								}
-							]
-						},
-						"description": "Checks for availability of a user handle."
-					},
-					"response": []
-				},
-				{
-					"name": "Get Sila Balance (Proxy)",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "X-FORWARD-TO-URL",
-								"value": "{{host}}/0.2/get_sila_balance",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"blockchain_address\": \"{{user_address}}\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward?label=get_sila_balance",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{proxy_port}}",
-							"path": [
-								"forward"
-							],
-							"query": [
-								{
-									"key": "address",
-									"value": "{{user_address}}",
-									"disabled": true
-								},
-								{
-									"key": "label",
-									"value": "get_sila_balance"
-								},
-								{
-									"key": "debug",
-									"value": "true",
-									"disabled": true
-								}
-							]
-						},
-						"description": "Simple request requiring no authentication. Can be a POST or a GET. Either POST an \"address\" in a JSON request body or put it in a query parameter in a GET request."
-					},
-					"response": []
+					"description": "These are endpoints to create and check transactions.",
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -1769,34 +2557,29 @@
 	},
 	"variable": [
 		{
-			"id": "84a9a027-c202-460b-8831-fade4517cd63",
+			"id": "908e3c52-5922-4f08-a4c1-6350b34c1c87",
 			"key": "X-AUTH-PRIVATE-KEY",
-			"value": "",
-			"type": "string"
+			"value": ""
 		},
 		{
-			"id": "47a79295-36b3-4ef0-975e-af0159977598",
+			"id": "7b5a7860-3fa2-422c-9396-8717497b8220",
 			"key": "X-USER-PRIVATE-KEY",
-			"value": "",
-			"type": "string"
+			"value": ""
 		},
 		{
-			"id": "36d2aa9a-1c00-40ac-96e1-2d4bd20b3650",
+			"id": "afec65ed-6395-4f72-9d8a-50e0163917e0",
 			"key": "auth_handle",
-			"value": "dev",
-			"type": "string"
+			"value": "dev"
 		},
 		{
-			"id": "4dfd5d88-193b-4820-948d-6bd276bf6859",
+			"id": "fe3496e5-1d7c-48b1-b671-fd2bba6b8685",
 			"key": "user_handle",
-			"value": "user",
-			"type": "string"
+			"value": "user"
 		},
 		{
-			"id": "cae5fabe-3f0d-4533-98d2-37e1acbce567",
+			"id": "92d0aaba-a0d9-4b89-a047-34b8645657df",
 			"key": "X-FORWARD-TO-URL",
-			"value": "http://localhost:8000/0.2/check_handle",
-			"type": "string"
+			"value": "http://localhost:8000/0.2/check_handle"
 		}
 	],
 	"protocolProfileBehavior": {}
