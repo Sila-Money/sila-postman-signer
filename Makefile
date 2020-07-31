@@ -1,3 +1,5 @@
+# Convenience commands for running this local proxy signer.
+
 # SHELL: Global Makefile setting.
 # make will use /bin/bash instead of the default /bin/sh so that we can invoke source.
 SHELL = /bin/bash
@@ -31,6 +33,10 @@ clean:
 venvclean:
 	@rm -rf $(VIRTUAL_ENV_DIR)
 
-# runserver runs a local server on the configured port.
+# runserver runs a local (debug-mode) server on the configured port.
 runserver:
-	@python3 manage.py runserver $(port)
+	@( \
+		export FLASK_APP=signerserver/application.py; \
+		export FLASK_ENV=development; \
+		flask run --port=$(port); \
+	)

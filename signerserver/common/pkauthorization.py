@@ -1,17 +1,17 @@
-""" Handles custom 'private-key' authorization header parsing. """
+"""Handles custom 'private-key' authorization header parsing."""
 
 import logging
 
-from signerserver.common import ethkeys
+from . import ethkeys
 
 logger = logging.getLogger(__name__)
 
 
 class AuthorizationError(Exception):
-    """ To be thrown when an unsupported authorization method is sent. """
+    """To be thrown when an unsupported authorization method is sent."""
 
 class ParseAuthorizationHeaderError(Exception):
-    """ To be thrown when header cannot be parsed. """
+    """To be thrown when header cannot be parsed."""
 
 
 def get_signature_headers(request_headers, request_body):
@@ -53,10 +53,11 @@ def get_signature_headers(request_headers, request_body):
 
 
 def parse_private_key_authorization_header(authorization_header_value, ignore_parse_errors=False):
-    """ Only allows "private-key" authorization.
-        Returns a dictionary of desired headers to private keys used to generate the headers.
-        If ignore_parse_errors is True, ignores any problematic header arguments
-        and returns a dictionary of all parsed headers arguments.
+    """
+    Only allows "private-key" authorization.
+    Returns a dictionary of desired headers to private keys used to generate the headers.
+    If ignore_parse_errors is True, ignores any problematic header arguments
+    and returns a dictionary of all parsed headers arguments.
     """
     requested_signature_headers_dict = {}
 
