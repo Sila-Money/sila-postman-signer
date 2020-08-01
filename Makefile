@@ -37,6 +37,6 @@ venvclean:
 runserver:
 	@( \
 		export FLASK_APP=signerserver/application.py; \
-		export FLASK_ENV=development; \
+		export FLASK_ENV=production; \
 		flask run --port=$(port); \
 	)

@@ -1,8 +1,8 @@
-"""Handles custom 'private-key' authorization header parsing."""
+"""Handles custom 'private-key' authorization header parsing and signature generation."""
 
 import logging
 
-from . import ethkeys
+from . import keys
 
 logger = logging.getLogger(__name__)
 
@@ -14,54 +14,41 @@ class ParseAuthorizationHeaderError(Exception):
     """To be thrown when header cannot be parsed."""
 
 
-def get_signature_headers(request_headers, request_body):
-    authsignature = request_headers.get('authsignature')
-    usersignature = request_headers.get("usersignature")
-    auth_pk = request_headers.get('x-auth-private-key')
-    user_pk = request_headers.get('x-user-private-key')
-    authorization = request_headers.get('authorization')
-
+def get_signature_headers(authorization_header: str, request_body: str) -> dict:
+    """
+    Gets private keys from authorization header, generates signatures
+    using the request body, and returns those signatures in a dict.
+    """
     pk_headers = {}
     signature_headers = {}
 
-    if authsignature:
-        signature_headers["authsignature"] = authsignature
-    if usersignature:
-        signature_headers["usersignature"] = usersignature
-
-    if authorization:
+    if authorization_header:
         try:
-            pk_headers = parse_private_key_authorization_header(authorization)
+            pk_headers = parse_private_key_authorization_header(authorization_header)
         except Exception as exc:
             logger.error("Invalid Authorization header:", str(exc))
-    else:
-        if auth_pk:
-            pk_headers["authsignature"] = auth_pk
-        if user_pk:
-            pk_headers["usersignature"] = user_pk
 
     for pk_header in pk_headers:
         key = pk_headers[pk_header]
-        try:
-            ethkeys.get_private_key_address(key)
-        except Exception as exc:
-            logger.error("Invalid private key:", str(exc))
+        if not keys.is_valid_private_key(key):
+            logger.error('The key provided to generate the %s header is not a valid private key.', pk_header)
             continue
-
-        signature_headers[pk_header] = ethkeys.sign_message(request_body.encode('utf-8'), key)
+        signature_headers[pk_header] = keys.sign_message(request_body.encode('utf-8'), key)
     return signature_headers
 
 
-def parse_private_key_authorization_header(authorization_header_value, ignore_parse_errors=False):
+def parse_private_key_authorization_header(authorization_header: str, ignore_parse_errors=False):
     """
     Only allows "private-key" authorization.
     Returns a dictionary of desired headers to private keys used to generate the headers.
+
     If ignore_parse_errors is True, ignores any problematic header arguments
-    and returns a dictionary of all parsed headers arguments.
+    and just returns a dictionary of all parsed headers arguments.
+    If False, 
     """
     requested_signature_headers_dict = {}
 
-    raw_header_args = authorization_header_value.split(';')
+    raw_header_args = authorization_header.split(';')
     if raw_header_args[0].lower().strip() != "private-key":
         raise AuthorizationError(f"Unsupported Authorization method: {raw_header_args[0]}")
 

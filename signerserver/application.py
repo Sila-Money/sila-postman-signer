@@ -2,7 +2,7 @@
 Endpoints served by Flask to sign, modify, and forward requests to desired targets.
 Intended for use on localhost only.
 
-Designed for use with the Sila API (https://www.silamoney.com).
+Designed for use with the Sila API (https://www.silamoney.com) and Postman.
 """
 
 import json
@@ -13,7 +13,7 @@ from datetime import datetime
 import requests
 from flask import Flask, request
 
-from .common import ethkeys, pkauthorization
+from . import keys, auth, request_transform
 
 logger = logging.getLogger(__name__)
 app = Flask(__name__)
@@ -36,12 +36,12 @@ def generate_private_key():
     This is a convenience method and is not recommended for applications other than
     tests on the sandbox API.
     """
-    private_key = ethkeys.generate_private_key()
-    address = ethkeys.get_private_key_address(private_key)
+    private_key = keys.generate_private_key()
+    address = keys.get_private_key_address(private_key)
     return {
         "private_key": private_key,
         "address": address,
-        "wallet_verification_signature": ethkeys.sign_message(address.encode('utf-8'), private_key),
+        "wallet_verification_signature": keys.sign_message(address.encode('utf-8'), private_key),
     }
 
 
@@ -49,8 +49,31 @@ def generate_private_key():
 def forward():
     """
     Forwards requests to desired host.
+
     Generates signature headers and optionally modifies the request body before
     signing with timestamps and UUIDs in requested JSON fields.
+    When forwarding request, does not include Authorization header.
+
+    Headers:
+    - x-forward-to-url: header to specify full URL to send transformed request.
+    - x-set-epoch: header to specify a key in a JSON body to set an epoch timestamp.
+    - x-set-uuid: header to specify a key in a JSON body to set a generated UUID4 string.
+    - authorization: header to specify private keys to use to sign.
+        
+        Your private keys can allow access to very sensitive information,
+        so if that's the case, please do not host this server anywhere public
+        and use common sense to prevent exposure of your secure keys to any public network.
+        This functionality is intended for sandbox testing convenience only.
+        
+        Format of header value should look like:
+            'private-key; [desired header name]=[private key]; [another desired header name]=[another private key]'
+        For example,
+            Authorization: private-key; authsignature=badba7368134dcd61c60f9b56979c09196d03f5891a20c1557b1afac0202a97c
+
+    Query parameters:
+    - debug: instead of returning the response as received by the forwarded host,
+        returns JSON with the original request body, the request body that was sent, the forwarded
+        URL, the generated signature headers, and the response body, headers, and status code.
     """
     SET_EPOCH_HEADER = 'x-set-epoch'
     SET_UUID_HEADER = 'x-set-uuid'
@@ -62,63 +85,32 @@ def forward():
     target_url = request.headers.get(FORWARD_TO_URL_HEADER)
 
     original_request_body = request.data.decode('utf-8')
-    request_body = original_request_body
-    json_dict = None
-
-    # Check if valid JSON request
-    try:
-        json_dict = json.loads(original_request_body)
-    except Exception as exc:
-        return (
-            {
-                "success": False,
-                "message": f"Proxy error: Unable to parse response as JSON: {str(exc)}"
-            },
-            400
-        )
-
-    # Set epoch if in request header
-    if set_epoch:
-        try:
-            set_current_epoch_in_dict(json_dict, str(set_epoch).lower().split("."))
-        except Exception as exc:
-            return (
-                {
-                    "success": False,
-                    "message": f"Proxy error: Could not set epoch in request body: {str(exc)}"
-                },
-                400
-            )
-
-    # Set epoch if in request header
-    if set_uuid:
-        try:
-            set_value_in_dict(json_dict, str(set_uuid).lower().split("."), str(uuid.uuid4()))
-        except Exception as exc:
-            return (
-                {
-                    "success": False,
-                    "message": f"Proxy error: Could not set epoch in request body: {str(exc)}"
-                },
-                400
-            )
-
-    request_body = json.dumps(json_dict)
-    signature_headers = pkauthorization.get_signature_headers(request.headers, request_body)
+    request_body = request_transform.modify_json_request_body(original_request_body, set_epoch, set_uuid)
+    
+    # Generate signature headers if a valid Authorization header is present.
+    # Scrub out headers in scrub list before forwarding request.
+    signature_headers = auth.get_signature_headers(request.headers.get('authorization'), request_body)
+    scrubbed_request_headers = request_transform.get_scrubbed_request_headers(
+        dict(request.headers),
+        scrub_list=['authorization', 'host', 'content-length', SET_UUID_HEADER, SET_EPOCH_HEADER, FORWARD_TO_URL_HEADER]
+    )
+    forwarded_request_headers = {**signature_headers, **scrubbed_request_headers}
 
     proxy_response_dict = {
         "original_request_body": original_request_body,
         "request_body": request_body,
-        "signature_headers": signature_headers,
+        "request_headers": forwarded_request_headers,
         "forwarded_to_url": target_url,
     }
 
-    if target_url:
+    if not target_url:
+        proxy_response_dict["message"] = f"No forwarding URL in header {FORWARD_TO_URL_HEADER}, so did not forward request."
+    else:
         response = requests.request(
             method=request.method,
             url=target_url,
             data=request_body,
-            headers={**signature_headers},
+            headers=forwarded_request_headers,
         )
         proxy_response_dict["response"] = {
             "status_code": response.status_code,
@@ -129,9 +121,7 @@ def forward():
             proxy_response_dict["response"]['json_content'] = response.json()
         except Exception as exc:
             logger.error(str(exc))
-    else:
-        proxy_response_dict["message"] = "No forwarding URL in header {}, so did not forward request.".format(FORWARD_TO_URL_HEADER)
-        
+
     if is_debug or 'response' not in proxy_response_dict:
         return proxy_response_dict
 
@@ -139,48 +129,24 @@ def forward():
         proxy_response_dict["response"]["content"],
         proxy_response_dict["response"]["status_code"],
         {
-            "FORWARDED": f"url={target_url}",
+            "Forwarded": f"url={target_url}",
             **proxy_response_dict["response"]["headers"]
         }
     )
 
-### Helper functions ###
-
-def set_current_epoch_in_dict(target_dict: dict, keys: list):
-    """
-    Sets an integer timestamp on a key in target_dict.
-    Accepts keys as a tuple and descends into a nested structure in target.
-    No return value - the target_dict value will be mutated as a side effect.
-    Example: if keys = ("grandparent", "parent", "timestamp"), target_dict
-    will contain:
-    {
-        "grandparent": {
-            "parent": {
-                "timestamp": <timestamp>
-            }
-        }
-    }
-    """
-    timestamp = int(datetime.now().timestamp())
-    set_value_in_dict(target_dict, keys, timestamp)
+@app.errorhandler(404)
+def endpoint_not_found(e):
+    return exception_message_handler(e, message="That resource doesn't exist, sorry!", status=404)
 
 
-def set_value_in_dict(target_dict, keys, value):
-    """
-    Sets a value on a key in target_dict.
-    Accepts keys as a tuple and descends into a nested structure in target.
-    No return value - the target_dict value will be mutated as a side effect.
-    Example: if keys = ("grandparent", "parent", "timestamp"), target_dict
-    will contain:
-    {
-        "grandparent": {
-            "parent": {
-                "timestamp": value
-            }
-        }
-    }
-    """
-    dic = target_dict
-    for key in keys[:-1]:
-        dic = dic.setdefault(key, {})
-    dic[keys[-1]] = value
+@app.errorhandler(Exception)
+def handle_exception(e):
+    if isinstance(e, json.decoder.JSONDecodeError):
+        return exception_message_handler(e, message=f"Invalid JSON: {e}", status=400)
+    return exception_message_handler(e)
+
+
+def exception_message_handler(e, message=None, status=500):
+    if message is None:
+        message = str(e)
+    return {"success": False, "message": f"Proxy error: {message}"}, status
