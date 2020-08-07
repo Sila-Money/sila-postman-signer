@@ -6,9 +6,9 @@ Designed as an API testing helper since most REST clients, like Postman, don't s
 Includes a Postman collection you can use to try out the [Sila sandbox API](https://docs.silamoney.com).
 
 ## Requirements
-Make sure you have Python 3.3+ and the ability to run make commands from a Makefile.
+Make sure you have Python 3.6+. If on Mac or Linux, have bash and the ability to run make commands from a Makefile.
 
-## Quickstart
+## Quickstart (Mac and Linux)
 1. Clone me into a local directory. Change directory into my root (same directory as `Makefile`).
 2. From the terminal, run `make venv`. This will install all dependencies into a local environment and only needs to be done once.
 3. From the terminal, run `make runserver`. By default, a local server will run on port 8181; you can specify a different port like `make runserver port=3001`.
