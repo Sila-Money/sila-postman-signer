@@ -3,6 +3,8 @@ Local proxy server served by Flask (https://flask.palletsprojects.com/en/1.1.x/)
 
 Designed as an API testing helper since most REST clients, like Postman, don't support this signature authentication mechanism. Only designed for local use.
 
+Includes a Postman collection you can use to try out the Sila sandbox API.
+
 ## Quickstart
 1. Clone me into a local directory. Change directory into my root (same directory as `Makefile`).
 2. From the terminal, run `make venv`. This will install all dependencies are installed into a local environment.
