@@ -15,8 +15,6 @@ venv:
 	@python3 -m venv $(VIRTUAL_ENV_DIR)
 	@$(MAKE) deps --no-print-directory
 	@echo "Your virtual environment has been created with all dependencies installed."
-	@echo "Change parameters in your .env and .local_paramstore.json files as needed."
-	@echo "Activate your virtual environment with 'source $(VIRTUAL_ENV_DIR)/bin/activate'; you can deactivate it with 'deactivate'."
 
 # deps installs dependencies to the virtual environment created with venv.
 deps:
@@ -36,6 +34,7 @@ venvclean:
 # runserver runs a local (debug-mode) server on the configured port.
 runserver:
 	@( \
+		source ./$(VIRTUAL_ENV_DIR)/bin/activate; \
 		export FLASK_APP=signerserver/application.py; \
 		export FLASK_ENV=production; \
 		flask run --port=$(port); \
