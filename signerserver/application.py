@@ -18,6 +18,8 @@ from . import keys, auth, request_transform
 logger = logging.getLogger(__name__)
 app = Flask(__name__)
 
+logger.warning("\nMake sure not to serve this externally or set private keys in requests anywhere except for the Authorization header.")
+
 
 @app.route('/', methods=['OPTIONS', 'GET', 'POST', 'PUT', 'PATCH', 'DELETE'])
 def root():
