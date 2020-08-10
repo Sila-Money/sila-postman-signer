@@ -3,7 +3,7 @@ Local proxy server served by Flask (https://flask.palletsprojects.com/en/1.1.x/)
 
 Designed as an API testing helper since most REST clients, like Postman, don't support this signature authentication mechanism. Only designed for local use. **Do not serve this externally. When sending private keys in requests to this server, only set them in the Authorization header, which is not forwarded.**
 
-Includes a Postman collection you can use to try out the [Sila sandbox API](https://docs.silamoney.com).
+Includes a Postman collection you can use to try out the [Sila sandbox API](https://docs.silamoney.com), but works with any REST client.
 
 ## Requirements
 Make sure you have Python 3.6+. If on Mac or Linux, have bash and the ability to run make commands from a Makefile.
