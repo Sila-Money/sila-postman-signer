@@ -1,5 +1,5 @@
 # Sila Signer Server + Postman Collection
-Local proxy server served by Flask (https://flask.palletsprojects.com/en/1.1.x/) to perform request signing with ECDSA and forward requests to desired host.
+Lightweight local proxy server served by Flask (https://flask.palletsprojects.com/en/1.1.x/) to perform request signing with ECDSA and forward requests to desired host.
 
 Designed as an API testing helper since most REST clients, like Postman, don't support this signature authentication mechanism. Only designed for local use. **Do not serve this externally. When sending private keys in requests to this server, only set them in the Authorization header, which is not forwarded.**
 
