@@ -6,7 +6,7 @@ Designed as an API testing helper since most REST clients, like Postman, don't s
 Includes a Postman collection you can use to try out the [Sila sandbox API](https://docs.silamoney.com), but works with any REST client.
 
 ## Requirements
-Make sure you have Python 3.6+. If on Mac or Linux, have bash and the ability to run make commands from a Makefile.
+Make sure you have Python 3.6+. If using the quickstart, have bash, python venv, and the ability to run make commands from a Makefile.
 
 ## Quickstart (Mac and Linux)
 1. Clone me into a local directory. Change directory into my root (same directory as `Makefile`).
@@ -18,7 +18,7 @@ Make sure you have Python 3.6+. If on Mac or Linux, have bash and the ability to
 7. Open issues or contact support if you need more help. For security vulnerabilities, please email support@silamoney.com rather than opening a GitHub issue.
 
 ## Postman
-This repository includes a Postman collection and a Postman environment. To use these, first have the Postman desktop application installed: https://www.postman.com/downloads/.
+This repository includes a Postman collection and a Postman environment. To use these, first have the Postman desktop application installed: https://www.postman.com/downloads/. **Make sure your local installation is up to date!** One known issue with importing this collection into older versions of Postman is that you may not have the Authorization API key option and will have to manually set the Authorization header on all requests (which is a pain, but you should still be able to use this collection).
 
 To import the collection, there should be an Import button in the top left corner of the Postman application. Click this and browse to the `Sila API v0.2 - Local Signer Server Edition.postman_collection.json` file in the postman folder of this repository.
 
