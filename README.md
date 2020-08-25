@@ -9,13 +9,34 @@ Includes a Postman collection you can use to try out the [Sila sandbox API](http
 Make sure you have Python 3.6+. If using the quickstart, have bash, python venv, and the ability to run make commands from a Makefile.
 
 ## Quickstart (Mac and Linux)
+### Building the signer-server
+NOTE: the signer-server default port is **8181**
+#### Build and run from source
+1. Have a copy of **Python 3.6** installed; later versions of Python may be supported, but are untested.  We recommend [pyenv](https://github.com/pyenv/pyenv) for managing multiple Python versions. 
 1. Clone me into a local directory. Change directory into my root (same directory as `Makefile`).
-2. From the terminal, run `make venv`. This will install all dependencies into a local environment and only needs to be done once.
-3. From the terminal, run `make runserver`. By default, a local server will run on port 8181; you can specify a different port like `make runserver port=3001`.
-4. Use me with the REST client of your choice. `/forward` is the endpoint that signs requests and forwards them onward sans the original Authorization header. For convenience (not recommended for production use), you can generate new private key pairs with `/generate_private_key`, which also generates wallet verification signatures accepted by the Sila API when registering secondary wallets to users.
-5. If you want me to generate signature headers for you, set the Authorization header in requests to me like `Authorization: private-key; [signature header name]=[private key hex here]; [another signature header name]=[private key hex here]`. To have me forward your request somewhere, set a header like `X-Forward-To-URL: http://sandbox.silamoney.com/0.2/check_handle`.
-6. You can also set valid epoch timestamps and random UUID4 strings with the `X-Set-Epoch` and `X-Set-UUID` headers. You can specify which JSON key to set in the request like `X-Set-Epoch: header.created` or `X-Set-UUID: header.reference` (which each set keys in a nested dictionary like: `{"header": {"created": [sets epoch int in seconds]}}` and `{"header": {"reference": [sets random UUID4 string]}}`).
-7. Open issues or contact support if you need more help. For security vulnerabilities, please email support@silamoney.com rather than opening a GitHub issue.
+1. From the terminal, run `make venv`. This will install all dependencies into a local environment and only needs to be done once.
+1. From the terminal, run `make runserver`
+##### Running on a non-default port
+You can specify that the server run on a different port wth:
+ 
+`make runserver port=3001`.
+#### Build and run the Signer Server in a Docker container
+**This option eliminates the requirement for a Python 3.6 installation.**
+
+You'll need [Docker](https://docs.docker.com/get-docker/) installed in order to build and run Docker images and containers.
+1. Build the Docker image (should only need to be done once): `make docker-image`
+1. Start the Docker container and access the server at the **default port 8181**: `make docker-run`
+##### Running on a non-default port
+This will make the signer-server accessible on port 3001 of the container:
+ 
+`docker run -p 3001:8181 sila-signer-server`
+
+
+### Routing requests through the signer server
+1. Use me with the REST client of your choice. `/forward` is the endpoint that signs requests and forwards them onward sans the original Authorization header. For convenience (not recommended for production use), you can generate new private key pairs with `/generate_private_key`, which also generates wallet verification signatures accepted by the Sila API when registering secondary wallets to users.
+1. If you want me to generate signature headers for you, set the Authorization header in requests to me like `Authorization: private-key; [signature header name]=[private key hex here]; [another signature header name]=[private key hex here]`. To have me forward your request somewhere, set a header like `X-Forward-To-URL: http://sandbox.silamoney.com/0.2/check_handle`.
+1. You can also set valid epoch timestamps and random UUID4 strings with the `X-Set-Epoch` and `X-Set-UUID` headers. You can specify which JSON key to set in the request like `X-Set-Epoch: header.created` or `X-Set-UUID: header.reference` (which each set keys in a nested dictionary like: `{"header": {"created": [sets epoch int in seconds]}}` and `{"header": {"reference": [sets random UUID4 string]}}`).
+1. Open issues or contact support if you need more help. For security vulnerabilities, please email support@silamoney.com rather than opening a GitHub issue.
 
 ## Postman
 This repository includes a Postman collection and a Postman environment. To use these, first have the Postman desktop application installed: https://www.postman.com/downloads/. **Make sure your local installation is up to date!** One known issue with importing this collection into older versions of Postman is that you may not have the Authorization API key option and will have to manually set the Authorization header on all requests (which is a pain, but you should still be able to use this collection).
