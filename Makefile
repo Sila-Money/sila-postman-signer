@@ -11,6 +11,7 @@ VIRTUAL_ENV_DIR := env
 port ?= 8181
 
 DOCKER_IMAGE := sila-signer-server
+IMAGE_VERSION = $(shell grep "LABEL Version" Dockerfile | sed -e "s/.*=\"\(.*\)\"/\1/")
 
 .PHONY := venv deps clean venv runserver docker-image docker-run
 
@@ -48,7 +49,7 @@ runserver:
 	)
 
 docker-image:
-	@docker build -t ${DOCKER_IMAGE} .
+	@docker build -t ${DOCKER_IMAGE}:${IMAGE_VERSION} .
 
 docker-run:
-	@docker run -p ${port}:${port} ${DOCKER_IMAGE}
+	@docker run -p ${port}:${port} ${DOCKER_IMAGE}:${IMAGE_VERSION}
