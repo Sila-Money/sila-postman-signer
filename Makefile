@@ -10,6 +10,14 @@ VIRTUAL_ENV_DIR := env
 # port: configurable local port on which to run this proxy server.
 port ?= 8181
 
+DOCKER_IMAGE := sila-signer-server
+IMAGE_VERSION = $(shell grep "LABEL Version" Dockerfile | sed -e "s/.*=\"\(.*\)\"/\1/")
+
+.PHONY := venv deps clean venv runserver docker-image docker-run
+
+list:
+	@printf "\n\tTARGETS: venv deps clean venv runserver docker-image docker-run\n\n"
+
 # venv creates a virtual environment for containing versioned dependencies.
 venv:
 	@python3 -m venv $(VIRTUAL_ENV_DIR)
@@ -39,3 +47,9 @@ runserver:
 		export FLASK_ENV=production; \
 		flask run --port=$(port); \
 	)
+
+docker-image:
+	@docker build -t ${DOCKER_IMAGE}:${IMAGE_VERSION} .
+
+docker-run:
+	@docker run -p ${port}:${port} ${DOCKER_IMAGE}:${IMAGE_VERSION}
