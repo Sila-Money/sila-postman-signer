@@ -17,7 +17,7 @@ def modify_json_request_body(request_body: str, set_epoch_field, set_uuid_field)
     return request_body
 
 
-def get_scrubbed_request_headers(initial_headers: dict, scrub_list=None) -> dict:
+def scrub_request_headers(initial_headers: dict, scrub_list=None) -> dict:
     """
     Removes certain headers from the request before forwarding to new host.
     If scrub_list is None, removes no headers.
@@ -36,6 +36,8 @@ def get_scrubbed_request_headers(initial_headers: dict, scrub_list=None) -> dict
                 caps_sensitive_scrub_list.append(header)
                 break
 
+    # this is done because you can't change the
+    # length of an iterable while iterating over it
     for pop_header in caps_sensitive_scrub_list:
         initial_headers.pop(pop_header)
 
