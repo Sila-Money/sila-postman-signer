@@ -104,7 +104,7 @@ def forward():
         set_uuid,
         set_file_hash_field=(
             None
-            if not is_form_data
+            if not (is_form_data and set_file_hash)
             else (set_file_hash, request.files['file'])
         )
     )
