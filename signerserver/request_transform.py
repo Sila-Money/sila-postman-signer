@@ -56,11 +56,11 @@ def scrub_request_headers(initial_headers: dict, scrub_list=None) -> dict:
     return initial_headers
 
 
-def generate_sha256_file_hash(file):
+def generate_sha256_file_hash(f):
     hasher = hashlib.sha256()
-    hasher.update(file.read())
+    hasher.update(f.read())
     file_hash = hasher.hexdigest()
-    print("FILE", file, "FILE HASH", file_hash)
+    f.seek(0)
     return file_hash
 
 
