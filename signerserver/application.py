@@ -17,6 +17,7 @@ from . import keys, auth, request_transform
 
 SET_EPOCH_HEADER = 'x-set-epoch'
 SET_UUID_HEADER = 'x-set-uuid'
+SET_FILE_HASH_HEADER = 'x-set-file-hash'
 FORWARD_TO_URL_HEADER = 'x-forward-to-url'
 
 logger = logging.getLogger(__name__)
@@ -86,8 +87,10 @@ def forward():
     is_debug = request.args.get("debug")
     set_epoch = request.headers.get(SET_EPOCH_HEADER)
     set_uuid = request.headers.get(SET_UUID_HEADER)
+    set_file_hash = request.headers.get(SET_FILE_HASH_HEADER)
     target_url = request.headers.get(FORWARD_TO_URL_HEADER)
-    is_form_data = request.headers.get('content-type').startswith('multipart/form-data')
+    is_form_data = request.headers.get(
+        'content-type').startswith('multipart/form-data')
 
     original_request_body = (
         request.data.decode('utf-8')
@@ -96,7 +99,15 @@ def forward():
     )
 
     request_body = request_transform.modify_json_request_body(
-        original_request_body, set_epoch, set_uuid)
+        original_request_body,
+        set_epoch,
+        set_uuid,
+        set_file_hash_field=(
+            None
+            if not is_form_data
+            else (set_file_hash, request.files['file'])
+        )
+    )
 
     # Generate signature headers if a valid Authorization header is present.
     # Scrub out headers in scrub list before forwarding request.
@@ -104,7 +115,8 @@ def forward():
         request.headers.get('authorization'), request_body)
     scrub_list = [
         'authorization', 'host', 'content-length',
-        SET_UUID_HEADER, SET_EPOCH_HEADER, FORWARD_TO_URL_HEADER]
+        SET_UUID_HEADER, SET_EPOCH_HEADER, FORWARD_TO_URL_HEADER, SET_FILE_HASH_HEADER]
+
     if is_form_data:
         scrub_list.append('content-type')
         request_body = {"data": request_body}

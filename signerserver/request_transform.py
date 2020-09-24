@@ -1,11 +1,18 @@
 """Contains helper functions for transforming a request to be forwarded."""
 
+import hashlib
 import json
 import uuid
 from datetime import datetime
+from typing import Optional, Tuple
 
 
-def modify_json_request_body(request_body: str, set_epoch_field, set_uuid_field) -> str:
+def modify_json_request_body(
+        request_body: str,
+        set_epoch_field: Optional[str] = None,
+        set_uuid_field: Optional[str] = None,
+        set_file_hash_field: Optional[Tuple[str, object]] = None,
+    ) -> str:
     """Modifies request body if set_epoch_field or set_uuid_field is not None."""
     if set_epoch_field or set_uuid_field:
         json_dict = json.loads(request_body)
@@ -13,6 +20,11 @@ def modify_json_request_body(request_body: str, set_epoch_field, set_uuid_field)
             set_current_epoch_in_dict(json_dict, str(set_epoch_field).lower().split("."))
         if set_uuid_field:
             set_value_in_dict(json_dict, str(set_uuid_field).lower().split("."), str(uuid.uuid4()))
+        if set_file_hash_field:
+            hash_location = str(set_file_hash_field[0]).lower().split(".")
+            file_hash = generate_sha256_file_hash(set_file_hash_field[1])
+            set_value_in_dict(json_dict, hash_location, file_hash)
+
         request_body = json.dumps(json_dict)
     return request_body
 
@@ -42,6 +54,14 @@ def scrub_request_headers(initial_headers: dict, scrub_list=None) -> dict:
         initial_headers.pop(pop_header)
 
     return initial_headers
+
+
+def generate_sha256_file_hash(file):
+    hasher = hashlib.sha256()
+    hasher.update(file.read())
+    file_hash = hasher.hexdigest()
+    print("FILE", file, "FILE HASH", file_hash)
+    return file_hash
 
 
 def set_current_epoch_in_dict(target_dict: dict, keys: list):
