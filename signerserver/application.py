@@ -146,13 +146,16 @@ def forward():
         )
         proxy_response_dict["response"] = {
             "status_code": response.status_code,
-            "content": response.content.decode('utf-8'),
             "headers": dict(response.headers),
         }
         try:
+            proxy_response_dict["response"]["content"] = response.content.decode('utf-8')
             proxy_response_dict["response"]['json_content'] = response.json()
         except Exception as exc:
-            logger.error(str(exc))
+            if response.headers['Content-Type'] != 'application/json':
+                proxy_response_dict['response']['content'] = response.content
+            else:
+                logger.error(str(exc))
 
     if is_debug or 'response' not in proxy_response_dict:
         return proxy_response_dict
