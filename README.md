@@ -6,30 +6,42 @@ Designed as an API testing helper since most REST clients, like Postman, don't s
 Includes a Postman collection you can use to try out the [Sila sandbox API](https://docs.silamoney.com), but works with any REST client.
 
 ## Requirements
-Make sure you have Python 3.6+. If using the quickstart, have bash, python venv, and the ability to run make commands from a Makefile.
+Either:
+* [Docker](https://docs.docker.com/get-docker/) is installed.  (see: [Running in a Docker container](#run-the-signer-server-in-a-docker-container))
+
+or: (see: [Building and running from source](#building-and-running-the-signer-server-from-source))
+* Python 3.6+ 
+* python [venv](https://docs.python.org/3.6/library/venv.html) module (seems to not ship with Ubuntu)
+* bash
+* the ability to run `make` commands from a Makefile.
 
 ## Quickstart (Mac and Linux)
-### Building the signer-server
-NOTE: the signer-server default port is **8181**
-#### Build and run from source
+**NOTE**: the signer-server default port is **8181**
+
+### Run the signer-server in a Docker container
+This option eliminates the requirement for a Python 3.6 installation.
+
+You'll need [Docker](https://docs.docker.com/get-docker/) installed in order to build and run Docker images and containers.
+1. Build the Docker image (should only need to be done once): 
+   * with `make`: `make docker-image`
+   * without `make`: `docker build -t sila-signer-server`
+1. Start the Docker container and access the server at the **default port 8181**:
+   * with `make`: `make docker-run`
+   * without `make`: `docker run -p 8181:8181 sila-signer-server`
+
+##### Specifying a non-default port for the Docker container
+Make the signer-server accessible on (for example) port 3001 of the container:
+ 
+`docker run -p 3001:8181 sila-signer-server`
+### Building and running the signer-server from source
 1. Have a copy of **Python 3.6** installed; later versions of Python may be supported, but are untested.  We recommend [pyenv](https://github.com/pyenv/pyenv) for managing multiple Python versions. 
 1. Clone me into a local directory. Change directory into my root (same directory as `Makefile`).
 1. From the terminal, run `make venv`. This will install all dependencies into a local environment and only needs to be done once.
 1. From the terminal, run `make runserver`
-##### Running on a non-default port
+##### Specifying a non-default port
 You can specify that the server run on a different port wth:
  
 `make runserver port=3001`.
-#### Build and run the Signer Server in a Docker container
-**This option eliminates the requirement for a Python 3.6 installation.**
-
-You'll need [Docker](https://docs.docker.com/get-docker/) installed in order to build and run Docker images and containers.
-1. Build the Docker image (should only need to be done once): `make docker-image`
-1. Start the Docker container and access the server at the **default port 8181**: `make docker-run`
-##### Running on a non-default port
-This will make the signer-server accessible on port 3001 of the container:
- 
-`docker run -p 3001:8181 sila-signer-server`
 
 
 ### Routing requests through the signer server
