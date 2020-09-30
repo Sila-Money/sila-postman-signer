@@ -19,6 +19,7 @@ from . import keys, auth, request_transform
 SET_EPOCH_HEADER = 'x-set-epoch'
 SET_UUID_HEADER = 'x-set-uuid'
 SET_FILE_HASH_HEADER = 'x-set-file-hash'
+SET_FILE_METADATA_HEADER = 'x-set-file-metadata'
 FORWARD_TO_URL_HEADER = 'x-forward-to-url'
 
 logger = logging.getLogger(__name__)
@@ -88,9 +89,11 @@ def forward():
     is_debug = request.args.get("debug")
     page = request.args.get('page')
     per_page = request.args.get('per_page')
+
     set_epoch = request.headers.get(SET_EPOCH_HEADER)
     set_uuid = request.headers.get(SET_UUID_HEADER)
     set_file_hash = request.headers.get(SET_FILE_HASH_HEADER)
+    set_file_metadata = request.headers.get(SET_FILE_METADATA_HEADER)
     target_url = request.headers.get(FORWARD_TO_URL_HEADER)
 
     query_params = ''
@@ -122,6 +125,11 @@ def forward():
             None
             if not (is_form_data and set_file_hash)
             else (set_file_hash, request.files['file'])
+        ),
+        set_file_metadata_field=(
+            None
+            if not (is_form_data and set_file_metadata)
+            else (set_file_metadata, request.files['file'])
         )
     )
 

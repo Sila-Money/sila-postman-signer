@@ -12,18 +12,27 @@ def modify_json_request_body(
         set_epoch_field: Optional[str] = None,
         set_uuid_field: Optional[str] = None,
         set_file_hash_field: Optional[Tuple[str, object]] = None,
-    ) -> str:
+        set_file_metadata_field: Optional[Tuple[str, object]] = None,
+) -> str:
     """Modifies request body if set_epoch_field or set_uuid_field is not None."""
     if set_epoch_field or set_uuid_field:
         json_dict = json.loads(request_body)
         if set_epoch_field:
             set_current_epoch_in_dict(json_dict, str(set_epoch_field).lower().split("."))
+
         if set_uuid_field:
             set_value_in_dict(json_dict, str(set_uuid_field).lower().split("."), str(uuid.uuid4()))
+
         if set_file_hash_field:
             hash_location = str(set_file_hash_field[0]).lower().split(".")
             file_hash = generate_sha256_file_hash(set_file_hash_field[1])
             set_value_in_dict(json_dict, hash_location, file_hash)
+
+        if set_file_metadata_field:
+            file_name_key, mime_type_key = [x.strip() for x in str(set_file_metadata_field[0]).lower().split(',')]
+            file_storage = set_file_metadata_field[1]
+            set_value_in_dict(json_dict, [file_name_key], file_storage.filename)
+            set_value_in_dict(json_dict, [mime_type_key], file_storage.mimetype)
 
         request_body = json.dumps(json_dict)
     return request_body
