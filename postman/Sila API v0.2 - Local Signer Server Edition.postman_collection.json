@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "efc895cf-bf6b-4590-9476-32a4f1485abc",
+		"_postman_id": "64552f15-769c-4344-84ce-be39e60e0979",
 		"name": "Sila API v0.2 - Local Signer Server Edition",
 		"description": "These endpoints are designed to work with our lightweight local proxy server. The local server signs and forwards requests to the main API host.\n\nAuthentication of requests made to the main API host is performed using ETH signatures. For more information, visit our docs at https://docs.silamoney.com/docs/process-overview.\n",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -9,6 +9,1119 @@
 		{
 			"name": "Entities",
 			"item": [
+				{
+					"name": "Change Registration Data",
+					"item": [
+						{
+							"name": "Add Email",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"description": "Forwards to this endpoint on main API host.",
+										"key": "X-Forward-To-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/add/email"
+									},
+									{
+										"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+										"key": "X-Set-Epoch",
+										"type": "text",
+										"value": "header.created"
+									},
+									{
+										"description": "Sets a random UUID4 string on specified JSON key.",
+										"key": "X-Set-UUID",
+										"type": "text",
+										"value": "header.reference"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"email\": \"another.user@email.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=add_email",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "Requests that proxy send back debug information about request and response.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "add_email"
+										}
+									]
+								},
+								"description": "Adds an email address to a registered user."
+							},
+							"response": []
+						},
+						{
+							"name": "Add Phone",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"description": "Forwards to this endpoint on main API host.",
+										"key": "X-Forward-To-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/add/phone"
+									},
+									{
+										"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+										"key": "X-Set-Epoch",
+										"type": "text",
+										"value": "header.created"
+									},
+									{
+										"description": "Sets a random UUID4 string on specified JSON key.",
+										"key": "X-Set-UUID",
+										"type": "text",
+										"value": "header.reference"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"phone\": \"321-123-9876\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=add_phone",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "Requests that proxy send back debug information about request and response.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "add_phone"
+										}
+									]
+								},
+								"description": "Adds a phone number to a registered user."
+							},
+							"response": []
+						},
+						{
+							"name": "Add Identity",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"description": "Forwards to this endpoint on main API host.",
+										"key": "X-Forward-To-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/add/identity"
+									},
+									{
+										"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+										"key": "X-Set-Epoch",
+										"type": "text",
+										"value": "header.created"
+									},
+									{
+										"description": "Sets a random UUID4 string on specified JSON key.",
+										"key": "X-Set-UUID",
+										"type": "text",
+										"value": "header.reference"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"identity_alias\": \"SSN\",\n    \"identity_value\": \"123452222\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=add_identity",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "Requests that proxy send back debug information about request and response.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "add_identity"
+										}
+									]
+								},
+								"description": "Adds an ID number to a registered user."
+							},
+							"response": []
+						},
+						{
+							"name": "Add Address",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"description": "Forwards to this endpoint on main API host.",
+										"key": "X-Forward-To-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/add/address"
+									},
+									{
+										"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+										"key": "X-Set-Epoch",
+										"type": "text",
+										"value": "header.created"
+									},
+									{
+										"description": "Sets a random UUID4 string on specified JSON key.",
+										"key": "X-Set-UUID",
+										"type": "text",
+										"value": "header.reference"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"address_alias\": \"\",\n    \"street_address_1\": \"324 Songbird Avenue\",\n    \"city\": \"Portland\",\n    \"state\": \"OR\",\n    \"postal_code\": \"12345\",\n    \"country\": \"US\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=add_address",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "Requests that proxy send back debug information about request and response.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "add_address"
+										}
+									]
+								},
+								"description": "Adds a street address to a registered user."
+							},
+							"response": []
+						},
+						{
+							"name": "Update Email",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"description": "Forwards to this endpoint on main API host.",
+										"key": "X-Forward-To-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/update/email"
+									},
+									{
+										"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+										"key": "X-Set-Epoch",
+										"type": "text",
+										"value": "header.created"
+									},
+									{
+										"description": "Sets a random UUID4 string on specified JSON key.",
+										"key": "X-Set-UUID",
+										"type": "text",
+										"value": "header.reference"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"uuid\": \"\",\n    \"email\": \"another.user@email.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=update_email",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "Requests that proxy send back debug information about request and response.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "update_email"
+										}
+									]
+								},
+								"description": "Updates an email address for a registered user. Requires the UUID of the email already registered to the entity; make a request to /get_entity to retrieve the appropriate UUID value."
+							},
+							"response": []
+						},
+						{
+							"name": "Update Phone",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"description": "Forwards to this endpoint on main API host.",
+										"key": "X-Forward-To-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/update/phone"
+									},
+									{
+										"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+										"key": "X-Set-Epoch",
+										"type": "text",
+										"value": "header.created"
+									},
+									{
+										"description": "Sets a random UUID4 string on specified JSON key.",
+										"key": "X-Set-UUID",
+										"type": "text",
+										"value": "header.reference"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"uuid\": \"\",\n    \"phone\": \"321-123-9876\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=update_phone",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "Requests that proxy send back debug information about request and response.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "update_phone"
+										}
+									]
+								},
+								"description": "Updates a phone number for a registered user. Requires the UUID of the phone already registered to the entity; make a request to /get_entity to retrieve the appropriate UUID value."
+							},
+							"response": []
+						},
+						{
+							"name": "Update Identity",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"description": "Forwards to this endpoint on main API host.",
+										"key": "X-Forward-To-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/update/identity"
+									},
+									{
+										"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+										"key": "X-Set-Epoch",
+										"type": "text",
+										"value": "header.created"
+									},
+									{
+										"description": "Sets a random UUID4 string on specified JSON key.",
+										"key": "X-Set-UUID",
+										"type": "text",
+										"value": "header.reference"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"uuid\": \"\",\n    \"identity_alias\": \"SSN\",\n    \"identity_value\": \"123452222\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=update_identity",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "Requests that proxy send back debug information about request and response.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "update_identity"
+										}
+									]
+								},
+								"description": "Updates an ID number for a registered user. Requires the UUID of the identity already registered to the entity; make a request to /get_entity to retrieve the appropriate UUID value."
+							},
+							"response": []
+						},
+						{
+							"name": "Update Address",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"description": "Forwards to this endpoint on main API host.",
+										"key": "X-Forward-To-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/update/address"
+									},
+									{
+										"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+										"key": "X-Set-Epoch",
+										"type": "text",
+										"value": "header.created"
+									},
+									{
+										"description": "Sets a random UUID4 string on specified JSON key.",
+										"key": "X-Set-UUID",
+										"type": "text",
+										"value": "header.reference"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"uuid\": \"\",\n    \"address_alias\": \"\",\n    \"street_address_1\": \"324 Songbird Avenue\",\n    \"city\": \"Portland\",\n    \"state\": \"OR\",\n    \"postal_code\": \"12345\",\n    \"country\": \"US\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=update_address",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "Requests that proxy send back debug information about request and response.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "update_address"
+										}
+									]
+								},
+								"description": "Updates a street address for a registered user. Requires the UUID of the address already registered to the entity; make a request to /get_entity to retrieve the appropriate UUID value."
+							},
+							"response": []
+						},
+						{
+							"name": "Update Entity",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"description": "Forwards to this endpoint on main API host.",
+										"key": "X-Forward-To-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/update/address"
+									},
+									{
+										"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+										"key": "X-Set-Epoch",
+										"type": "text",
+										"value": "header.created"
+									},
+									{
+										"description": "Sets a random UUID4 string on specified JSON key.",
+										"key": "X-Set-UUID",
+										"type": "text",
+										"value": "header.reference"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"first_name\": \"Newfirst\",\n    \"last_name\": \"Newlast\",\n    \"entity_name\": \"New Full Name\",\n    \"birthdate\": \"2000-12-31\",\n    \"business_type\": \"llc\",\n    \"naics_code\": 721,\n    \"doing_business_as\": \"New Business Alias\",\n    \"business_website\": \"https://www.silamoney.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=update_entity",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "Requests that proxy send back debug information about request and response.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "update_entity"
+										}
+									]
+								},
+								"description": "Updates an entity's name, birthdate, and/or business-related information if the entity is a business."
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Email",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"description": "Forwards to this endpoint on main API host.",
+										"key": "X-Forward-To-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/delete/email"
+									},
+									{
+										"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+										"key": "X-Set-Epoch",
+										"type": "text",
+										"value": "header.created"
+									},
+									{
+										"description": "Sets a random UUID4 string on specified JSON key.",
+										"key": "X-Set-UUID",
+										"type": "text",
+										"value": "header.reference"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"uuid\": \"\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=delete_email",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "Requests that proxy send back debug information about request and response.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "delete_email"
+										}
+									]
+								},
+								"description": "Deletes an email address for a registered user. Requires the UUID of the email already registered to the entity; make a request to /get_entity to retrieve the appropriate UUID value."
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Phone",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"description": "Forwards to this endpoint on main API host.",
+										"key": "X-Forward-To-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/delete/phone"
+									},
+									{
+										"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+										"key": "X-Set-Epoch",
+										"type": "text",
+										"value": "header.created"
+									},
+									{
+										"description": "Sets a random UUID4 string on specified JSON key.",
+										"key": "X-Set-UUID",
+										"type": "text",
+										"value": "header.reference"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"uuid\": \"\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=delete_phone",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "Requests that proxy send back debug information about request and response.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "delete_phone"
+										}
+									]
+								},
+								"description": "Deletes a phone number for a registered user. Requires the UUID of the phone already registered to the entity; make a request to /get_entity to retrieve the appropriate UUID value."
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Identity",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"description": "Forwards to this endpoint on main API host.",
+										"key": "X-Forward-To-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/delete/identity"
+									},
+									{
+										"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+										"key": "X-Set-Epoch",
+										"type": "text",
+										"value": "header.created"
+									},
+									{
+										"description": "Sets a random UUID4 string on specified JSON key.",
+										"key": "X-Set-UUID",
+										"type": "text",
+										"value": "header.reference"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"uuid\": \"\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=delete_identity",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "Requests that proxy send back debug information about request and response.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "delete_identity"
+										}
+									]
+								},
+								"description": "Deletes an ID number for a registered user. Requires the UUID of the identity already registered to the entity; make a request to /get_entity to retrieve the appropriate UUID value."
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Address",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"description": "Forwards to this endpoint on main API host.",
+										"key": "X-Forward-To-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/delete/address"
+									},
+									{
+										"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+										"key": "X-Set-Epoch",
+										"type": "text",
+										"value": "header.created"
+									},
+									{
+										"description": "Sets a random UUID4 string on specified JSON key.",
+										"key": "X-Set-UUID",
+										"type": "text",
+										"value": "header.reference"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"uuid\": \"\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=delete_address",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "Requests that proxy send back debug information about request and response.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "delete_address"
+										}
+									]
+								},
+								"description": "Deletes a street address for a registered user. Requires the UUID of the address already registered to the entity; make a request to /get_entity to retrieve the appropriate UUID value."
+							},
+							"response": []
+						}
+					],
+					"description": "This folder contains /add, /update, and /delete requests for changing a user's registered data. These endpoints are used to change data that is used in verification.\n\nNote that some data cannot be changed after a verification has already passed or while a verification is still in progress (pending), and that only one SSN or EIN can be added to an entity at a time.",
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
 				{
 					"name": "Check Handle",
 					"request": {
