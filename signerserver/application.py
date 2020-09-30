@@ -7,6 +7,7 @@ Designed for use with the Sila API (https://www.silamoney.com) and Postman.
 
 import json
 import logging
+import re
 import uuid
 from datetime import datetime
 
@@ -85,10 +86,25 @@ def forward():
     """
 
     is_debug = request.args.get("debug")
+    page = request.args.get('page')
+    per_page = request.args.get('per_page')
     set_epoch = request.headers.get(SET_EPOCH_HEADER)
     set_uuid = request.headers.get(SET_UUID_HEADER)
     set_file_hash = request.headers.get(SET_FILE_HASH_HEADER)
     target_url = request.headers.get(FORWARD_TO_URL_HEADER)
+
+    query_params = ''
+    if page or per_page:
+        if per_page and page:
+            query_params = f'page={page}&per_page={per_page}'
+        elif page:
+            query_params = f'page={page}'
+        elif per_page:
+            query_params = f'per_page={per_page}'
+
+    if query_params:
+        target_url += f'?{query_params}'
+
     is_form_data = request.headers.get(
         'content-type').startswith('multipart/form-data')
 
