@@ -7,6 +7,7 @@ Designed for use with the Sila API (https://www.silamoney.com) and Postman.
 
 import json
 import logging
+import re
 import uuid
 from datetime import datetime
 
@@ -15,10 +16,17 @@ from flask import Flask, request
 
 from . import keys, auth, request_transform
 
+SET_EPOCH_HEADER = 'x-set-epoch'
+SET_UUID_HEADER = 'x-set-uuid'
+SET_FILE_HASH_HEADER = 'x-set-file-hash'
+SET_FILE_METADATA_HEADER = 'x-set-file-metadata'
+FORWARD_TO_URL_HEADER = 'x-forward-to-url'
+
 logger = logging.getLogger(__name__)
 app = Flask(__name__)
 
-logger.warning("\nMake sure not to serve this externally or set private keys in requests anywhere except for the Authorization header.")
+logger.warning(
+    "\nMake sure not to serve this externally or set private keys in requests anywhere except for the Authorization header.")
 
 
 @app.route('/', methods=['OPTIONS', 'GET', 'POST', 'PUT', 'PATCH', 'DELETE'])
@@ -26,7 +34,7 @@ def root():
     return forward()
 
 
-@app.route('/generate_private_key', methods= ['OPTIONS', 'GET', 'POST'])
+@app.route('/generate_private_key', methods=['OPTIONS', 'GET', 'POST'])
 def generate_private_key():
     """
     Generates a private key, public address, and wallet verification signature
@@ -61,12 +69,12 @@ def forward():
     - x-set-epoch: header to specify a key in a JSON body to set an epoch timestamp.
     - x-set-uuid: header to specify a key in a JSON body to set a generated UUID4 string.
     - authorization: header to specify private keys to use to sign.
-        
+
         Your private keys can allow access to very sensitive information,
         so if that's the case, please do not host this server anywhere public
         and use common sense to prevent exposure of your secure keys to any public network.
         This functionality is intended for sandbox testing convenience only.
-        
+
         Format of header value should look like:
             'private-key; [desired header name]=[private key]; [another desired header name]=[another private key]'
         For example,
@@ -77,26 +85,71 @@ def forward():
         returns JSON with the original request body, the request body that was sent, the forwarded
         URL, the generated signature headers, and the response body, headers, and status code.
     """
-    SET_EPOCH_HEADER = 'x-set-epoch'
-    SET_UUID_HEADER = 'x-set-uuid'
-    FORWARD_TO_URL_HEADER = 'x-forward-to-url'
 
     is_debug = request.args.get("debug")
+    page = request.args.get('page')
+    per_page = request.args.get('per_page')
+
     set_epoch = request.headers.get(SET_EPOCH_HEADER)
     set_uuid = request.headers.get(SET_UUID_HEADER)
+    set_file_hash = request.headers.get(SET_FILE_HASH_HEADER)
+    set_file_metadata = request.headers.get(SET_FILE_METADATA_HEADER)
     target_url = request.headers.get(FORWARD_TO_URL_HEADER)
 
-    original_request_body = request.data.decode('utf-8')
-    request_body = request_transform.modify_json_request_body(original_request_body, set_epoch, set_uuid)
-    
+    query_params = ''
+    if page or per_page:
+        if per_page and page:
+            query_params = f'page={page}&per_page={per_page}'
+        elif page:
+            query_params = f'page={page}'
+        elif per_page:
+            query_params = f'per_page={per_page}'
+
+    if query_params:
+        target_url += f'?{query_params}'
+
+    is_form_data = request.headers.get(
+        'content-type').startswith('multipart/form-data')
+
+    original_request_body = (
+        request.data.decode('utf-8')
+        if not is_form_data
+        else request.form.get('data')
+    )
+
+    request_body = request_transform.modify_json_request_body(
+        original_request_body,
+        set_epoch,
+        set_uuid,
+        set_file_hash_field=(
+            None
+            if not (is_form_data and set_file_hash)
+            else (set_file_hash, request.files['file'])
+        ),
+        set_file_metadata_field=(
+            None
+            if not (is_form_data and set_file_metadata)
+            else (set_file_metadata, request.files['file'])
+        )
+    )
+
     # Generate signature headers if a valid Authorization header is present.
     # Scrub out headers in scrub list before forwarding request.
-    signature_headers = auth.get_signature_headers(request.headers.get('authorization'), request_body)
-    scrubbed_request_headers = request_transform.get_scrubbed_request_headers(
+    signature_headers = auth.get_signature_headers(
+        request.headers.get('authorization'), request_body)
+    scrub_list = [
+        'authorization', 'host', 'content-length',
+        SET_UUID_HEADER, SET_EPOCH_HEADER, FORWARD_TO_URL_HEADER, SET_FILE_HASH_HEADER]
+
+    if is_form_data:
+        scrub_list.append('content-type')
+        request_body = {"data": request_body}
+
+    clean_request_headers = request_transform.scrub_request_headers(
         dict(request.headers),
-        scrub_list=['authorization', 'host', 'content-length', SET_UUID_HEADER, SET_EPOCH_HEADER, FORWARD_TO_URL_HEADER]
+        scrub_list
     )
-    forwarded_request_headers = {**signature_headers, **scrubbed_request_headers}
+    forwarded_request_headers = {**signature_headers, **clean_request_headers}
 
     proxy_response_dict = {
         "original_request_body": original_request_body,
@@ -112,17 +165,21 @@ def forward():
             method=request.method,
             url=target_url,
             data=request_body,
+            files=request.files,
             headers=forwarded_request_headers,
         )
         proxy_response_dict["response"] = {
             "status_code": response.status_code,
-            "content": response.content.decode('utf-8'),
             "headers": dict(response.headers),
         }
         try:
+            proxy_response_dict["response"]["content"] = response.content.decode('utf-8')
             proxy_response_dict["response"]['json_content'] = response.json()
         except Exception as exc:
-            logger.error(str(exc))
+            if response.headers['Content-Type'] != 'application/json':
+                proxy_response_dict['response']['content'] = response.content
+            else:
+                logger.error(str(exc))
 
     if is_debug or 'response' not in proxy_response_dict:
         return proxy_response_dict
@@ -135,6 +192,7 @@ def forward():
             **proxy_response_dict["response"]["headers"]
         }
     )
+
 
 @app.errorhandler(404)
 def endpoint_not_found(e):

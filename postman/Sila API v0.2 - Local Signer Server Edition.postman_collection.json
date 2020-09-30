@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "64552f15-769c-4344-84ce-be39e60e0979",
+		"_postman_id": "92863c05-5acd-4e4d-86c8-0cefe75dbd2f",
 		"name": "Sila API v0.2 - Local Signer Server Edition",
 		"description": "These endpoints are designed to work with our lightweight local proxy server. The local server signs and forwards requests to the main API host.\n\nAuthentication of requests made to the main API host is performed using ETH signatures. For more information, visit our docs at https://docs.silamoney.com/docs/process-overview.\n",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -9,6 +9,383 @@
 		{
 			"name": "Entities",
 			"item": [
+				{
+					"name": "KYC/KYB Documents",
+					"item": [
+						{
+							"name": "Documents (Upload)",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "multipart/form-data"
+									},
+									{
+										"key": "x-forward-to-url",
+										"type": "text",
+										"value": "{{host}}/0.2/documents"
+									},
+									{
+										"key": "x-set-epoch",
+										"type": "text",
+										"value": "header.created"
+									},
+									{
+										"key": "x-set-file-hash",
+										"type": "text",
+										"value": "hash"
+									},
+									{
+										"key": "x-set-file-metadata",
+										"type": "text",
+										"value": "filename, mime_type"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"contentType": "",
+											"type": "file",
+											"src": []
+										},
+										{
+											"key": "data",
+											"value": "{\"header\": {\"auth_handle\":  \"{{app_handle}}\", \"user_handle\":  \"{{user_handle}}\"}, \"filename\": \"your_file.jpg\", \"hash\": \"\", \"mime_type\": \"image/jpeg\", \"document_type\": \"id_drivers_license\", \"identity_type\": \"license\"}",
+											"type": "text"
+										}
+									],
+									"options": {
+										"formdata": {}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?debug=true&label=documents",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true"
+										},
+										{
+											"key": "label",
+											"value": "documents"
+										}
+									]
+								},
+								"description": "Upload documents by posting to this endpoint, which uses a multipart/form-data content type; the \"data\" field contains JSON metadata.\n\nIf you are using the signer-server, you can set the \"x-set-file-hash\" header to \"hash\", and the signer-server will generate the hash for you.\n\nIf you're not using the signer-server, you will need to generate the file hash with SHA256 and include it in the request."
+							},
+							"response": []
+						},
+						{
+							"name": "List Documents",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"description": "Forwards to this endpoint on main API host.",
+										"key": "X-Forward-To-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/list_documents"
+									},
+									{
+										"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+										"key": "X-Set-Epoch",
+										"type": "text",
+										"value": "header.created"
+									},
+									{
+										"description": "Sets a random UUID4 string on specified JSON key.",
+										"key": "X-Set-UUID",
+										"type": "text",
+										"value": "header.reference"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=list_documents",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "Requests that proxy send back debug information about request and response.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "list_documents"
+										},
+										{
+											"key": "per_page",
+											"value": "100",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								},
+								"description": "Request a listing of previously uploaded documents.\n\nSupport pagination with \"per_page\" and \"page\" query parameters"
+							},
+							"response": []
+						},
+						{
+							"name": "Document Types",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"description": "Forwards to this endpoint on main API host.",
+										"key": "X-Forward-To-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/document_types"
+									},
+									{
+										"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+										"key": "X-Set-Epoch",
+										"type": "text",
+										"value": "header.created"
+									},
+									{
+										"description": "Sets a random UUID4 string on specified JSON key.",
+										"key": "X-Set-UUID",
+										"type": "text",
+										"value": "header.reference"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=document_types",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "Requests that proxy send back debug information about request and response.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "document_types"
+										},
+										{
+											"key": "per_page",
+											"value": "100",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								},
+								"description": "Request a listing of supported document types, returns the details for each type.\n\nSupports pagination with \"per_page\" and \"page\" queury parameters."
+							},
+							"response": []
+						},
+						{
+							"name": "Get Document",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"description": "Forwards to this endpoint on main API host.",
+										"key": "X-Forward-To-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/get_document"
+									},
+									{
+										"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+										"key": "X-Set-Epoch",
+										"type": "text",
+										"value": "header.created"
+									},
+									{
+										"description": "Sets a random UUID4 string on specified JSON key.",
+										"key": "X-Set-UUID",
+										"type": "text",
+										"value": "header.reference"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"document_id\": \"{{doc_id}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=get_document",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "Requests that proxy send back debug information about request and response.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "get_document"
+										}
+									]
+								},
+								"description": "Download a previously uploaded document.\n\nThe document will be the entire response body."
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
 				{
 					"name": "Change Registration Data",
 					"item": [
