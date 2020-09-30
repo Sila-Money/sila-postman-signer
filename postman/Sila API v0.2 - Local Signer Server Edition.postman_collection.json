@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "f5dce60f-5e15-4693-b45d-0917d11666d5",
+		"_postman_id": "acf4eda3-b81f-495c-b021-e2c90897807f",
 		"name": "Sila API v0.2 - Local Signer Server Edition",
 		"description": "These endpoints are designed to work with our lightweight local proxy server. The local server signs and forwards requests to the main API host.\n\nAuthentication of requests made to the main API host is performed using ETH signatures. For more information, visit our docs at https://docs.silamoney.com/docs/process-overview.\n",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -13,7 +13,7 @@
 					"name": "KYC/KYB Documents",
 					"item": [
 						{
-							"name": "Documents (upload)",
+							"name": "Documents (Upload)",
 							"request": {
 								"auth": {
 									"type": "apikey",
@@ -54,13 +54,13 @@
 									},
 									{
 										"key": "x-set-file-hash",
-										"value": "hash",
-										"type": "text"
+										"type": "text",
+										"value": "hash"
 									},
 									{
 										"key": "x-set-file-metadata",
-										"value": "filename, mime_type",
-										"type": "text"
+										"type": "text",
+										"value": "filename, mime_type"
 									}
 								],
 								"body": {
@@ -74,7 +74,7 @@
 										},
 										{
 											"key": "data",
-											"value": "{\n  \"header\":{\n    \"auth_handle\": \"{{app_handle}}\",\n    \"user_handle\": \"{{user_handle}}\"\n  }, \n  \"filename\": \"your_file.jpg\",\n  \"hash\": \"b1eeaaa532539a6b24a6d753f67c7f40b400e7215d6089320f06db7daee8565b\",\n  \"mime_type\": \"image/jpeg\",\n  \"document_type\": \"id_drivers_license\",\n  \"identity_type\": \"license\"\n}",
+											"value": "{\"header\": {\"auth_handle\":  \"{{app_handle}}\", \"user_handle\":  \"{{user_handle}}\"}, \"filename\": \"your_file.jpg\", \"hash\": \"\", \"mime_type\": \"image/jpeg\", \"document_type\": \"id_drivers_license\", \"identity_type\": \"license\"}",
 											"type": "text"
 										}
 									],
@@ -83,7 +83,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:{{proxy_port}}/forward?label=documents",
+									"raw": "http://localhost:{{proxy_port}}/forward?debug=true&label=documents",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -95,8 +95,7 @@
 									"query": [
 										{
 											"key": "debug",
-											"value": "true",
-											"disabled": true
+											"value": "true"
 										},
 										{
 											"key": "label",
