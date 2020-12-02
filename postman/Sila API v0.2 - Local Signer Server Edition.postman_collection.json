@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "92863c05-5acd-4e4d-86c8-0cefe75dbd2f",
+		"_postman_id": "3fe33da3-9304-4156-8544-432948767652",
 		"name": "Sila API v0.2 - Local Signer Server Edition",
 		"description": "These endpoints are designed to work with our lightweight local proxy server. The local server signs and forwards requests to the main API host.\n\nAuthentication of requests made to the main API host is performed using ETH signatures. For more information, visit our docs at https://docs.silamoney.com/docs/process-overview.\n",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -3230,6 +3230,149 @@
 						"description": "Allows an entity to have a second wallet registered. Requires a valid verification signature."
 					},
 					"response": []
+				},
+				{
+					"name": "Get Sila Balance",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/get_sila_balance"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"address\": \"{{user_address}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=get_sila_balance",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "get_sila_balance",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Gets details about the wallet used to sign the request. Includes balance and whether wallet is whitelisted."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Wallet",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/delete_wallet"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=delete_wallet",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "delete_wallet",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Allows updating nickname and default status of the wallet used to sign the request."
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -3576,6 +3719,91 @@
 						"description": "Initiates a transaction which transfers a given amount (in Sila) from the ETH wallet used to sign the request to the handle and wallet specified in the request. If there is no wallet nickname or wallet address in the request, the receiver's default wallet is selected as the destination."
 					},
 					"response": []
+				},
+				{
+					"name": "Cancel Transaction",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/cancel_transaction"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"transaction_id\": \"80aea226-76a3-4b60-a629-25a2db572ec8\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=cancel_transaction",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "cancel_transaction",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -3868,72 +4096,72 @@
 	],
 	"variable": [
 		{
-			"id": "d61c8034-55ae-4a5e-9429-9ff653c5b336",
+			"id": "2746764e-af78-4ddf-b2a8-3917c56977ca",
 			"key": "host",
 			"value": "sandbox.silamoney.com"
 		},
 		{
-			"id": "831b38d1-82d3-4d38-a8bb-b05cbd5eafb5",
+			"id": "909b3682-996e-473e-822b-e5cb3a1e33ec",
 			"key": "proxy_port",
 			"value": "8181"
 		},
 		{
-			"id": "e4c68f26-a363-4290-bfe3-c8d1d02d42c5",
+			"id": "c57f6a52-7a9e-4331-b688-b53aba074be9",
 			"key": "app_handle",
 			"value": ""
 		},
 		{
-			"id": "531efe5b-b432-4a87-9e86-739a8412d920",
+			"id": "7499a7f7-6060-48b1-8e68-62863140f445",
 			"key": "app_private_key",
 			"value": ""
 		},
 		{
-			"id": "c537c9a4-77c6-4761-9e05-fc8c3eac2664",
+			"id": "7a8ecf4a-90a3-475b-8a02-f32c9ab477a9",
 			"key": "user_handle",
 			"value": ""
 		},
 		{
-			"id": "d2a0a238-07f8-4ee0-8c5f-1985afb524dc",
+			"id": "8a2ac4bc-1300-4eb4-80b3-3f3cf51df36e",
 			"key": "user_private_key",
 			"value": ""
 		},
 		{
-			"id": "384b8375-0d1f-4918-9519-adaf4bae6396",
+			"id": "c2154b70-d9a4-4493-b237-907ea847dd24",
 			"key": "user_address",
 			"value": ""
 		},
 		{
-			"id": "6c1b8c5a-c989-4d69-812e-207a459f8392",
+			"id": "fa9ebce9-ad22-4766-97b6-8b9c8a0c5f24",
 			"key": "business_handle",
 			"value": ""
 		},
 		{
-			"id": "a0686737-b02f-4ff6-b960-5f6a6cbe06cd",
+			"id": "796a2c0b-012b-4f3d-bbfa-72907e2425b6",
 			"key": "business_private_key",
 			"value": ""
 		},
 		{
-			"id": "80b52f55-4a90-44b1-8383-29b4e96a7650",
+			"id": "34b7b197-e15b-4aec-8b15-2ed68438df7a",
 			"key": "business_address",
 			"value": ""
 		},
 		{
-			"id": "bf8ac20e-31d6-46a5-ab47-065cfa9a3072",
+			"id": "1934114d-0f44-488f-8cec-bd50ff5bc486",
 			"key": "user_private_key2",
 			"value": ""
 		},
 		{
-			"id": "669338a8-57d2-4046-88e8-b5fea34d13fc",
+			"id": "2dc8585d-00e2-4225-841b-d024d21b6278",
 			"key": "user_address2",
 			"value": ""
 		},
 		{
-			"id": "20e407d5-80ad-41a5-b478-66e33ad9ae5e",
+			"id": "d8839295-c1e7-47c8-92e5-bbdcd59e64f1",
 			"key": "plaid_bank_account_name",
 			"value": ""
 		},
 		{
-			"id": "4f623893-5c88-465b-863e-2d8a83c3caf6",
+			"id": "ea042755-bfd1-4b8d-84a0-f2458025326e",
 			"key": "manual_bank_account_name",
 			"value": ""
 		}
