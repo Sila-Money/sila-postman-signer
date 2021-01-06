@@ -83,7 +83,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:{{proxy_port}}/forward?debug=true&label=documents",
+									"raw": "http://localhost:{{proxy_port}}/forward?label=documents",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -95,7 +95,8 @@
 									"query": [
 										{
 											"key": "debug",
-											"value": "true"
+											"value": "false",
+                                            "disabled": true
 										},
 										{
 											"key": "label",
