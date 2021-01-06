@@ -96,7 +96,7 @@
 										{
 											"key": "debug",
 											"value": "false",
-                                            "disabled": true
+											"disabled": true
 										},
 										{
 											"key": "label",
