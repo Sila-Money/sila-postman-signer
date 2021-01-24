@@ -1,7 +1,7 @@
 FROM python:3.6
 
 LABEL Author="SilaMoney"
-LABEL Version="1.1.0"
+LABEL Version="1.2.0"
 
 
 WORKDIR /signer-server
