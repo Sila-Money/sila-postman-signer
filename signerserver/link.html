@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Plaid Link</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+    <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+</head>
+
+<body>
+
+    <label>Link Token: </label>
+    <input id="link-token-input-field" type="text" required>
+    <button id="link-button">Link Account</button>
+
+    <br>
+    <p id="public-token-response"></p>
+    <p id="metadata-response" style="white-space: pre-wrap"></p>
+
+    <script type="text/javascript">
+        var plaid_link_init_args = {
+            // Create a new link_token to initialize Link
+            //token: '',
+            env: 'sandbox',
+            onSuccess: function (public_token, metadata) {
+                // Send the public_token to your app server.
+                // The metadata object contains info about the institution the
+                // user selected and the account ID or IDs, if the
+                // Select Account view is enabled.
+                console.log('public_token: ' + public_token);
+                console.log('onSuccess metadata: ', metadata);
+                document.getElementById('public-token-response').textContent = 'Public token: ' + public_token;
+                document.getElementById('metadata-response').textContent = 'Metadata:\n' + JSON.stringify(metadata, null, '\t');
+            },
+            onExit: function (err, metadata) {
+                // The user exited the Link flow.
+                // metadata contains information about the institution
+                // that the user selected and the most recent API request IDs.
+                // Storing this information can be helpful for support.
+                if (err != null) {
+                    // The user encountered a Plaid API error prior to exiting.
+                    console.log('error: ', err);
+                }
+                console.log('onExit metadata: ', metadata);
+            },
+            onEvent: function (event_name, metadata) {
+                // Optionally capture Link flow events, streamed through
+                // this callback as your users connect an Item to Plaid.
+                // For example:
+                // event_name = "TRANSITION_VIEW"
+                // metadata  = {
+                //   link_session_id: "123-abc",
+                //   mfa_type:        "questions",
+                //   timestamp:       "2017-09-14T14:42:19.350Z",
+                //   view_name:       "MFA",
+                // }
+                console.log('event_name: ', event_name);
+                console.log('onEvent metadata: ', metadata);
+            }
+        }
+
+        $('#link-button').on('click', function (e) {
+            var form_token = document.getElementById('link-token-input-field').value;
+            console.log('form link token: ', form_token);
+            plaid_link_init_args['token'] = form_token;
+            if (plaid_link_init_args['token']) {
+                var handler = Plaid.create(plaid_link_init_args);
+                handler.open();
+            }
+        });
+
+    </script>
+</body>
+
+</html>

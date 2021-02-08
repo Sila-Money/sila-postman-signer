@@ -8,6 +8,7 @@ Designed for use with the Sila API (https://www.silamoney.com) and Postman.
 import json
 import logging
 import re
+import os
 import uuid
 from datetime import datetime
 
@@ -21,6 +22,8 @@ SET_UUID_HEADER = 'x-set-uuid'
 SET_FILE_HASH_HEADER = 'x-set-file-hash'
 SET_FILE_METADATA_HEADER = 'x-set-file-metadata'
 FORWARD_TO_URL_HEADER = 'x-forward-to-url'
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 logger = logging.getLogger(__name__)
 app = Flask(__name__)
@@ -53,6 +56,14 @@ def generate_private_key():
         "address": address,
         "wallet_verification_signature": keys.sign_message(address.encode('utf-8'), private_key),
     }
+
+
+@app.route('/plaid_link')
+def serve_plaid_link():
+    """Simply serves a static Plaid Link demo page."""
+    with open(BASE_DIR + '/link.html', 'r') as file:
+        file_string = file.read()
+    return file_string
 
 
 @app.route('/forward', methods=['OPTIONS', 'GET', 'POST', 'PUT', 'PATCH', 'DELETE'])
