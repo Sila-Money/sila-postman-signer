@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "3fe33da3-9304-4156-8544-432948767652",
+		"_postman_id": "7f236125-bb70-4f9d-93e2-ff2fce950285",
 		"name": "Sila API v0.2 - Local Signer Server Edition",
 		"description": "These endpoints are designed to work with our lightweight local proxy server. The local server signs and forwards requests to the main API host.\n\nAuthentication of requests made to the main API host is performed using ETH signatures. For more information, visit our docs at https://docs.silamoney.com/docs/process-overview.\n",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -74,13 +74,10 @@
 										},
 										{
 											"key": "data",
-											"value": "{\"header\": {\"auth_handle\":  \"{{app_handle}}\", \"user_handle\":  \"{{user_handle}}\"}, \"filename\": \"your_file.jpg\", \"hash\": \"\", \"mime_type\": \"image/jpeg\", \"document_type\": \"id_drivers_license\", \"identity_type\": \"license\"}",
+											"value": "{\"header\": {\"app_handle\":  \"{{app_handle}}\", \"user_handle\":  \"{{user_handle}}\"}, \"filename\": \"your_file.jpg\", \"hash\": \"\", \"mime_type\": \"image/jpeg\", \"document_type\": \"id_drivers_license\", \"identity_type\": \"license\"}",
 											"type": "text"
 										}
-									],
-									"options": {
-										"formdata": {}
-									}
+									]
 								},
 								"url": {
 									"raw": "http://localhost:{{proxy_port}}/forward?label=documents",
@@ -159,7 +156,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -254,7 +251,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\"\n    }\n}",
+									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\"\n    }\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -349,7 +346,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"document_id\": \"{{doc_id}}\"\n}",
+									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"document_id\": \"{{doc_id}}\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -383,9 +380,7 @@
 							},
 							"response": []
 						}
-					],
-					"protocolProfileBehavior": {},
-					"_postman_isSubFolder": true
+					]
 				},
 				{
 					"name": "Change Registration Data",
@@ -441,7 +436,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"email\": \"another.user@email.com\"\n}",
+									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"email\": \"another.user@email.com\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -526,7 +521,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"phone\": \"321-123-9876\"\n}",
+									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"phone\": \"321-123-9876\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -611,7 +606,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"identity_alias\": \"SSN\",\n    \"identity_value\": \"123452222\"\n}",
+									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"identity_alias\": \"SSN\",\n    \"identity_value\": \"123452222\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -696,7 +691,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"address_alias\": \"\",\n    \"street_address_1\": \"324 Songbird Avenue\",\n    \"city\": \"Portland\",\n    \"state\": \"OR\",\n    \"postal_code\": \"12345\",\n    \"country\": \"US\"\n}",
+									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"address_alias\": \"\",\n    \"street_address_1\": \"324 Songbird Avenue\",\n    \"city\": \"Portland\",\n    \"state\": \"OR\",\n    \"postal_code\": \"12345\",\n    \"country\": \"US\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -781,7 +776,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"uuid\": \"\",\n    \"email\": \"another.user@email.com\"\n}",
+									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"uuid\": \"\",\n    \"email\": \"another.user@email.com\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -866,7 +861,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"uuid\": \"\",\n    \"phone\": \"321-123-9876\"\n}",
+									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"uuid\": \"\",\n    \"phone\": \"321-123-9876\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -951,7 +946,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"uuid\": \"\",\n    \"identity_alias\": \"SSN\",\n    \"identity_value\": \"123452222\"\n}",
+									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"uuid\": \"\",\n    \"identity_alias\": \"SSN\",\n    \"identity_value\": \"123452222\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1036,7 +1031,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"uuid\": \"\",\n    \"address_alias\": \"\",\n    \"street_address_1\": \"324 Songbird Avenue\",\n    \"city\": \"Portland\",\n    \"state\": \"OR\",\n    \"postal_code\": \"12345\",\n    \"country\": \"US\"\n}",
+									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"uuid\": \"\",\n    \"address_alias\": \"\",\n    \"street_address_1\": \"324 Songbird Avenue\",\n    \"city\": \"Portland\",\n    \"state\": \"OR\",\n    \"postal_code\": \"12345\",\n    \"country\": \"US\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1104,7 +1099,7 @@
 										"description": "Forwards to this endpoint on main API host.",
 										"key": "X-Forward-To-URL",
 										"type": "text",
-										"value": "{{host}}/0.2/update/address"
+										"value": "{{host}}/0.2/update/entity"
 									},
 									{
 										"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
@@ -1121,7 +1116,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"first_name\": \"Newfirst\",\n    \"last_name\": \"Newlast\",\n    \"entity_name\": \"New Full Name\",\n    \"birthdate\": \"2000-12-31\",\n    \"business_type\": \"llc\",\n    \"naics_code\": 721,\n    \"doing_business_as\": \"New Business Alias\",\n    \"business_website\": \"https://www.silamoney.com\"\n}",
+									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"first_name\": \"Newfirst\",\n    \"last_name\": \"Newlast\",\n    \"entity_name\": \"New Full Name\",\n    \"birthdate\": \"2000-12-31\",\n    \"business_type\": \"llc\",\n    \"naics_code\": 721,\n    \"doing_business_as\": \"New Business Alias\",\n    \"business_website\": \"https://www.silamoney.com\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1206,7 +1201,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"uuid\": \"\"\n}",
+									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"uuid\": \"\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1291,7 +1286,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"uuid\": \"\"\n}",
+									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"uuid\": \"\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1376,7 +1371,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"uuid\": \"\"\n}",
+									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"uuid\": \"\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1461,7 +1456,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"uuid\": \"\"\n}",
+									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"uuid\": \"\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1496,9 +1491,7 @@
 							"response": []
 						}
 					],
-					"description": "This folder contains /add, /update, and /delete requests for changing a user's registered data. These endpoints are used to change data that is used in verification.\n\nNote that some data cannot be changed after a verification has already passed or while a verification is still in progress (pending), and that only one SSN or EIN can be added to an entity at a time.",
-					"protocolProfileBehavior": {},
-					"_postman_isSubFolder": true
+					"description": "This folder contains /add, /update, and /delete requests for changing a user's registered data. These endpoints are used to change data that is used in verification.\n\nNote that some data cannot be changed after a verification has already passed or while a verification is still in progress (pending), and that only one SSN or EIN can be added to an entity at a time."
 				},
 				{
 					"name": "Check Handle",
@@ -1551,7 +1544,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1637,7 +1630,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1723,7 +1716,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"address\": {\n\t\t\"address_alias\": \"Home\",\n\t\t\"street_address_1\": \"123 NW 1st Ave.\",\n\t\t\"city\": \"Portland\",\n\t\t\"state\": \"OR\",\n\t\t\"country\": \"US\",\n\t\t\"postal_code\": \"97200\"\n\t},\n\t\"identity\": {\n\t\t\"identity_alias\": \"SSN\",\n\t\t\"identity_value\": \"123-45-2222\"\n\t},\n\t\"entity\": {\n\t\t\"entity_name\": \"Postman User\",\n\t\t\"first_name\": \"Postman\",\n\t\t\"last_name\": \"User\",\n\t\t\"birthdate\": \"1990-01-31\"\n\t},\n\t\"contact\": {\n\t\t\"email\": \"postman@user.com\",\n\t\t\"phone\": \"1231231234\"\n\t},\n\t\"crypto_entry\": {\n\t\t\"crypto_code\": \"ETH\",\n\t\t\"crypto_address\": \"{{user_address}}\"\n\t}\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"address\": {\n\t\t\"address_alias\": \"Home\",\n\t\t\"street_address_1\": \"123 NW 1st Ave.\",\n\t\t\"city\": \"Portland\",\n\t\t\"state\": \"OR\",\n\t\t\"country\": \"US\",\n\t\t\"postal_code\": \"97200\"\n\t},\n\t\"identity\": {\n\t\t\"identity_alias\": \"SSN\",\n\t\t\"identity_value\": \"123-45-2222\"\n\t},\n\t\"entity\": {\n\t\t\"entity_name\": \"Postman User\",\n\t\t\"first_name\": \"Postman\",\n\t\t\"last_name\": \"User\",\n\t\t\"birthdate\": \"1990-01-31\"\n\t},\n\t\"contact\": {\n\t\t\"email\": \"postman@user.com\",\n\t\t\"phone\": \"1231231234\"\n\t},\n\t\"crypto_entry\": {\n\t\t\"crypto_code\": \"ETH\",\n\t\t\"crypto_address\": \"{{user_address}}\"\n\t}\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1809,7 +1802,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{business_handle}}\"\n    },\n    \"address\": {\n\t\t\"address_alias\": \"Office\",\n\t\t\"street_address_1\": \"123 NW 1st Ave.\",\n\t\t\"city\": \"Portland\",\n\t\t\"state\": \"OR\",\n\t\t\"country\": \"US\",\n\t\t\"postal_code\": \"97200\"\n\t},\n\t\"identity\": {\n\t\t\"identity_alias\": \"EIN\",\n\t\t\"identity_value\": \"12-3452222\"\n\t},\n\t\"entity\": {\n\t\t\"entity_name\": \"Postman User\",\n\t\t\"type\": \"business\",\n\t\t\"business_type\": \"llc\",\n\t\t\"naics_code\": 721\n\t},\n\t\"contact\": {\n\t\t\"email\": \"postman@user.com\",\n\t\t\"phone\": \"1231231234\"\n\t},\n\t\"crypto_entry\": {\n\t\t\"crypto_code\": \"ETH\",\n\t\t\"crypto_address\": \"{{business_address}}\"\n\t}\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{business_handle}}\"\n    },\n    \"address\": {\n\t\t\"address_alias\": \"Office\",\n\t\t\"street_address_1\": \"123 NW 1st Ave.\",\n\t\t\"city\": \"Portland\",\n\t\t\"state\": \"OR\",\n\t\t\"country\": \"US\",\n\t\t\"postal_code\": \"97200\"\n\t},\n\t\"identity\": {\n\t\t\"identity_alias\": \"EIN\",\n\t\t\"identity_value\": \"12-3452222\"\n\t},\n\t\"entity\": {\n\t\t\"entity_name\": \"Postman User\",\n\t\t\"type\": \"business\",\n\t\t\"business_type\": \"llc\",\n\t\t\"naics_code\": 721\n\t},\n\t\"contact\": {\n\t\t\"email\": \"postman@user.com\",\n\t\t\"phone\": \"1231231234\"\n\t},\n\t\"crypto_entry\": {\n\t\t\"crypto_code\": \"ETH\",\n\t\t\"crypto_address\": \"{{business_address}}\"\n\t}\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1895,7 +1888,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1981,7 +1974,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{business_handle}}\"\n    }\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{business_handle}}\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2067,7 +2060,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\",\n        \"business_handle\": \"{{business_handle}}\"\n    },\n    \"role\": \"administrator\"\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\",\n        \"business_handle\": \"{{business_handle}}\"\n    },\n    \"role\": [\"administrator\", \"controlling_officer\"]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2153,7 +2146,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\",\n        \"business_handle\": \"{{business_handle}}\"\n    },\n    \"role\": \"administrator\"\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\",\n        \"business_handle\": \"{{business_handle}}\"\n    },\n    \"role\": \"administrator\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2239,7 +2232,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2325,7 +2318,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2411,7 +2404,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\",\n        \"business_handle\": \"{{business_handle}}\"\n    },\n    \"certification_token\": \"blah\",\n    \"member_handle\": \"{{user_handle}}\"\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\",\n        \"business_handle\": \"{{business_handle}}\"\n    },\n    \"certification_token\": \"blah\",\n    \"member_handle\": \"{{user_handle}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2497,7 +2490,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\",\n        \"business_handle\": \"{{business_handle}}\"\n    }\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\",\n        \"business_handle\": \"{{business_handle}}\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2531,9 +2524,88 @@
 						"description": "Certifies that all beneficial owners have been added to the business with the correct information and correct ownership stakes."
 					},
 					"response": []
+				},
+				{
+					"name": "Check KYC App",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Forward-To-URL",
+								"value": "{{host}}/0.2/check_kyc_app",
+								"description": "Forwards to this endpoint on main API host.",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-Epoch",
+								"value": "header.created",
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-UUID",
+								"value": "header.reference",
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"query_app_handle\": \"{{Cross APP handle}}\",\n    \"query_user_handle\": \"{{Cross APP User handle}}\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=check_kyc_app",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "check_kyc_app",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Accounts",
@@ -2589,7 +2661,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2675,7 +2747,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"account_name\": \"{{plaid_bank_account_name}}\"\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"account_name\": \"{{plaid_bank_account_name}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2761,7 +2833,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"public_token\": \"sandbox\",\n    \"account_name\": \"{{plaid_bank_account_name}}\"\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"public_token\": \"sandbox\",\n    \"account_name\": \"{{plaid_bank_account_name}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2847,7 +2919,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"account_number\": \"999999999\",\n    \"routing_number\": \"123456789\",\n    \"account_name\": \"{{manual_bank_account_name}}\"\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"account_number\": \"999999999\",\n    \"routing_number\": \"123456789\",\n    \"account_name\": \"{{manual_bank_account_name}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2881,9 +2953,243 @@
 						"description": "Links a bank account with account and routing number to the user_handle."
 					},
 					"response": []
+				},
+				{
+					"name": "Delete a Bank Account",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/delete_account"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							},
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"account_name\": \"{{Bank Account Name}}\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=delete_bank_account",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "delete_bank_account",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a Bank Account",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Forward-To-URL",
+								"value": "{{host}}/0.2/update_account",
+								"description": "Forwards to this endpoint on main API host.",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-Epoch",
+								"value": "header.created",
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-UUID",
+								"value": "header.reference",
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"account_name\": \"{{Bank Account Name}}\",\n    \"new_account_name\": \"{{New Bank Account Name}}\",\n}"
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=update_bank_account",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "update_bank_account",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Link Token (Plaid)",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Forward-To-URL",
+								"value": "{{host}}/0.2/plaid_link_token",
+								"description": "Forwards to this endpoint on main API host.",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-Epoch",
+								"value": "header.created",
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-UUID",
+								"value": "header.reference",
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }    \n}"
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=create_link_token_plaid",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "create_link_token_plaid",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Wallets",
@@ -2939,7 +3245,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3025,7 +3331,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3111,7 +3417,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"nickname\": \"Default Wallet\"\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"nickname\": \"Default Wallet\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3197,7 +3503,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"wallet_verification_signature\": \"\",\n    \"wallet\": {\n        \"blockchain_address\": \"{{user_address2}}\"\n    }\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"wallet_verification_signature\": \"\",\n    \"wallet\": {\n        \"blockchain_address\": \"{{user_address2}}\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3254,7 +3560,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"address\": \"{{user_address}}\"\n}",
+							"raw": "{\n    \"address\": \"{{user_address (either address or blockchain_address as key)}}\",\n    \"blockchain_address\": \"{{user_address (either address or blockchain_address as key)}}\"\n\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3340,7 +3646,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3375,8 +3681,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Transactions",
@@ -3432,7 +3737,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"search_filters\": {\n    \"transaction_id\": \"{{some UUID string assigned by Sila}}\",    \n    \"show_timelines\": true,\n    \"sort_ascending\": false,\n    \"max_sila_amount\": \"{{transaction max amount}}\",\n    \"min_sila_amount\": \"{{transaction min amount}}\",\n    \"statuses\": [\"queued\", \"pending\", \"failed\", \"success\", \"rollback\", \"review\"],\n    \"start_epoch\": \"{{transaction start time}}\",\n    \"end_epoch\": \"{{transaction end time}}\",\n    \"page\": 1,\n    \"per_page\": 20,\n    \"transaction_types\": \"{{transaction type}}\",\n    \"bank_account_name\": \"{{bank_account_name}}\"\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3517,7 +3822,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"amount\": 1,\n    \"account_name\": \"{{plaid_bank_account_name}}\"\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"amount\": 1,\n    \"account_name\": \"{{plaid_bank_account_name}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3602,7 +3907,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"amount\": 1,\n    \"account_name\": \"{{plaid_bank_account_name}}\"\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"amount\": 1,\n    \"account_name\": \"{{plaid_bank_account_name}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3687,7 +3992,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"destination\": \"{{business_handle}}\",\n    \"amount\": 1\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"destination\": \"{{business_handle}}\",\n    \"amount\": 1\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3772,7 +4077,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"transaction_id\": \"80aea226-76a3-4b60-a629-25a2db572ec8\"\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"transaction_id\": \"80aea226-76a3-4b60-a629-25a2db572ec8\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3806,8 +4111,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Parameters",
@@ -3863,7 +4167,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3949,7 +4253,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4035,7 +4339,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"auth_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4071,8 +4375,7 @@
 					"response": []
 				}
 			],
-			"description": "Contains endpoints which return meta information about how to make requests to this API.",
-			"protocolProfileBehavior": {}
+			"description": "Contains endpoints which return meta information about how to make requests to this API."
 		},
 		{
 			"name": "Proxy Helper: Generate Private Key",
@@ -4097,75 +4400,60 @@
 	],
 	"variable": [
 		{
-			"id": "2746764e-af78-4ddf-b2a8-3917c56977ca",
 			"key": "host",
 			"value": "sandbox.silamoney.com"
 		},
 		{
-			"id": "909b3682-996e-473e-822b-e5cb3a1e33ec",
 			"key": "proxy_port",
 			"value": "8181"
 		},
 		{
-			"id": "c57f6a52-7a9e-4331-b688-b53aba074be9",
 			"key": "app_handle",
 			"value": ""
 		},
 		{
-			"id": "7499a7f7-6060-48b1-8e68-62863140f445",
 			"key": "app_private_key",
 			"value": ""
 		},
 		{
-			"id": "7a8ecf4a-90a3-475b-8a02-f32c9ab477a9",
 			"key": "user_handle",
 			"value": ""
 		},
 		{
-			"id": "8a2ac4bc-1300-4eb4-80b3-3f3cf51df36e",
 			"key": "user_private_key",
 			"value": ""
 		},
 		{
-			"id": "c2154b70-d9a4-4493-b237-907ea847dd24",
 			"key": "user_address",
 			"value": ""
 		},
 		{
-			"id": "fa9ebce9-ad22-4766-97b6-8b9c8a0c5f24",
 			"key": "business_handle",
 			"value": ""
 		},
 		{
-			"id": "796a2c0b-012b-4f3d-bbfa-72907e2425b6",
 			"key": "business_private_key",
 			"value": ""
 		},
 		{
-			"id": "34b7b197-e15b-4aec-8b15-2ed68438df7a",
 			"key": "business_address",
 			"value": ""
 		},
 		{
-			"id": "1934114d-0f44-488f-8cec-bd50ff5bc486",
 			"key": "user_private_key2",
 			"value": ""
 		},
 		{
-			"id": "2dc8585d-00e2-4225-841b-d024d21b6278",
 			"key": "user_address2",
 			"value": ""
 		},
 		{
-			"id": "d8839295-c1e7-47c8-92e5-bbdcd59e64f1",
 			"key": "plaid_bank_account_name",
 			"value": ""
 		},
 		{
-			"id": "ea042755-bfd1-4b8d-84a0-f2458025326e",
 			"key": "manual_bank_account_name",
 			"value": ""
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }
