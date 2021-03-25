@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "5a419442-9eff-4625-9b43-bf676e5bc900",
+		"_postman_id": "8d2c2bcd-5e76-4eb0-8af7-eb865c59857d",
 		"name": "Sila API v0.2 - Local Signer Server Edition",
 		"description": "These endpoints are designed to work with our lightweight local proxy server. The local server signs and forwards requests to the main API host.\n\nAuthentication of requests made to the main API host is performed using ETH signatures. For more information, visit our docs at https://docs.silamoney.com/docs/process-overview.\n",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -2918,7 +2918,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"public_token\": \"sandbox\",\n    \"account_name\": \"{{plaid_bank_account_name}}\"\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"public_token\": \"sandbox\",\n    \"account_name\": \"{{plaid_bank_account_name}}\",\n    \"plaid_token_type\": \"{{plaid token type}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
