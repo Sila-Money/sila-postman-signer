@@ -2918,7 +2918,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"public_token\": \"sandbox\",\n    \"account_name\": \"{{plaid_bank_account_name}}\",\n    \"plaid_token_type\": \"{{plaid token type}}\"\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"public_token\": \"sandbox\",\n    \"account_name\": \"{{plaid_bank_account_name}}\",\n    \"plaid_token_type\": \"{{plaid_token_type}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
