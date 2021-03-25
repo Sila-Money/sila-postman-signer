@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "5a419442-9eff-4625-9b43-bf676e5bc900",
+		"_postman_id": "0e29fb4c-0056-4c14-8675-302c1eb433eb",
 		"name": "Sila API v0.2 - Local Signer Server Edition",
 		"description": "These endpoints are designed to work with our lightweight local proxy server. The local server signs and forwards requests to the main API host.\n\nAuthentication of requests made to the main API host is performed using ETH signatures. For more information, visit our docs at https://docs.silamoney.com/docs/process-overview.\n",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -3897,7 +3897,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"search_filters\": {\n    \"transaction_id\": \"{{some UUID string assigned by Sila}}\",    \n    \"show_timelines\": true,\n    \"sort_ascending\": false,\n    \"max_sila_amount\": \"{{transaction max amount}}\",\n    \"min_sila_amount\": \"{{transaction min amount}}\",\n    \"statuses\": [\"queued\", \"pending\", \"failed\", \"success\", \"rollback\", \"review\"],\n    \"start_epoch\": \"{{transaction start time}}\",\n    \"end_epoch\": \"{{transaction end time}}\",\n    \"page\": 1,\n    \"per_page\": 20,\n    \"transaction_types\": \"{{transaction type}}\",\n    \"bank_account_name\": \"{{bank_account_name}}\"\n  }\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"search_filters\": {\n    \"transaction_id\": \"{{some UUID string assigned by Sila}}\",    \n    \"show_timelines\": true,\n    \"sort_ascending\": false,\n    \"max_sila_amount\": \"{{transaction max amount}}\",\n    \"min_sila_amount\": \"{{transaction min amount}}\",\n    \"statuses\": [\"queued\", \"pending\", \"failed\", \"success\", \"rollback\", \"review\"],\n    \"start_epoch\": \"{{transaction start time}}\",\n    \"end_epoch\": \"{{transaction end time}}\",\n    \"page\": 1,\n    \"per_page\": 20,\n    \"transaction_types\": \"{{transaction type}}\",\n    \"bank_account_name\": \"{{bank_account_name}}\",\n    \"blockchain_address\": \"{{blockchain address of the wallet}}\"\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
