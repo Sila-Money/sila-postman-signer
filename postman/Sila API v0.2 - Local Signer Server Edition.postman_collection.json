@@ -2832,7 +2832,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"account_name\": \"{{plaid_bank_account_name}}\"\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"account_name\": \"{{bank_account_name}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2918,7 +2918,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"public_token\": \"sandbox\",\n    \"account_name\": \"{{plaid_bank_account_name}}\",\n    \"plaid_token_type\": \"{{plaid_token_type}}\"\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"plaid_token\": \"sandbox\",\n    \"account_name\": \"{{bank_account_name}}\",\n    \"plaid_token_type\": \"{{plaid_token_type}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3090,7 +3090,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"account_name\": \"{{Bank Account Name}}\"\n}"
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"account_name\": \"{{bank_account_name}}\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:{{proxy_port}}/forward?label=delete_bank_account",
@@ -3165,7 +3165,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"account_name\": \"{{Bank Account Name}}\",\n    \"new_account_name\": \"{{New Bank Account Name}}\",\n}"
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"account_name\": \"{{bank_account_name}}\",\n    \"new_account_name\": \"{{new_bank_account_name}}\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:{{proxy_port}}/forward?label=update_bank_account",
@@ -3320,7 +3320,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"account_name\": \"Bank Account Name\"\n}"
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"account_name\": \"{{bank_account_name}}\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:{{proxy_port}}/forward?label=create_link_token_plaid_update_mode",
@@ -4053,7 +4053,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"amount\": 1,\n    \"account_name\": \"{{plaid_bank_account_name}}\"\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"amount\": 1,\n    \"account_name\": \"{{bank_account_name}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4138,7 +4138,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"amount\": 1,\n    \"account_name\": \"{{plaid_bank_account_name}}\"\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"amount\": 1,\n    \"account_name\": \"{{bank_account_name}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4679,7 +4679,7 @@
 			"value": ""
 		},
 		{
-			"key": "plaid_bank_account_name",
+			"key": "bank_account_name",
 			"value": ""
 		},
 		{
