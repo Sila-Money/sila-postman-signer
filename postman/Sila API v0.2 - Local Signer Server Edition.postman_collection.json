@@ -3968,7 +3968,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"search_filters\": {\n    \"transaction_id\": \"{{some UUID string assigned by Sila}}\",    \n    \"show_timelines\": true,\n    \"sort_ascending\": false,\n    \"max_sila_amount\": \"{{transaction max amount}}\",\n    \"min_sila_amount\": \"{{transaction min amount}}\",\n    \"statuses\": [\"queued\", \"pending\", \"failed\", \"success\", \"rollback\", \"review\"],\n    \"start_epoch\": \"{{transaction start time}}\",\n    \"end_epoch\": \"{{transaction end time}}\",\n    \"page\": 1,\n    \"per_page\": 20,\n    \"transaction_types\": \"{{transaction type}}\",\n    \"bank_account_name\": \"{{bank_account_name}}\"\n  }\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"search_filters\": {\n    \"transaction_id\": \"{{some UUID string assigned by Sila}}\",    \n    \"show_timelines\": true,\n    \"sort_ascending\": false,\n    \"max_sila_amount\": \"{{transaction max amount}}\",\n    \"min_sila_amount\": \"{{transaction min amount}}\",\n    \"statuses\": [\"queued\", \"pending\", \"failed\", \"success\", \"rollback\", \"review\"],\n    \"start_epoch\": \"{{transaction start time}}\",\n    \"end_epoch\": \"{{transaction end time}}\",\n    \"page\": 1,\n    \"per_page\": 20,\n    \"transaction_types\": \"{{transaction type}}\",\n    \"bank_account_name\": \"{{bank_account_name}}\",\n    \"blockchain_address\": \"{{blockchain_address_of_the_wallet}}\"\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
