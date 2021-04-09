@@ -89,6 +89,7 @@ def forward():
     is_debug = request.args.get("debug")
     page = request.args.get('page')
     per_page = request.args.get('per_page')
+    order = request.args.get('order')
 
     set_epoch = request.headers.get(SET_EPOCH_HEADER)
     set_uuid = request.headers.get(SET_UUID_HEADER)
@@ -104,6 +105,12 @@ def forward():
             query_params = f'page={page}'
         elif per_page:
             query_params = f'per_page={per_page}'
+    
+    if order is not None:
+        if query_params:
+            query_params += f'&order={order}'
+        else:
+            query_params = f'order={order}'
 
     if query_params:
         target_url += f'?{query_params}'
