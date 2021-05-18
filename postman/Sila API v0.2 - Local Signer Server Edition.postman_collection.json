@@ -3300,35 +3300,22 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "X-Forward-To-URL",
-								"value": "{{host}}/0.2/plaid_link_token",
-								"description": "Forwards to this endpoint on main API host.",
-								"type": "text"
-							},
-							{
-								"key": "X-Set-Epoch",
-								"value": "header.created",
-								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
-								"type": "text"
-							},
-							{
-								"key": "X-Set-UUID",
-								"value": "header.reference",
-								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "label",
+								"value": "",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }    \n}"
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"account_name\": \"{{bank_account_name}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
 						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward?label=create_link_token_plaid",
+							"raw": "http://localhost:{{proxy_port}}/forward?label=plaid_sameday_auth",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -3339,15 +3326,14 @@
 							],
 							"query": [
 								{
-									"key": "label",
-									"value": "create_link_token_plaid",
-									"description": "Adds an informative label to request (helpful in proxy logs)."
-								},
-								{
 									"key": "debug",
 									"value": "true",
 									"description": "Requests that proxy send back debug information about request and response.",
 									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "plaid_sameday_auth"
 								}
 							]
 						}
