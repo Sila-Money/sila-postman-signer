@@ -24,7 +24,7 @@ This option eliminates the requirement for a Python 3.6 installation.
 You'll need [Docker](https://docs.docker.com/get-docker/) installed in order to build and run Docker images and containers.
 1. Build the Docker image (should only need to be done once): 
    * with `make`: `make docker-image`
-   * without `make`: `docker build -t sila-signer-server`
+   * without `make`: `docker build -t sila-signer-server .`
 1. Start the Docker container and access the server at the **default port 8181**:
    * with `make`: `make docker-run`
    * without `make`: `docker run -p 8181:8181 sila-signer-server`
