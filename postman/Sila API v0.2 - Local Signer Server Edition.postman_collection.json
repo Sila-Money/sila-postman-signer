@@ -3276,11 +3276,6 @@
 				},
 				{
 					"name": "Plaid Sameday Auth",
-					"protocolProfileBehavior": {
-						"disabledSystemHeaders": {
-							"content-type": true
-						}
-					},
 					"request": {
 						"auth": {
 							"type": "apikey",
@@ -3301,36 +3296,31 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"type": "text",
+								"value": "application/json"
 							},
 							{
-								"key": "X-Forward-To-URL",
-								"value": "{{host}}/0.2/plaid_sameday_auth",
 								"description": "Forwards to this endpoint on main API host.",
-								"type": "text"
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/plaid_sameday_auth"
 							},
 							{
-								"key": "X-Set-Epoch",
-								"value": "header.created",
 								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
-								"type": "text"
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
 							},
 							{
-								"key": "X-Set-UUID",
-								"value": "header.reference",
 								"description": "Sets a random UUID4 string on specified JSON key.",
-								"type": "text"
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"account_name\": \"{{bank_account_name}}\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"account_name\": \"{{bank_account_name}}\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:{{proxy_port}}/forward?label=plaid_sameday_auth",
@@ -3344,14 +3334,15 @@
 							],
 							"query": [
 								{
+									"key": "label",
+									"value": "plaid_sameday_auth",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
 									"key": "debug",
 									"value": "true",
 									"description": "Requests that proxy send back debug information about request and response.",
 									"disabled": true
-								},
-								{
-									"key": "label",
-									"value": "plaid_sameday_auth"
 								}
 							]
 						}
