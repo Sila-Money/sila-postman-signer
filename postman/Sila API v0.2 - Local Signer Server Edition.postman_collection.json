@@ -3245,7 +3245,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }    \n}"
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"android_package_name\": \"\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:{{proxy_port}}/forward?label=create_link_token_plaid",
