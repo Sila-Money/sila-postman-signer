@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "e379e8b5-42ec-40f3-9124-ec1b2eae1352",
+		"_postman_id": "ad0013da-f402-4e0a-8b1a-35815813097d",
 		"name": "Sila API v0.2 - Local Signer Server Edition",
 		"description": "These endpoints are designed to work with our lightweight local proxy server. The local server signs and forwards requests to the main API host.\n\nAuthentication of requests made to the main API host is performed using ETH signatures. For more information, visit our docs at https://docs.silamoney.com/docs/process-overview.\n",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -4756,6 +4756,76 @@
 				}
 			],
 			"description": "Contains endpoints which return meta information about how to make requests to this API."
+		},
+		{
+			"name": "Webhooks",
+			"item": [
+				{
+					"name": "Get Webhooks",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "private-key; Authsignature={{app_private_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Forward-To-URL",
+								"value": "{{host}}/0.2/get_webhooks",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-Epoch",
+								"value": "header.created",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-UUID",
+								"value": "header.reference",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"search_filters\": {\n    \"uuid\": \"{{some UUID string assigned by Sila}}\",    \n    \"delivered\": {{webhook delivered true|false}},\n    \"sort_ascending\": false,\n    \"event_type\": \"{{webhook event type}}\",\n    \"endpoint_name\": \"{{webhook endpoint name}}\",\n    \"user_handle\": \"{{webhook user handle}}\",\n    \"start_epoch\": \"{{webhook start time}}\",\n    \"end_epoch\": \"{{webhook end time}}\",\n    \"page\": 1,\n    \"per_page\": 20\n  }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=get_webhooks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "get_webhooks"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "Proxy Helper: Generate Private Key",
