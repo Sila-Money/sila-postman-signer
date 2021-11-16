@@ -3650,7 +3650,7 @@
 								}
 							]
 						},
-						"description": "Gets list of bank accounts linked to the user_handle along with their statuses."
+						"description": "This endpoint is used for retrieving all of the virtual accounts that are allocated to an end user."
 					},
 					"response": []
 				}
