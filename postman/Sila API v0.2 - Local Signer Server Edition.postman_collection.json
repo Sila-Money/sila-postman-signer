@@ -3653,6 +3653,80 @@
 						"description": "This endpoint is used for retrieving all of the virtual accounts that are allocated to an end user."
 					},
 					"response": []
+				},
+				{
+					"name": "Fund Virtual Account",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Forward-To-URL",
+								"value": "{{host}}/0.2/fund_virtual_account",
+								"description": "Forwards to this endpoint on main API host.",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-Epoch",
+								"value": "header.created",
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-UUID",
+								"value": "header.reference",
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"virtual_account_id\": \"{{user_virtual_account_id}}\",\n    \"amount\": 100\n}"
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=fund_virtual_account",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "fund_virtual_account"
+								}
+							]
+						},
+						"description": "This endpoint creates a transaction that funds a virtual account with mock funds"
+					},
+					"response": []
 				}
 			]
 		},
