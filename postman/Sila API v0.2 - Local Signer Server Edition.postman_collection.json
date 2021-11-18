@@ -3735,7 +3735,7 @@
 								}
 							]
 						},
-						"description": "Gets list of bank accounts linked to the user_handle along with their statuses."
+						"description": "This endpoint is used for retrieving all of the virtual accounts that are allocated to an end user."
 					},
 					"response": []
 				}
@@ -4926,6 +4926,76 @@
 				}
 			],
 			"description": "Contains endpoints which return meta information about how to make requests to this API."
+		},
+		{
+			"name": "Webhooks",
+			"item": [
+				{
+					"name": "Get Webhooks",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "private-key; Authsignature={{app_private_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Forward-To-URL",
+								"value": "{{host}}/0.2/get_webhooks",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-Epoch",
+								"value": "header.created",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-UUID",
+								"value": "header.reference",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"search_filters\": {\n    \"uuid\": \"{{some UUID string assigned by Sila}}\",    \n    \"delivered\": {{webhook delivered true|false}},\n    \"sort_ascending\": false,\n    \"event_type\": \"{{webhook event type}}\",\n    \"endpoint_name\": \"{{webhook endpoint name}}\",\n    \"user_handle\": \"{{webhook user handle}}\",\n    \"start_epoch\": \"{{webhook start time}}\",\n    \"end_epoch\": \"{{webhook end time}}\",\n    \"page\": 1,\n    \"per_page\": 20\n  }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=get_webhooks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "get_webhooks"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "Proxy Helper: Generate Private Key",
