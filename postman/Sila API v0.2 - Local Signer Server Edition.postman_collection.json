@@ -806,7 +806,7 @@
 										}
 									]
 								},
-								"description": "Adds a device to a registered user. "
+								"description": "Adds a device to a registered user."
 							},
 							"response": []
 						},
