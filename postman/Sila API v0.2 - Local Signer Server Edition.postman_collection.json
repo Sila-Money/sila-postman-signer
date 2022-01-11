@@ -5266,7 +5266,7 @@
 						"header": [
 							{
 								"key": "X-Forward-To-URL",
-								"value": "{{host}}/0.2/get_virtual_account",
+								"value": "{{host}}/0.2/update_virtual_account",
 								"description": "Forwards to this endpoint on main API host.",
 								"type": "text"
 							},
@@ -5293,7 +5293,7 @@
 							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"virtual_account_id\": \"{{user_virtual_account_id}}\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward?label=get_virtual_account",
+							"raw": "http://localhost:{{proxy_port}}/forward?label=update_virtual_account",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -5305,7 +5305,7 @@
 							"query": [
 								{
 									"key": "label",
-									"value": "get_virtual_account"
+									"value": "update_virtual_account"
 								}
 							]
 						}
