@@ -5334,7 +5334,7 @@
 						"header": [
 							{
 								"key": "X-Forward-To-URL",
-								"value": "{{host}}/0.2/get_virtual_account",
+								"value": "{{host}}/0.2/close_virtual_account",
 								"description": "Forwards to this endpoint on main API host.",
 								"type": "text"
 							},
