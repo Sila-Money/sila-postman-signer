@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "91dbf3c1-566f-4aa8-a684-3bd7c7d11051",
+		"_postman_id": "e77e1830-baa2-4b9a-a658-2cc63c5fb000",
 		"name": "Sila API v0.2 - Local Signer Server Edition",
 		"description": "These endpoints are designed to work with our lightweight local proxy server. The local server signs and forwards requests to the main API host.\n\nAuthentication of requests made to the main API host is performed using ETH signatures. For more information, visit our docs at https://docs.silamoney.com/docs/process-overview.\n",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -1492,6 +1492,91 @@
 						}
 					],
 					"description": "This folder contains /add, /update, and /delete requests for changing a user's registered data. These endpoints are used to change data that is used in verification.\n\nNote that some data cannot be changed after a verification has already passed or while a verification is still in progress (pending), and that only one SSN or EIN can be added to an entity at a time."
+				},
+				{
+					"name": "Get Payment Methods",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/get_payment_methods"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=get_payment_methods",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "get_payment_methods"
+								}
+							]
+						},
+						"description": "Gets list of payment methods linked to the given entity."
+					},
+					"response": []
 				},
 				{
 					"name": "Check Handle",
