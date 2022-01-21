@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "91dbf3c1-566f-4aa8-a684-3bd7c7d11051",
-		"name": "Sila API v0.2 - Local Signer Server Edition",
+		"name": "Sila API v0.2 - Local Signer Server Edition base64",
 		"description": "These endpoints are designed to work with our lightweight local proxy server. The local server signs and forwards requests to the main API host.\n\nAuthentication of requests made to the main API host is performed using ETH signatures. For more information, visit our docs at https://docs.silamoney.com/docs/process-overview.\n",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -102,6 +102,82 @@
 									]
 								},
 								"description": "Upload documents by posting to this endpoint, which uses a multipart/form-data content type; the \"data\" field contains JSON metadata.\n\nIf you are using the signer-server, you can set the \"x-set-file-hash\" header to \"hash\", and the signer-server will generate the hash for you.\n\nIf you're not using the signer-server, you will need to generate the file hash with SHA256 and include it in the request."
+							},
+							"response": []
+						},
+						{
+							"name": "Upload document(base64)",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "x-forward-to-url",
+										"value": "{{host}}/0.2/upload_document",
+										"type": "text"
+									},
+									{
+										"key": "X-Set-Epoch",
+										"value": "header.created",
+										"type": "text"
+									},
+									{
+										"key": "X-Set-UUID",
+										"value": "header.reference",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\",\n        \"version\": \"0.2\", \n        \"crypto\": \"ETH\", \n        \"reference\": \"ref\",\n        \"created\": 1234567890\n    },\n    \"message\": \"header_msg\",\n    \"name\": \"CA drivers license\",\n    \"filename\": \"myfile.png\",\n    \"hash\": \"4a711f5cd03c09fd79ae2f19bb2f71168e71c18b7562626a1ae8d99ebc3212ff\",\n    \"mime_type\": \"image/png\",\n    \"document_type\": \"id_drivers_license\",\n    \"identity_type\": \"license\",\n    \"body\": \"iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==\",\n    \"description\": \"my CA driver's license from 2019\"\n}"
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=upload_document",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "false",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "upload_document"
+										}
+									]
+								},
+								"description": "This endpoint is allowed you to upload the file by passing upload data in base64 format."
 							},
 							"response": []
 						},
