@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "91dbf3c1-566f-4aa8-a684-3bd7c7d11051",
+		"_postman_id": "cac930ac-dc8f-4640-87ec-9b802a5cd6e0",
 		"name": "Sila API v0.2 - Local Signer Server Edition",
 		"description": "These endpoints are designed to work with our lightweight local proxy server. The local server signs and forwards requests to the main API host.\n\nAuthentication of requests made to the main API host is performed using ETH signatures. For more information, visit our docs at https://docs.silamoney.com/docs/process-overview.\n",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -5002,6 +5002,18 @@
 				},
 				{
 					"name": "Fund Virtual Account",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const moment = require('moment');",
+									"pm.globals.set(\"today\", moment().format(\"YYYY-MM-DD\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "apikey",
@@ -5051,7 +5063,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"virtual_account_id\": \"{{user_virtual_account_id}}\",\n    \"amount\": 100\n}"
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"virtual_account_id\": \"{{virtual_account_id}}\",\n    \"amount\": 100,\n    \"effective_date\": \"{{today}}\",\n    \"ach_transaction_code\": 100\n}"
 						},
 						"url": {
 							"raw": "http://localhost:{{proxy_port}}/forward?label=fund_virtual_account",
