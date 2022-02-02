@@ -4953,7 +4953,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\"\n    },\n    \"uuid\": \"{{some UUID string assigned by Sila}}\"\n}"
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\"\n    },\n    \"event_uuid\": \"{{some UUID string assigned by Sila}}\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:{{proxy_port}}/forward?label=retry_webhook",
