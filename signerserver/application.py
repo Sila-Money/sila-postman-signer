@@ -180,10 +180,12 @@ def forward():
             "headers": dict(response.headers),
         }
         try:
+
             proxy_response_dict["response"]["content"] = response.content.decode('utf-8')
-            proxy_response_dict["response"]['json_content'] = response.json()
+            if proxy_response_dict["response"]["content"] != "":
+                proxy_response_dict["response"]['json_content'] = response.json()
         except Exception as exc:
-            if response.headers['Content-Type'] != 'application/json':
+            if response.headers.get('Content-Type') != 'application/json':
                 proxy_response_dict['response']['content'] = response.content
             else:
                 logger.error(str(exc))
