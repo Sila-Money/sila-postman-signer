@@ -4287,7 +4287,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"search_filters\": {\n    \"transaction_id\": \"{{some UUID string assigned by Sila}}\",    \n    \"show_timelines\": true,\n    \"sort_ascending\": false,\n    \"max_sila_amount\": \"{{transaction max amount}}\",\n    \"min_sila_amount\": \"{{transaction min amount}}\",\n    \"statuses\": [\"queued\", \"pending\", \"failed\", \"success\", \"rollback\", \"review\"],\n    \"start_epoch\": \"{{transaction start time}}\",\n    \"end_epoch\": \"{{transaction end time}}\",\n    \"page\": 1,\n    \"per_page\": 20,\n    \"transaction_types\": \"{{transaction type}}\",\n    \"bank_account_name\": \"{{bank_account_name}}\",\n    \"blockchain_address\": \"{{blockchain_address_of_the_wallet}}\",\n    \"destination_id\": \"UUID of destination PaymentInstrument\",\n    \"source_id\": \"UUID of source PaymentInstrument\",\n    \"effective_date\": {{effective_date of transaction}},\n    \"effective_epoch\": {{effective_epoch of transaction}}\n  }\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"search_filters\": {\n    \"transaction_id\": \"{{some UUID string assigned by Sila}}\",    \n    \"show_timelines\": true,\n    \"sort_ascending\": false,\n    \"max_sila_amount\": \"{{transaction max amount}}\",\n    \"min_sila_amount\": \"{{transaction min amount}}\",\n    \"statuses\": [\"queued\", \"pending\", \"failed\", \"success\", \"rollback\", \"review\"],\n    \"start_epoch\": \"{{transaction start time}}\",\n    \"end_epoch\": \"{{transaction end time}}\",\n    \"page\": 1,\n    \"per_page\": 20,\n    \"transaction_types\": \"{{transaction type}}\",\n    \"bank_account_name\": \"{{bank_account_name}}\",\n    \"blockchain_address\": \"{{blockchain_address_of_the_wallet}}\",\n    \"destination_id\": \"UUID of destination PaymentInstrument\",\n    \"source_id\": \"UUID of source PaymentInstrument\",\n    \"effective_date\": {{effective_date of transaction}},\n    \"effective_epoch\": {{effective_epoch of transaction}},\n    \"processing_type\": {{processing type of transaction}}\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4373,6 +4373,91 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"amount\": 1,\n    \"account_name\": \"{{bank_account_name}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=issue_sila",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "issue_sila"
+								}
+							]
+						},
+						"description": "Initiates a transaction which debits a bank account a given amount (in cents) and mints tokens in the given amount (in Sila) after the transaction has settled."
+					},
+					"response": []
+				},
+				{
+					"name": "Issue Sila Instant Settlement",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/issue_sila"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"amount\": 1,\n    \"account_name\": \"{{bank_account_name}}\",\n    \"processing_type\": \"INSTANT_SETTLEMENT\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
