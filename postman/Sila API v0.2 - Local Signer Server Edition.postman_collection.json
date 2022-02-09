@@ -4490,6 +4490,91 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Create Test Virtual Account Transaction",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/create_test_virtual_account_transaction"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"virtual_account_number\": {{virtual_account_number}},\n    \"amount\": 1,\n    \"tran_code\": 22,\n    \"effective_date\": \"2021-10-22T00:00:00\",\n    \"entity_name\": \"TEST ENTITY\",\n    \"ced\": \"PAYROLL\",\n    \"ach_name\": \"SILA INC\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=create_test_virtual_account_transaction",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "create_test_virtual_account_transaction"
+								}
+							]
+						},
+						"description": "Initiates a transaction which transfers a given amount (in Sila) from the ETH wallet used to sign the request to the handle and wallet specified in the request. If there is no wallet nickname or wallet address in the request, the receiver's default wallet is selected as the destination."
+					},
+					"response": []
 				}
 			]
 		},
