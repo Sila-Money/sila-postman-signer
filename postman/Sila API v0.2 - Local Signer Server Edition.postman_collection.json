@@ -4492,7 +4492,7 @@
 					"response": []
 				},
 				{
-					"name": "Create Test Virtual Account Transaction",
+					"name": "Create Test Virtual Account ACH Transaction",
 					"request": {
 						"auth": {
 							"type": "apikey",
@@ -4525,7 +4525,7 @@
 								"description": "Forwards to this endpoint on main API host.",
 								"key": "X-Forward-To-URL",
 								"type": "text",
-								"value": "{{host}}/0.2/create_test_virtual_account_transaction"
+								"value": "{{host}}/0.2/create_test_virtual_account_ach_transaction"
 							},
 							{
 								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
@@ -4542,7 +4542,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"virtual_account_number\": {{virtual_account_number}},\n    \"amount\": 1,\n    \"tran_code\": 22,\n    \"effective_date\": \"2021-10-22T00:00:00\",\n    \"entity_name\": \"TEST ENTITY\",\n    \"ced\": \"PAYROLL\",\n    \"ach_name\": \"SILA INC\"\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"virtual_account_number\": \"{{virtual_account_number}}\",\n    \"amount\": 1,\n    \"tran_code\": 27,\n    \"effective_date\": \"2021-10-22\",\n    \"entity_name\": \"TEST ENTITY\",\n    \"ced\": \"PAYROLL\",\n    \"ach_name\": \"SILA INC\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4550,7 +4550,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward?label=create_test_virtual_account_transaction",
+							"raw": "http://localhost:{{proxy_port}}/forward?label=create_test_virtual_account_ach_transaction",
 							"protocol": "http",
 							"host": [
 								"localhost"
