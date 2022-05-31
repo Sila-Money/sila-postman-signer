@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "91f87e25-ed4e-4b5d-8722-64bc0dbe3434",
+		"_postman_id": "1d44bfa4-be40-4d66-91ab-a1f25f48cb04",
 		"name": "Sila API v0.2 - Local Signer Server Edition",
 		"description": "These endpoints are designed to work with our lightweight local proxy server. The local server signs and forwards requests to the main API host.\n\nAuthentication of requests made to the main API host is performed using ETH signatures. For more information, visit our docs at https://docs.silamoney.com/docs/process-overview.\n",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -3771,12 +3771,12 @@
 							"raw": "{\n    \"header\": {\n        \"app_handle\": \"root\",\n        \"user_handle\": \"cb_test\"\n    },\n    \"paypal_name\": \"test\",\n    \"new_paypal_name\": \"update 2 paypal account\"\n\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8181/forward?label=update_paypal",
+							"raw": "http://localhost:{{proxy_port}}/forward?label=update_paypal",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8181",
+							"port": "{{proxy_port}}",
 							"path": [
 								"forward"
 							],
@@ -3821,12 +3821,12 @@
 							"raw": "{\n    \"header\": {\n        \"app_handle\": \"root\",\n        \"user_handle\": \"cb_test\"\n    },\n    \"paypal_name\": \"test\",\n    \"new_paypal_name\": \"update 2 venmo account\",\n    \"venmo_phone\": \"+1-2323423411\"\n\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8181/forward?label=update_venmo",
+							"raw": "http://localhost:{{proxy_port}}/forward?label=update_venmo",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8181",
+							"port": "{{proxy_port}}",
 							"path": [
 								"forward"
 							],
@@ -3871,12 +3871,12 @@
 							"raw": "{\n    \"header\": {\n        \"app_handle\": \"root\",\n        \"user_handle\": \"cb_test\"\n    },\n    \"paypal_name\": \"enduser paypal account\",\n    \"paypal_phone\": \"\",\n    \"paypal_payer_id\": \"UE3DJ86DKGXVJ\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8181/forward?label=link_paypal_account",
+							"raw": "http://localhost:{{proxy_port}}/forward?label=link_paypal_account",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8181",
+							"port": "{{proxy_port}}",
 							"path": [
 								"forward"
 							],
@@ -3921,12 +3921,12 @@
 							"raw": "{\n    \"header\": {\n        \"app_handle\": \"root\",\n        \"user_handle\": \"cb_test\"\n    },\n    \"venmo_name\": \"venmo account 1\",\n    \"venmo_phone\": \"1234567890\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8181/forward?label=link_venmo_account",
+							"raw": "http://localhost:{{proxy_port}}/forward?label=link_venmo_account",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8181",
+							"port": "{{proxy_port}}",
 							"path": [
 								"forward"
 							],
@@ -3971,12 +3971,12 @@
 							"raw": "{\n    \"header\": {\n        \"app_handle\": \"systango_test4\",\n        \"user_handle\": \"systango_test4_user1\"\n    },\n    \"paypal_name\": \"paypal account\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8181/forward?label=delete_paypal",
+							"raw": "http://localhost:{{proxy_port}}/forward?label=delete_paypal",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8181",
+							"port": "{{proxy_port}}",
 							"path": [
 								"forward"
 							],
@@ -4021,12 +4021,12 @@
 							"raw": "{\n    \"header\": {\n        \"app_handle\": \"systango_test4\",\n        \"user_handle\": \"systango_test4_user1\"\n    },\n    \"venmo_name\": \"venmo account\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8181/forward?label=delete_venmo",
+							"raw": "http://localhost:{{proxy_port}}/forward?label=delete_venmo",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8181",
+							"port": "{{proxy_port}}",
 							"path": [
 								"forward"
 							],
