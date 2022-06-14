@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "1d44bfa4-be40-4d66-91ab-a1f25f48cb04",
+		"_postman_id": "2faed9b3-32d6-4284-b8af-d4e398c80685",
 		"name": "Sila API v0.2 - Local Signer Server Edition",
 		"description": "These endpoints are designed to work with our lightweight local proxy server. The local server signs and forwards requests to the main API host.\n\nAuthentication of requests made to the main API host is performed using ETH signatures. For more information, visit our docs at https://docs.silamoney.com/docs/process-overview.\n",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -3818,7 +3818,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"app_handle\": \"root\",\n        \"user_handle\": \"cb_test\"\n    },\n    \"paypal_name\": \"test\",\n    \"new_paypal_name\": \"update 2 venmo account\",\n    \"venmo_phone\": \"+1-2323423411\"\n\n}"
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"root\",\n        \"user_handle\": \"cb_test\"\n    },\n    \"venmo_name\": \"test\",\n    \"new_venmo_name\": \"update 2 venmo account\",\n    \"venmo_phone\": \"+1-2323423411\"\n\n}"
 						},
 						"url": {
 							"raw": "http://localhost:{{proxy_port}}/forward?label=update_venmo",
