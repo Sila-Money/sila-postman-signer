@@ -3768,7 +3768,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"app_handle\": \"root\",\n        \"user_handle\": \"cb_test\"\n    },\n    \"paypal_name\": \"test\",\n    \"new_paypal_name\": \"update 2 paypal account\"\n\n}"
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"root\",\n        \"user_handle\": \"cb_test\"\n    },\n    \"paypal_name\": \"test\",\n    \"new_paypal_name\": \"update 2 paypal account\",\n    \"paypal_phone\": \"\",\n    \"paypal_email\": \"\",\n    \"paypal_payer_id\": \"UE3DJ86DKGXVJ\",\n    \"active\": true\n\n}"
 						},
 						"url": {
 							"raw": "http://localhost:{{proxy_port}}/forward?label=update_paypal",
@@ -3818,7 +3818,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"app_handle\": \"root\",\n        \"user_handle\": \"cb_test\"\n    },\n    \"venmo_name\": \"test\",\n    \"new_venmo_name\": \"update 2 venmo account\",\n    \"venmo_phone\": \"+1-2323423411\"\n\n}"
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"root\",\n        \"user_handle\": \"cb_test\"\n    },\n    \"venmo_name\": \"test\",\n    \"new_venmo_name\": \"update 2 venmo account\",\n    \"venmo_phone\": \"+1-2323423411\",\n    \"active\": true\n}"
 						},
 						"url": {
 							"raw": "http://localhost:{{proxy_port}}/forward?label=update_venmo",
@@ -3868,7 +3868,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"app_handle\": \"root\",\n        \"user_handle\": \"cb_test\"\n    },\n    \"paypal_name\": \"enduser paypal account\",\n    \"paypal_phone\": \"\",\n    \"paypal_payer_id\": \"UE3DJ86DKGXVJ\"\n}"
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"root\",\n        \"user_handle\": \"cb_test\"\n    },\n    \"paypal_name\": \"enduser paypal account\",\n    \"paypal_phone\": \"\",\n    \"paypal_email\": \"\",\n    \"paypal_payer_id\": \"UE3DJ86DKGXVJ\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:{{proxy_port}}/forward?label=link_paypal_account",
