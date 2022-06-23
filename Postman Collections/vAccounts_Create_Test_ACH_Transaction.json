@@ -1,0 +1,5333 @@
+{
+	"info": {
+		"_postman_id": "58e984ea-7b82-48da-ad0e-16f707a3562b",
+		"name": "Sila API v0.2 - Local Signer Server Edition",
+		"description": "These endpoints are designed to work with our lightweight local proxy server. The local server signs and forwards requests to the main API host.\n\nAuthentication of requests made to the main API host is performed using ETH signatures. For more information, visit our docs at https://docs.silamoney.com/docs/process-overview.\n",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Entities",
+			"item": [
+				{
+					"name": "KYC/KYB Documents",
+					"item": [
+						{
+							"name": "Documents (Upload)",
+							"_postman_id": "99ddd569-59fb-49b1-8f5c-fce965210398",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": {
+										"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+										"key": "Authorization",
+										"in": "header"
+									}
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "multipart/form-data"
+									},
+									{
+										"key": "x-forward-to-url",
+										"type": "text",
+										"value": "{{host}}/0.2/documents"
+									},
+									{
+										"key": "x-set-epoch",
+										"type": "text",
+										"value": "header.created"
+									},
+									{
+										"key": "x-set-file-hash",
+										"type": "text",
+										"value": "hash"
+									},
+									{
+										"key": "x-set-file-metadata",
+										"type": "text",
+										"value": "filename, mime_type"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"contentType": "",
+											"type": "file",
+											"value": null
+										},
+										{
+											"key": "data",
+											"value": "{\"header\": {\"app_handle\":  \"{{app_handle}}\", \"user_handle\":  \"{{user_handle}}\"}, \"filename\": \"your_file.jpg\", \"hash\": \"\", \"mime_type\": \"image/jpeg\", \"document_type\": \"id_drivers_license\", \"identity_type\": \"license\"}",
+											"type": "text"
+										}
+									],
+									"options": {}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=documents",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "false",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "documents"
+										}
+									]
+								},
+								"description": "Upload documents by posting to this endpoint, which uses a multipart/form-data content type; the \"data\" field contains JSON metadata.\n\nIf you are using the signer-server, you can set the \"x-set-file-hash\" header to \"hash\", and the signer-server will generate the hash for you.\n\nIf you're not using the signer-server, you will need to generate the file hash with SHA256 and include it in the request."
+							},
+							"response": []
+						},
+						{
+							"name": "List Documents",
+							"_postman_id": "6234fc80-b476-4ab8-859f-be198021aa15",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": {
+										"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+										"key": "Authorization",
+										"in": "header"
+									}
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"description": "Forwards to this endpoint on main API host.",
+										"key": "X-Forward-To-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/list_documents"
+									},
+									{
+										"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+										"key": "X-Set-Epoch",
+										"type": "text",
+										"value": "header.created"
+									},
+									{
+										"description": "Sets a random UUID4 string on specified JSON key.",
+										"key": "X-Set-UUID",
+										"type": "text",
+										"value": "header.reference"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=list_documents",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "Requests that proxy send back debug information about request and response.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "list_documents"
+										},
+										{
+											"key": "per_page",
+											"value": "100",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								},
+								"description": "Request a listing of previously uploaded documents.\n\nSupport pagination with \"per_page\" and \"page\" query parameters"
+							},
+							"response": []
+						},
+						{
+							"name": "Document Types",
+							"_postman_id": "7840ad23-7958-4887-9f07-d38a4f148bc3",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": {
+										"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+										"key": "Authorization",
+										"in": "header"
+									}
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"description": "Forwards to this endpoint on main API host.",
+										"key": "X-Forward-To-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/document_types"
+									},
+									{
+										"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+										"key": "X-Set-Epoch",
+										"type": "text",
+										"value": "header.created"
+									},
+									{
+										"description": "Sets a random UUID4 string on specified JSON key.",
+										"key": "X-Set-UUID",
+										"type": "text",
+										"value": "header.reference"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=document_types",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "Requests that proxy send back debug information about request and response.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "document_types"
+										},
+										{
+											"key": "per_page",
+											"value": "100",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								},
+								"description": "Request a listing of supported document types, returns the details for each type.\n\nSupports pagination with \"per_page\" and \"page\" queury parameters."
+							},
+							"response": []
+						},
+						{
+							"name": "Get Document",
+							"_postman_id": "991c2f86-721b-40ac-8af2-1226b46cd54d",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": {
+										"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+										"key": "Authorization",
+										"in": "header"
+									}
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"description": "Forwards to this endpoint on main API host.",
+										"key": "X-Forward-To-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/get_document"
+									},
+									{
+										"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+										"key": "X-Set-Epoch",
+										"type": "text",
+										"value": "header.created"
+									},
+									{
+										"description": "Sets a random UUID4 string on specified JSON key.",
+										"key": "X-Set-UUID",
+										"type": "text",
+										"value": "header.reference"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"document_id\": \"{{doc_id}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=get_document",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "Requests that proxy send back debug information about request and response.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "get_document"
+										}
+									]
+								},
+								"description": "Download a previously uploaded document.\n\nThe document will be the entire response body."
+							},
+							"response": []
+						}
+					],
+					"_postman_id": "51ea2d4a-b00f-46c3-bb31-2630464487a9",
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Change Registration Data",
+					"item": [
+						{
+							"name": "Add Email",
+							"_postman_id": "8a4779d4-59de-429d-b32a-3fcf8f6a40ae",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": {
+										"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+										"key": "Authorization",
+										"in": "header"
+									}
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"description": "Forwards to this endpoint on main API host.",
+										"key": "X-Forward-To-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/add/email"
+									},
+									{
+										"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+										"key": "X-Set-Epoch",
+										"type": "text",
+										"value": "header.created"
+									},
+									{
+										"description": "Sets a random UUID4 string on specified JSON key.",
+										"key": "X-Set-UUID",
+										"type": "text",
+										"value": "header.reference"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"email\": \"another.user@email.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=add_email",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "Requests that proxy send back debug information about request and response.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "add_email"
+										}
+									]
+								},
+								"description": "Adds an email address to a registered user."
+							},
+							"response": []
+						},
+						{
+							"name": "Add Phone",
+							"_postman_id": "0a92dd4f-306d-4a94-b2af-3603b07b927d",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": {
+										"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+										"key": "Authorization",
+										"in": "header"
+									}
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"description": "Forwards to this endpoint on main API host.",
+										"key": "X-Forward-To-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/add/phone"
+									},
+									{
+										"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+										"key": "X-Set-Epoch",
+										"type": "text",
+										"value": "header.created"
+									},
+									{
+										"description": "Sets a random UUID4 string on specified JSON key.",
+										"key": "X-Set-UUID",
+										"type": "text",
+										"value": "header.reference"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"phone\": \"321-123-9876\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=add_phone",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "Requests that proxy send back debug information about request and response.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "add_phone"
+										}
+									]
+								},
+								"description": "Adds a phone number to a registered user."
+							},
+							"response": []
+						},
+						{
+							"name": "Add Identity",
+							"_postman_id": "a72e0c4a-5825-44a4-bede-ffb820e0dadf",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": {
+										"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+										"key": "Authorization",
+										"in": "header"
+									}
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"description": "Forwards to this endpoint on main API host.",
+										"key": "X-Forward-To-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/add/identity"
+									},
+									{
+										"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+										"key": "X-Set-Epoch",
+										"type": "text",
+										"value": "header.created"
+									},
+									{
+										"description": "Sets a random UUID4 string on specified JSON key.",
+										"key": "X-Set-UUID",
+										"type": "text",
+										"value": "header.reference"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"identity_alias\": \"SSN\",\n    \"identity_value\": \"123452222\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=add_identity",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "Requests that proxy send back debug information about request and response.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "add_identity"
+										}
+									]
+								},
+								"description": "Adds an ID number to a registered user."
+							},
+							"response": []
+						},
+						{
+							"name": "Add Address",
+							"_postman_id": "9caeb4a2-8ced-4f42-9cd1-b5c113f487c1",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": {
+										"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+										"key": "Authorization",
+										"in": "header"
+									}
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"description": "Forwards to this endpoint on main API host.",
+										"key": "X-Forward-To-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/add/address"
+									},
+									{
+										"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+										"key": "X-Set-Epoch",
+										"type": "text",
+										"value": "header.created"
+									},
+									{
+										"description": "Sets a random UUID4 string on specified JSON key.",
+										"key": "X-Set-UUID",
+										"type": "text",
+										"value": "header.reference"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"address_alias\": \"\",\n    \"street_address_1\": \"324 Songbird Avenue\",\n    \"city\": \"Portland\",\n    \"state\": \"OR\",\n    \"postal_code\": \"12345\",\n    \"country\": \"US\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=add_address",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "Requests that proxy send back debug information about request and response.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "add_address"
+										}
+									]
+								},
+								"description": "Adds a street address to a registered user."
+							},
+							"response": []
+						},
+						{
+							"name": "Update Email",
+							"_postman_id": "dfe12d4b-66bc-413e-aec6-12e67b46735d",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": {
+										"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+										"key": "Authorization",
+										"in": "header"
+									}
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"description": "Forwards to this endpoint on main API host.",
+										"key": "X-Forward-To-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/update/email"
+									},
+									{
+										"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+										"key": "X-Set-Epoch",
+										"type": "text",
+										"value": "header.created"
+									},
+									{
+										"description": "Sets a random UUID4 string on specified JSON key.",
+										"key": "X-Set-UUID",
+										"type": "text",
+										"value": "header.reference"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"uuid\": \"\",\n    \"email\": \"another.user@email.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=update_email",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "Requests that proxy send back debug information about request and response.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "update_email"
+										}
+									]
+								},
+								"description": "Updates an email address for a registered user. Requires the UUID of the email already registered to the entity; make a request to /get_entity to retrieve the appropriate UUID value."
+							},
+							"response": []
+						},
+						{
+							"name": "Update Phone",
+							"_postman_id": "180ca19e-5325-415d-8cfa-0bff8884d741",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": {
+										"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+										"key": "Authorization",
+										"in": "header"
+									}
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"description": "Forwards to this endpoint on main API host.",
+										"key": "X-Forward-To-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/update/phone"
+									},
+									{
+										"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+										"key": "X-Set-Epoch",
+										"type": "text",
+										"value": "header.created"
+									},
+									{
+										"description": "Sets a random UUID4 string on specified JSON key.",
+										"key": "X-Set-UUID",
+										"type": "text",
+										"value": "header.reference"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"uuid\": \"\",\n    \"phone\": \"321-123-9876\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=update_phone",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "Requests that proxy send back debug information about request and response.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "update_phone"
+										}
+									]
+								},
+								"description": "Updates a phone number for a registered user. Requires the UUID of the phone already registered to the entity; make a request to /get_entity to retrieve the appropriate UUID value."
+							},
+							"response": []
+						},
+						{
+							"name": "Update Identity",
+							"_postman_id": "6201311e-de7f-4565-a698-a0ea4feb878d",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": {
+										"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+										"key": "Authorization",
+										"in": "header"
+									}
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"description": "Forwards to this endpoint on main API host.",
+										"key": "X-Forward-To-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/update/identity"
+									},
+									{
+										"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+										"key": "X-Set-Epoch",
+										"type": "text",
+										"value": "header.created"
+									},
+									{
+										"description": "Sets a random UUID4 string on specified JSON key.",
+										"key": "X-Set-UUID",
+										"type": "text",
+										"value": "header.reference"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"uuid\": \"\",\n    \"identity_alias\": \"SSN\",\n    \"identity_value\": \"123452222\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=update_identity",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "Requests that proxy send back debug information about request and response.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "update_identity"
+										}
+									]
+								},
+								"description": "Updates an ID number for a registered user. Requires the UUID of the identity already registered to the entity; make a request to /get_entity to retrieve the appropriate UUID value."
+							},
+							"response": []
+						},
+						{
+							"name": "Update Address",
+							"_postman_id": "cbbf569a-369f-47cd-9498-3ebb322f7a96",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": {
+										"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+										"key": "Authorization",
+										"in": "header"
+									}
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"description": "Forwards to this endpoint on main API host.",
+										"key": "X-Forward-To-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/update/address"
+									},
+									{
+										"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+										"key": "X-Set-Epoch",
+										"type": "text",
+										"value": "header.created"
+									},
+									{
+										"description": "Sets a random UUID4 string on specified JSON key.",
+										"key": "X-Set-UUID",
+										"type": "text",
+										"value": "header.reference"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"uuid\": \"\",\n    \"address_alias\": \"\",\n    \"street_address_1\": \"324 Songbird Avenue\",\n    \"city\": \"Portland\",\n    \"state\": \"OR\",\n    \"postal_code\": \"12345\",\n    \"country\": \"US\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=update_address",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "Requests that proxy send back debug information about request and response.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "update_address"
+										}
+									]
+								},
+								"description": "Updates a street address for a registered user. Requires the UUID of the address already registered to the entity; make a request to /get_entity to retrieve the appropriate UUID value."
+							},
+							"response": []
+						},
+						{
+							"name": "Update Entity",
+							"_postman_id": "bf7b7b0b-4ca2-43e6-9dcf-e93fe63fc670",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": {
+										"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+										"key": "Authorization",
+										"in": "header"
+									}
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"description": "Forwards to this endpoint on main API host.",
+										"key": "X-Forward-To-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/update/entity"
+									},
+									{
+										"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+										"key": "X-Set-Epoch",
+										"type": "text",
+										"value": "header.created"
+									},
+									{
+										"description": "Sets a random UUID4 string on specified JSON key.",
+										"key": "X-Set-UUID",
+										"type": "text",
+										"value": "header.reference"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"first_name\": \"Newfirst\",\n    \"last_name\": \"Newlast\",\n    \"entity_name\": \"New Full Name\",\n    \"birthdate\": \"2000-12-31\",\n    \"business_type\": \"llc\",\n    \"naics_code\": 721,\n    \"doing_business_as\": \"New Business Alias\",\n    \"business_website\": \"https://www.silamoney.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=update_entity",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "Requests that proxy send back debug information about request and response.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "update_entity"
+										}
+									]
+								},
+								"description": "Updates an entity's name, birthdate, and/or business-related information if the entity is a business."
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Email",
+							"_postman_id": "baa3e768-312a-4e4a-83b8-7bfd00831a2f",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": {
+										"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+										"key": "Authorization",
+										"in": "header"
+									}
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"description": "Forwards to this endpoint on main API host.",
+										"key": "X-Forward-To-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/delete/email"
+									},
+									{
+										"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+										"key": "X-Set-Epoch",
+										"type": "text",
+										"value": "header.created"
+									},
+									{
+										"description": "Sets a random UUID4 string on specified JSON key.",
+										"key": "X-Set-UUID",
+										"type": "text",
+										"value": "header.reference"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"uuid\": \"\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=delete_email",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "Requests that proxy send back debug information about request and response.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "delete_email"
+										}
+									]
+								},
+								"description": "Deletes an email address for a registered user. Requires the UUID of the email already registered to the entity; make a request to /get_entity to retrieve the appropriate UUID value."
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Phone",
+							"_postman_id": "e8921783-2377-4643-b613-a53985370c21",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": {
+										"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+										"key": "Authorization",
+										"in": "header"
+									}
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"description": "Forwards to this endpoint on main API host.",
+										"key": "X-Forward-To-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/delete/phone"
+									},
+									{
+										"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+										"key": "X-Set-Epoch",
+										"type": "text",
+										"value": "header.created"
+									},
+									{
+										"description": "Sets a random UUID4 string on specified JSON key.",
+										"key": "X-Set-UUID",
+										"type": "text",
+										"value": "header.reference"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"uuid\": \"\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=delete_phone",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "Requests that proxy send back debug information about request and response.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "delete_phone"
+										}
+									]
+								},
+								"description": "Deletes a phone number for a registered user. Requires the UUID of the phone already registered to the entity; make a request to /get_entity to retrieve the appropriate UUID value."
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Identity",
+							"_postman_id": "000012a4-8d24-452e-8033-9dfd237efb68",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": {
+										"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+										"key": "Authorization",
+										"in": "header"
+									}
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"description": "Forwards to this endpoint on main API host.",
+										"key": "X-Forward-To-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/delete/identity"
+									},
+									{
+										"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+										"key": "X-Set-Epoch",
+										"type": "text",
+										"value": "header.created"
+									},
+									{
+										"description": "Sets a random UUID4 string on specified JSON key.",
+										"key": "X-Set-UUID",
+										"type": "text",
+										"value": "header.reference"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"uuid\": \"\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=delete_identity",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "Requests that proxy send back debug information about request and response.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "delete_identity"
+										}
+									]
+								},
+								"description": "Deletes an ID number for a registered user. Requires the UUID of the identity already registered to the entity; make a request to /get_entity to retrieve the appropriate UUID value."
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Address",
+							"_postman_id": "830040e5-fcc7-4cc6-9541-0225ccc122ce",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": {
+										"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+										"key": "Authorization",
+										"in": "header"
+									}
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"description": "Forwards to this endpoint on main API host.",
+										"key": "X-Forward-To-URL",
+										"type": "text",
+										"value": "{{host}}/0.2/delete/address"
+									},
+									{
+										"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+										"key": "X-Set-Epoch",
+										"type": "text",
+										"value": "header.created"
+									},
+									{
+										"description": "Sets a random UUID4 string on specified JSON key.",
+										"key": "X-Set-UUID",
+										"type": "text",
+										"value": "header.reference"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"uuid\": \"\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:{{proxy_port}}/forward?label=delete_address",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "{{proxy_port}}",
+									"path": [
+										"forward"
+									],
+									"query": [
+										{
+											"key": "debug",
+											"value": "true",
+											"description": "Requests that proxy send back debug information about request and response.",
+											"disabled": true
+										},
+										{
+											"key": "label",
+											"value": "delete_address"
+										}
+									]
+								},
+								"description": "Deletes a street address for a registered user. Requires the UUID of the address already registered to the entity; make a request to /get_entity to retrieve the appropriate UUID value."
+							},
+							"response": []
+						}
+					],
+					"_postman_id": "3cd6a25a-e752-422b-abbf-7e191b6f00f1",
+					"description": "This folder contains /add, /update, and /delete requests for changing a user's registered data. These endpoints are used to change data that is used in verification.\n\nNote that some data cannot be changed after a verification has already passed or while a verification is still in progress (pending), and that only one SSN or EIN can be added to an entity at a time.",
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Get Payment Methods",
+					"_postman_id": "4022a4ba-5354-42b8-8091-e26e6740632b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/get_payment_methods"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=get_payment_methods",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "get_payment_methods"
+								}
+							]
+						},
+						"description": "Gets list of payment methods linked to the given entity."
+					},
+					"response": []
+				},
+				{
+					"name": "Check Handle",
+					"_postman_id": "336ce96f-733f-4a8f-8de8-f94f4d79af1c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Forward-To-URL",
+								"value": "{{host}}/0.2/check_handle",
+								"description": "Forwards to this endpoint on main API host.",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-Epoch",
+								"value": "header.created",
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-UUID",
+								"value": "header.reference",
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=check_handle",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "check_handle",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Checks availability of a handle to see if it can be registered by an entity (business or individual)."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Entities",
+					"_postman_id": "83213e8d-d087-4163-bfb8-ce489f969f40",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/get_entities"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=get_entities",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "get_entities",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Gets a list of business and individual entities registered by the authenticating app."
+					},
+					"response": []
+				},
+				{
+					"name": "Register (individual)",
+					"_postman_id": "b629a8d4-4249-471b-809d-008a6e593c33",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/register"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"address\": {\n\t\t\"address_alias\": \"Home\",\n\t\t\"street_address_1\": \"123 NW 1st Ave.\",\n\t\t\"city\": \"Portland\",\n\t\t\"state\": \"OR\",\n\t\t\"country\": \"US\",\n\t\t\"postal_code\": \"97200\"\n\t},\n\t\"identity\": {\n\t\t\"identity_alias\": \"SSN\",\n\t\t\"identity_value\": \"123-45-2222\"\n\t},\n\t\"entity\": {\n\t\t\"entity_name\": \"Postman User\",\n\t\t\"first_name\": \"Postman\",\n\t\t\"last_name\": \"User\",\n\t\t\"birthdate\": \"1990-01-31\"\n\t},\n\t\"contact\": {\n\t\t\"email\": \"postman@user.com\",\n\t\t\"phone\": \"1231231234\"\n\t},\n\t\"crypto_entry\": {\n\t\t\"crypto_code\": \"ETH\",\n\t\t\"crypto_address\": \"{{user_address}}\"\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=register_individual",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "register_individual",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								}
+							]
+						},
+						"description": "Registers an individual entity. This same endpoint can be used to register businesses as well."
+					},
+					"response": []
+				},
+				{
+					"name": "Register (business)",
+					"_postman_id": "be1d8708-ee8f-48aa-a6cb-9f330fe7cdc8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/register"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{business_handle}}\"\n    },\n    \"address\": {\n\t\t\"address_alias\": \"Office\",\n\t\t\"street_address_1\": \"123 NW 1st Ave.\",\n\t\t\"city\": \"Portland\",\n\t\t\"state\": \"OR\",\n\t\t\"country\": \"US\",\n\t\t\"postal_code\": \"97200\"\n\t},\n\t\"identity\": {\n\t\t\"identity_alias\": \"EIN\",\n\t\t\"identity_value\": \"12-3452222\"\n\t},\n\t\"entity\": {\n\t\t\"entity_name\": \"Postman User\",\n\t\t\"type\": \"business\",\n\t\t\"business_type\": \"llc\",\n\t\t\"naics_code\": 721\n\t},\n\t\"contact\": {\n\t\t\"email\": \"postman@user.com\",\n\t\t\"phone\": \"1231231234\"\n\t},\n\t\"crypto_entry\": {\n\t\t\"crypto_code\": \"ETH\",\n\t\t\"crypto_address\": \"{{business_address}}\"\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=register_business",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "register_business",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								}
+							]
+						},
+						"description": "Registers business entities."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Entity (individual)",
+					"_postman_id": "352bb806-851d-4b60-b4ce-e997d5b736d0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/get_entity"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=get_entity_individual",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "get_entity_individual",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Gets registered details about an individual entity."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Entity (business)",
+					"_postman_id": "84d7b1c1-139d-4f8e-a8d2-954cc4369496",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{business_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/get_entity"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{business_handle}}\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=get_entity_business",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "get_entity_business",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Gets registered details about a business entity."
+					},
+					"response": []
+				},
+				{
+					"name": "Link Business Member",
+					"_postman_id": "da9af3f9-7cef-4963-8bdc-6e3f83b0d00e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}; Businesssignature={{business_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/link_business_member"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\",\n        \"business_handle\": \"{{business_handle}}\"\n    },\n    \"role\": [\"administrator\", \"controlling_officer\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=link_business_member",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "link_business_member",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Links an individual to a business with a given role. Ownership stake and additional details can also be included."
+					},
+					"response": []
+				},
+				{
+					"name": "Unlink Business Member",
+					"_postman_id": "8ad1712b-a212-4bd0-8e11-274c38b88067",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}; Businesssignature={{business_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/unlink_business_member"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\",\n        \"business_handle\": \"{{business_handle}}\"\n    },\n    \"role\": \"administrator\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=unlink_business_member",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "unlink_business_member",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Uninks an individual from a business with the given role."
+					},
+					"response": []
+				},
+				{
+					"name": "Request KYC",
+					"_postman_id": "3f9af3d4-20eb-4872-8f4d-c14b4d3bd667",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/request_kyc"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=request_kyc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "request_kyc",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Requests identity verification and blockchain address allowlisting for the given user_handle (can belong to an individual or a business).\n\nIf requesting KYB, make sure to use the business private key."
+					},
+					"response": []
+				},
+				{
+					"name": "Check KYC/KYB",
+					"_postman_id": "6c933988-7cf3-46b8-9f98-5f2e2e2b5dbd",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/check_kyc"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=check_kyc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "check_kyc",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Checks status of identity verification and blockchain address allowlisting for the given user_handle (can belong to an individual or a business)."
+					},
+					"response": []
+				},
+				{
+					"name": "Certify Beneficial Owner",
+					"_postman_id": "eb975991-35fa-4d7a-97a0-60de2a753f19",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}; Businesssignature={{business_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/certify_beneficial_owner"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\",\n        \"business_handle\": \"{{business_handle}}\"\n    },\n    \"certification_token\": \"blah\",\n    \"member_handle\": \"{{user_handle}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=certify_beneficial_owner",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "certify_beneficial_owner",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Certifies an individual with the beneficial owner role. Requires a certification token returned by /get_entity for the individual user and the member handle of the beneficial owner. The user handle must have been granted the administrator role for the business."
+					},
+					"response": []
+				},
+				{
+					"name": "Certify Business",
+					"_postman_id": "6d3cb5de-cd45-4d0c-b3db-39f1eb61f37f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}; Businesssignature={{business_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/certify_business"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\",\n        \"business_handle\": \"{{business_handle}}\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=certify_beneficial_owner",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "certify_beneficial_owner",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Certifies that all beneficial owners have been added to the business with the correct information and correct ownership stakes."
+					},
+					"response": []
+				},
+				{
+					"name": "Check KYC App",
+					"_postman_id": "a15e7225-07fc-4f1f-8343-01f5b9b0b87a",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						},
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+								"key": "Authorization"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Forward-To-URL",
+								"value": "{{host}}/0.2/check_kyc_app",
+								"description": "Forwards to this endpoint on main API host.",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-Epoch",
+								"value": "header.created",
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-UUID",
+								"value": "header.reference",
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"query_app_handle\": \"{{Cross APP handle}}\",\n    \"query_user_handle\": \"{{Cross APP User handle}}\"\n}",
+							"options": {}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=check_kyc_app",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "check_kyc_app",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check KYC/KYB Partnered App",
+					"_postman_id": "f081babb-5941-4865-9125-f02529b0932d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_b_pkey}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/check_partner_kyc"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_b_handle}}\"\n    },\n    \"query_app_handle\": \"{{app_handle}}\",\n    \"query_user_handle\": \"{{user_handle}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=check_partner_kyc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "check_partner_kyc"
+								}
+							]
+						},
+						"description": "Checks status of identity verification and blockchain address allowlisting for the given user_handle (can belong to an individual or a business)."
+					},
+					"response": []
+				}
+			],
+			"_postman_id": "c4a0ad93-6cf1-4a4b-82df-15c7aa13d79c"
+		},
+		{
+			"name": "Accounts",
+			"item": [
+				{
+					"name": "Get Bank Accounts",
+					"_postman_id": "02aa2930-8054-4e23-bd4d-040c1dbe45d4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/get_accounts"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=get_accounts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "get_accounts",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Gets list of bank accounts linked to the user_handle along with their statuses."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Bank Account Balance",
+					"_postman_id": "cc74ece5-a6aa-4cb4-abd5-99eb7e1c347a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/get_account_balance"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"account_name\": \"{{bank_account_name}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=get_account_balance",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "get_account_balance",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Gets balance information forwarded from Plaid. Only works for Plaid-linked bank accounts."
+					},
+					"response": []
+				},
+				{
+					"name": "Link Bank Account (Plaid)",
+					"_postman_id": "26551429-40ff-4ee8-905e-b26119f587c5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/link_account"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"plaid_token\": \"sandbox\",\n    \"account_name\": \"{{bank_account_name}}\",\n    \"plaid_token_type\": \"{{plaid_token_type}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=link_account_plaid",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "link_account_plaid",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Links a bank account with Plaid. Uses a sandbox value to pretend a valid public token was submitted."
+					},
+					"response": []
+				},
+				{
+					"name": "Link Bank Account (Manual)",
+					"_postman_id": "13ec26c2-e465-4e58-85e8-9a50262e898e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/link_account"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"account_number\": \"999999999\",\n    \"routing_number\": \"123456789\",\n    \"account_name\": \"{{manual_bank_account_name}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=link_account_manual",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "link_account_manual",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Links a bank account with account and routing number to the user_handle."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a Bank Account",
+					"_postman_id": "3542a366-d412-4406-a310-15f58d6f0029",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						},
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+								"key": "Authorization"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/delete_account"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							},
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"account_name\": \"{{bank_account_name}}\"\n}",
+							"options": {}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=delete_bank_account",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "delete_bank_account",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a Bank Account",
+					"_postman_id": "3e85db88-8918-4a07-95ff-0506d34f1623",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+								"key": "Authorization"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Forward-To-URL",
+								"value": "{{host}}/0.2/update_account",
+								"description": "Forwards to this endpoint on main API host.",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-Epoch",
+								"value": "header.created",
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-UUID",
+								"value": "header.reference",
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"account_name\": \"{{bank_account_name}}\",\n    \"new_account_name\": \"{{new_bank_account_name}}\",\n    \"active\": true\n}",
+							"options": {}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=update_bank_account",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "update_bank_account",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Link Token (Plaid)",
+					"_postman_id": "66304989-4ed8-427d-b259-a35c7ade516a",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						},
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+								"key": "Authorization"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Forward-To-URL",
+								"value": "{{host}}/0.2/plaid_link_token",
+								"description": "Forwards to this endpoint on main API host.",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-Epoch",
+								"value": "header.created",
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-UUID",
+								"value": "header.reference",
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"android_package_name\": \"\"\n}",
+							"options": {}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=create_link_token_plaid",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "create_link_token_plaid",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Plaid Sameday Auth",
+					"_postman_id": "a2158a43-af97-44bc-9bf9-5aec71b468a6",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+								"key": "Authorization"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/plaid_sameday_auth"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"account_name\": \"{{bank_account_name}}\"\n}",
+							"options": {}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=plaid_sameday_auth",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "plaid_sameday_auth",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Link Token (Plaid Update Mode)",
+					"_postman_id": "08509815-3e03-40f8-b3f0-5323dbb9a5da",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+								"key": "Authorization"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Forward-To-URL",
+								"value": "{{host}}/0.2/plaid_update_link_token",
+								"description": "Forwards to this endpoint on main API host.",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-Epoch",
+								"value": "header.created",
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-UUID",
+								"value": "header.reference",
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"account_name\": \"{{bank_account_name}}\"\n}",
+							"options": {}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=create_link_token_plaid_update_mode",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "create_link_token_plaid_update_mode",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Institutions",
+					"_postman_id": "7a9cf1d0-f278-4089-b5c7-f4904b57ea06",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Forward-To-URL",
+								"value": "{{host}}/0.2/get_institutions",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-Epoch",
+								"value": "header.created",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-UUID",
+								"value": "header.reference",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n       \n    },\n     \"search_filters\": {\n        \"page\": 1,\n        \"per_page\": 20,\n        \"institution_name\":\"bank\"\n    }\n\n}",
+							"options": {}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=get_institutions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "get_institutions"
+								}
+							]
+						},
+						"description": "Get Institutions"
+					},
+					"response": []
+				},
+				{
+					"name": "Check InstantACH Enable",
+					"_postman_id": "d039b3fd-444f-4315-8a8b-f51ebfa6b589",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+								"key": "Authorization"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Forward-To-URL",
+								"value": "{{host}}/0.2/check_instant_ach",
+								"description": "Forwards to this endpoint on main API host.",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-Epoch",
+								"value": "header.created",
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-UUID",
+								"value": "header.reference",
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"account_name\": \"{{bank_account_name}}\"\n}",
+							"options": {}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=check_instant_ach",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "check_instant_ach"
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Payment Methods",
+					"_postman_id": "ff9cf17f-0a59-4c2e-93d8-9c906116f90d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/get_payment_methods"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"search_filters\": {\n        \"payment_method_types\": [\"blockchain_address\", \"bank_account\", \"card\"],\n        \"page\":1,\n        \"per_page\":10\n    }  \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=get_payment_methods",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "get_payment_methods"
+								}
+							]
+						},
+						"description": "This endpoint lists all payment methods linked to an entity: cards, bank accounts, and wallets."
+					},
+					"response": []
+				}
+			],
+			"_postman_id": "24a9140b-dbf9-4661-9eb9-a268c4dbe9b0"
+		},
+		{
+			"name": "Wallets",
+			"item": [
+				{
+					"name": "Get Wallets",
+					"_postman_id": "d5a916f2-7e94-4600-8831-1bf127bca156",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/get_wallets"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"search_filters\": {\n        \"wallet_id\": \"37d7d51f-2f3a-4f16-9003-41366218a74c\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=get_wallets",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "get_wallets",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Gets list of blockchain addresses registered to the given entity."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Wallet",
+					"_postman_id": "ee77eea2-08eb-465f-b2a4-ac9631f20694",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/get_wallet"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=get_wallet",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "get_wallet",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Gets details about the wallet used to sign the request. Includes balance and whether wallet is whitelisted."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Wallet",
+					"_postman_id": "fc35fdc2-9652-4ff1-b956-46e9cbf577cd",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/update_wallet"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"nickname\": \"Default Wallet\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=update_wallet",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "update_wallet",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Allows updating nickname and default status of the wallet used to sign the request."
+					},
+					"response": []
+				},
+				{
+					"name": "Register Wallet",
+					"_postman_id": "2afcbd23-4202-4324-9cf0-6525e9a934d2",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/register_wallet"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"wallet_verification_signature\": \"\",\n    \"wallet\": {\n        \"blockchain_address\": \"{{user_address2}}\",\n        \"default\":true\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=register_wallet",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "register_wallet",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Allows an entity to have a second wallet registered. Requires a valid verification signature."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Sila Balance",
+					"_postman_id": "c196793e-d543-477e-9e6c-15015ab79698",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/get_sila_balance"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"address\": \"{{user_address (either address or blockchain_address as key)}}\",\n    \"blockchain_address\": \"{{user_address (either address or blockchain_address as key)}}\"\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=get_sila_balance",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "get_sila_balance",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Gets details about the wallet used to sign the request. Includes balance and whether wallet is whitelisted."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Wallet",
+					"_postman_id": "e968d92f-3692-406c-b62c-0c7c315c8e46",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/delete_wallet"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=delete_wallet",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "delete_wallet",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Allows updating nickname and default status of the wallet used to sign the request."
+					},
+					"response": []
+				}
+			],
+			"_postman_id": "3485c01a-092d-487e-99a1-3ddced4482c2"
+		},
+		{
+			"name": "Transactions",
+			"item": [
+				{
+					"name": "Get Transactions",
+					"_postman_id": "eaac6567-9eeb-43fb-9e3f-6c7c00848089",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/get_transactions"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"transaction_id\": \"c3bc7597-6a72-4a8f-9cb1-a18f6ffba34d\",    \n    \"bank_account_name\": \"{{bank_account_name}}\",\n    \"blockchain_address\": \"{{blockchain_address_of_the_wallet}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=get_transactions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "get_transactions"
+								}
+							]
+						},
+						"description": "Gets details about the transactions initiated with this user (issue, transfer, and redeem transactions)."
+					},
+					"response": []
+				},
+				{
+					"name": "Issue Sila",
+					"_postman_id": "c363a914-e69d-4682-bffc-5cb1086531ed",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/issue_sila"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"amount\": 1,\n    \"account_name\": \"{{bank_account_name}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=issue_sila",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "issue_sila"
+								}
+							]
+						},
+						"description": "Initiates a transaction which debits a bank account a given amount (in cents) and mints tokens in the given amount (in Sila) after the transaction has settled."
+					},
+					"response": []
+				},
+				{
+					"name": "Redeem Sila",
+					"_postman_id": "ae721750-2471-4e61-84af-e36ad247478f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/redeem_sila"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"amount\": 1,\n    \"account_name\": \"{{bank_account_name}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=redeem_sila",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "redeem_sila"
+								}
+							]
+						},
+						"description": "Initiates a transaction which burns a given amount (in Sila) from the ETH wallet used to sign the request and credits the bank account, identified by its account_name, the given amount (in cents)."
+					},
+					"response": []
+				},
+				{
+					"name": "Transfer Sila",
+					"_postman_id": "b78ac270-4b98-467d-9841-907a88e72eb1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/transfer_sila"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"destination\": \"{{business_handle}}\",\n    \"amount\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=transfer_sila",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "transfer_sila"
+								}
+							]
+						},
+						"description": "Initiates a transaction which transfers a given amount (in Sila) from the ETH wallet used to sign the request to the handle and wallet specified in the request. If there is no wallet nickname or wallet address in the request, the receiver's default wallet is selected as the destination."
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Transaction",
+					"_postman_id": "997a35e1-b4a8-4d31-9150-4676a2f7f55c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/cancel_transaction"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"transaction_id\": \"80aea226-76a3-4b60-a629-25a2db572ec8\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=cancel_transaction",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "cancel_transaction",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"_postman_id": "3e2dae41-e6f3-4bf8-8439-df737cd3ccfe"
+		},
+		{
+			"name": "Parameters",
+			"item": [
+				{
+					"name": "Get Business Types",
+					"_postman_id": "2dff8f4f-1501-4745-9b42-1ea049bf1cc5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/get_business_types"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=get_business_types",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "get_business_types",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Gets a list of business types that can be used when registering a business."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Business Roles",
+					"_postman_id": "2921b446-72bf-469f-b7be-88dc8b3cc39d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/get_business_roles"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=get_business_roles",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "get_business_roles",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Gets a list of business roles that can be used when linking a business member."
+					},
+					"response": []
+				},
+				{
+					"name": "Get NAICS Categories",
+					"_postman_id": "351d2ed5-3879-44de-bdd7-ab368dd6dd60",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/get_naics_categories"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=get_naics_categories",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "get_naics_categories",
+									"description": "Adds an informative label to request (helpful in proxy logs)."
+								},
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Gets a list of NAICS categories and codes that can be used when registering a business."
+					},
+					"response": []
+				}
+			],
+			"_postman_id": "eb681ae8-907a-4db4-abdb-ddaf4c210c02",
+			"description": "Contains endpoints which return meta information about how to make requests to this API."
+		},
+		{
+			"name": "Webhooks",
+			"item": [
+				{
+					"name": "Get Webhooks",
+					"_postman_id": "13f854cd-780d-4110-b69d-e7624054bcb1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}",
+								"key": "Authorization"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Forward-To-URL",
+								"value": "{{host}}/0.2/get_webhooks",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-Epoch",
+								"value": "header.created",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-UUID",
+								"value": "header.reference",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"search_filters\": {\n    \"uuid\": \"{{some UUID string assigned by Sila}}\",    \n    \"delivered\": {{webhook delivered true|false}},\n    \"sort_ascending\": false,\n    \"event_type\": \"{{webhook event type}}\",\n    \"endpoint_name\": \"{{webhook endpoint name}}\",\n    \"user_handle\": \"{{webhook user handle}}\",\n    \"start_epoch\": \"{{webhook start time}}\",\n    \"end_epoch\": \"{{webhook end time}}\",\n    \"page\": 1,\n    \"per_page\": 20\n  }\n}",
+							"options": {}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=get_webhooks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "get_webhooks"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retry Webhook",
+					"_postman_id": "6de790a5-5044-4b5e-aaf3-1c947b415cb2",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}",
+								"key": "Authorization"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/retry_webhook"
+							},
+							{
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\"\n    },\n    \"event_uuid\": \"{{some UUID string assigned by Sila}}\"\n}",
+							"options": {}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=retry_webhook",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "retry_webhook"
+								}
+							]
+						},
+						"description": "Retry Webhook"
+					},
+					"response": []
+				}
+			],
+			"_postman_id": "9d1ca358-bba4-4ee4-b002-70c9b8f9b7ef"
+		},
+		{
+			"name": "Virtual Accounts",
+			"item": [
+				{
+					"name": "Open Virtual Account",
+					"_postman_id": "2c2a2a18-9450-4f06-8c17-1b9afcb99d84",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/open_virtual_account"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"virtual_account_name\": \"name for newly opened virtual account\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=open_virtual_account",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "open_virtual_account"
+								}
+							]
+						},
+						"description": "Provisions a new virtual account for the specified user. If a virtual_account_name is specified, this will become the nickname of the new virtual account.\n\nIf the user already has a virtual account with the chosen nickname, the new virtual account will be the selected nickname + 8 random characters.\n\nThe app you are authenticated on must have already been set up for virtual accounts for this endpoint to succeed."
+					},
+					"response": []
+				},
+				{
+					"name": "Fund Virtual Account",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const moment = require('moment');",
+									"pm.globals.set(\"today\", moment().format(\"YYYY-MM-DD\"));"
+								],
+								"type": "text/javascript",
+								"id": "4673a7d6-71dd-48e7-a396-c01cd8873cfe"
+							}
+						}
+					],
+					"_postman_id": "46d8b876-f9cd-40a6-974d-52e246aea75d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Forward-To-URL",
+								"value": "{{host}}/0.2/fund_virtual_account",
+								"description": "Forwards to this endpoint on main API host.",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-Epoch",
+								"value": "header.created",
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-UUID",
+								"value": "header.reference",
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"virtual_account_id\": \"{{virtual_account_id}}\",\n    \"amount\": 100,\n    \"effective_date\": \"{{today}}\",\n    \"ach_transaction_code\": 100\n}",
+							"options": {}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=fund_virtual_account",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "fund_virtual_account"
+								}
+							]
+						},
+						"description": "This endpoint creates a transaction that funds a virtual account with mock funds"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Test Virtual Account ACH Transaction",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "4673a7d6-71dd-48e7-a396-c01cd8873cfe",
+								"exec": [
+									"const moment = require('moment');",
+									"pm.globals.set(\"today\", moment().format(\"YYYY-MM-DD\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"_postman_id": "7a4fcd3a-12e1-4e4d-9a75-94872005b38e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Forward-To-URL",
+								"value": "{{host}}/0.2/create_test_virtual_account_ach_transaction",
+								"description": "Forwards to this endpoint on main API host.",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-Epoch",
+								"value": "header.created",
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-UUID",
+								"value": "header.reference",
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"header\": {\n    \"app_handle\": \"{{app_handle}}\", \n    \"user_handle\":\"{{user_handle}}\"\n  },\n    \"amount\": \"10000\",\n    \"virtual_account_number\": \"9715837768366849\",\n    \"tran_code\": \"22\",\n    \"effective_date\": \"{{today}}\",\n    \"entity_name\": \"stephen entity\",\n    \"ced\": \"PAYROLL\",\n    \"ach_name\": \"ach business name\"\n}",
+							"options": {}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=create_test_virtual_account_ach_transaction",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "create_test_virtual_account_ach_transaction"
+								}
+							]
+						},
+						"description": "This endpoint creates a transaction that funds a virtual account with mock funds"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Virtual Account",
+					"_postman_id": "283d640c-02e1-4abf-b741-4b82ca665b96",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/get_virtual_account"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"virtual_account_id\": \"{{virtual_account_id}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=get_virtual_account",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "get_virtual_account"
+								}
+							]
+						},
+						"description": "Get a single virutal account that is linked to the user_handle. Returns the virtual account statuses and balance information."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Virtual Accounts",
+					"_postman_id": "91d1a585-6893-4725-a96f-4c8dbdf6578a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+								"key": "Authorization",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/get_virtual_accounts"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=get_virtual_accounts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "get_virtual_accounts"
+								}
+							]
+						},
+						"description": "This endpoint is used for retrieving all of the virtual accounts that are allocated to an end user."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Virtual Account",
+					"_postman_id": "fd52b3f6-6683-4661-abe1-aa0dbc319958",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"key": "Authorization",
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Forward-To-URL",
+								"value": "{{host}}/0.2/update_virtual_account",
+								"description": "Forwards to this endpoint on main API host.",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-Epoch",
+								"value": "header.created",
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-UUID",
+								"value": "header.reference",
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"virtual_account_id\": \"{{user_virtual_account_id}}\"\n}",
+							"options": {}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=update_virtual_account",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "update_virtual_account"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Close Virtual Account",
+					"_postman_id": "60ef0df5-d149-4147-8762-71739029af32",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"key": "Authorization",
+								"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Forward-To-URL",
+								"value": "{{host}}/0.2/close_virtual_account",
+								"description": "Forwards to this endpoint on main API host.",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-Epoch",
+								"value": "header.created",
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-UUID",
+								"value": "header.reference",
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"virtual_account_id\": \"{{user_virtual_account_id}}\",\n    \"account_number\": \"{{user_virtual_account_number}}\"\n\n}",
+							"options": {}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=close_virtual_account",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "close_virtual_account"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"_postman_id": "03084721-6365-4a59-a3c7-a4677a29b0bd"
+		},
+		{
+			"name": "Proxy Helper: Generate Private Key",
+			"_postman_id": "f06d0ca0-e9a3-4a84-a701-0d78a835e31c",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:{{proxy_port}}/generate_private_key",
+				"description": "Generates a private key/address pair (ETH). This is intended as a helper for testing purposes only."
+			},
+			"response": [
+				{
+					"id": "7b39af35-19f8-4c59-b7e8-1b19328e27ef",
+					"name": "User Private Key",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:{{proxy_port}}/generate_private_key"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "303"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/2.0.3 Python/3.6.15"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 14 Jun 2022 17:42:42 GMT"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n    \"address\": \"0x0a275005e689bf08C5E222B5BE2f9f9633941B92\",\n    \"private_key\": \"2773846a2c739d1da40a0205e8d84d7284ce6934ebf0d9bec75b547ed22e7b9a\",\n    \"wallet_verification_signature\": \"5b97bbec288ccd9f6fe206d399411d00acaa4b0344bc2f7408081209b47c4602031c922539d1af7f7c28c77226859190b88eb7a1254d73237694638948be82a51b\"\n}"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				],
+				"id": "02386df4-1791-4fab-91e0-0c2f4bde21a5"
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				],
+				"id": "806fb60d-2d23-469b-a4ae-359893f168f0"
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "f25d166c-9614-4b41-8754-4f9060b40c6d",
+			"key": "host",
+			"value": "sandbox.silamoney.com",
+			"type": "string"
+		},
+		{
+			"id": "8347a094-be9d-41b0-afe4-e260d29cd441",
+			"key": "proxy_port",
+			"value": "8181",
+			"type": "string"
+		},
+		{
+			"id": "db603567-55fe-4645-8b6a-d06f939a95af",
+			"key": "app_handle",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "7d1a12e6-2613-4b7f-a085-f85304dce92f",
+			"key": "app_private_key",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "f4115066-8b27-458d-bd80-67203682bbc0",
+			"key": "user_handle",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "12b12f0e-a90a-42dd-acf2-535113dde1c8",
+			"key": "user_address",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "0dccc59f-3b3b-46a7-b3c0-7890aa7de6c5",
+			"key": "business_handle",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "2870e271-7588-44ed-b035-4a6bfa6eecc6",
+			"key": "business_private_key",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "7e7e5d8f-34d6-4ac8-80d6-28c5d90ed25b",
+			"key": "business_address",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "b20901b8-aa45-4635-87b8-03cdf310a103",
+			"key": "user_private_key2",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "54d99864-f3e0-4aea-9139-605998771ec4",
+			"key": "user_address2",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "84707388-3fc9-408a-8f23-c2e34fabe1ae",
+			"key": "bank_account_name",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "8dff34f6-6d72-4a4a-acce-4cce405051e7",
+			"key": "manual_bank_account_name",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "56760fff-5803-4eec-8863-6de5f0ae43ff",
+			"key": "user_private_key",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
