@@ -5645,7 +5645,7 @@
 								}
 							]
 						},
-						"description": "Gets details about the transactions initiated with this user (issue, transfer, and redeem transactions)."
+						"description": "Get Statements Data according to provided month."
 					},
 					"response": []
 				},
@@ -5730,7 +5730,7 @@
 								}
 							]
 						},
-						"description": "Gets details about the transactions initiated with this user (issue, transfer, and redeem transactions)."
+						"description": "Get Wallet Statements Data according to provided wallet uuid and date range."
 					},
 					"response": []
 				}
