@@ -4120,26 +4120,6 @@
 				{
 					"name": "Get Virtual Accounts",
 					"request": {
-						"auth": {
-							"type": "apikey",
-							"apikey": [
-								{
-									"key": "value",
-									"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
-									"type": "string"
-								},
-								{
-									"key": "key",
-									"value": "Authorization",
-									"type": "string"
-								},
-								{
-									"key": "in",
-									"value": "header",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [
 							{
@@ -4151,24 +4131,27 @@
 								"description": "Forwards to this endpoint on main API host.",
 								"key": "X-Forward-To-URL",
 								"type": "text",
-								"value": "{{host}}/0.2/get_virtual_accounts"
+								"value": "{{host}}/0.2/get_virtual_accounts",
+								"disabled": true
 							},
 							{
 								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
 								"key": "X-Set-Epoch",
 								"type": "text",
-								"value": "header.created"
+								"value": "header.created",
+								"disabled": true
 							},
 							{
 								"description": "Sets a random UUID4 string on specified JSON key.",
 								"key": "X-Set-UUID",
 								"type": "text",
-								"value": "header.reference"
+								"value": "header.reference",
+								"disabled": true
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\",\n        \"created\":{{$timestamp}},\n        \"reference\":{{$timestamp}}\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4176,14 +4159,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward?label=get_virtual_accounts",
-							"protocol": "http",
+							"raw": "{{backend_url}}/0.2/get_virtual_accounts",
 							"host": [
-								"localhost"
+								"{{backend_url}}"
 							],
-							"port": "{{proxy_port}}",
 							"path": [
-								"forward"
+								"0.2",
+								"get_virtual_accounts"
 							],
 							"query": [
 								{
@@ -4191,10 +4173,6 @@
 									"value": "true",
 									"description": "Requests that proxy send back debug information about request and response.",
 									"disabled": true
-								},
-								{
-									"key": "label",
-									"value": "get_virtual_accounts"
 								}
 							]
 						},
@@ -4205,26 +4183,6 @@
 				{
 					"name": "Open Virtual Account",
 					"request": {
-						"auth": {
-							"type": "apikey",
-							"apikey": [
-								{
-									"key": "value",
-									"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
-									"type": "string"
-								},
-								{
-									"key": "key",
-									"value": "Authorization",
-									"type": "string"
-								},
-								{
-									"key": "in",
-									"value": "header",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [
 							{
@@ -4236,24 +4194,27 @@
 								"description": "Forwards to this endpoint on main API host.",
 								"key": "X-Forward-To-URL",
 								"type": "text",
-								"value": "{{host}}/0.2/open_virtual_account"
+								"value": "{{host}}/0.2/open_virtual_account",
+								"disabled": true
 							},
 							{
 								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
 								"key": "X-Set-Epoch",
 								"type": "text",
-								"value": "header.created"
+								"value": "header.created",
+								"disabled": true
 							},
 							{
 								"description": "Sets a random UUID4 string on specified JSON key.",
 								"key": "X-Set-UUID",
 								"type": "text",
-								"value": "header.reference"
+								"value": "header.reference",
+								"disabled": true
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"virtual_account_name\": \"{{virtual_account_name}}\"\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\",\n        \"created\":{{$timestamp}},\n        \"reference\":{{$timestamp}}\n    },\n    \"virtual_account_name\": \"{{virtual_account_name}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4261,14 +4222,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward?label=open_virtual_account",
-							"protocol": "http",
+							"raw": "{{backend_url}}/0.2/open_virtual_account",
 							"host": [
-								"localhost"
+								"{{backend_url}}"
 							],
-							"port": "{{proxy_port}}",
 							"path": [
-								"forward"
+								"0.2",
+								"open_virtual_account"
 							],
 							"query": [
 								{
@@ -4276,10 +4236,6 @@
 									"value": "true",
 									"description": "Requests that proxy send back debug information about request and response.",
 									"disabled": true
-								},
-								{
-									"key": "label",
-									"value": "open_virtual_account"
 								}
 							]
 						},
@@ -4290,26 +4246,6 @@
 				{
 					"name": "Get Virtual Account",
 					"request": {
-						"auth": {
-							"type": "apikey",
-							"apikey": [
-								{
-									"key": "value",
-									"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
-									"type": "string"
-								},
-								{
-									"key": "key",
-									"value": "Authorization",
-									"type": "string"
-								},
-								{
-									"key": "in",
-									"value": "header",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [
 							{
@@ -4321,24 +4257,27 @@
 								"description": "Forwards to this endpoint on main API host.",
 								"key": "X-Forward-To-URL",
 								"type": "text",
-								"value": "{{host}}/0.2/get_virtual_account"
+								"value": "{{host}}/0.2/get_virtual_account",
+								"disabled": true
 							},
 							{
 								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
 								"key": "X-Set-Epoch",
 								"type": "text",
-								"value": "header.created"
+								"value": "header.created",
+								"disabled": true
 							},
 							{
 								"description": "Sets a random UUID4 string on specified JSON key.",
 								"key": "X-Set-UUID",
 								"type": "text",
-								"value": "header.reference"
+								"value": "header.reference",
+								"disabled": true
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"virtual_account_id\": \"{{virtual_account_id}}\"\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\",\n        \"created\":{{$timestamp}},\n        \"reference\":{{$timestamp}}\n    },\n    \"virtual_account_id\": \"{{virtual_account_id}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4346,14 +4285,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward?label=get_virtual_account",
-							"protocol": "http",
+							"raw": "{{backend_url}}/0.2/get_virtual_account",
 							"host": [
-								"localhost"
+								"{{backend_url}}"
 							],
-							"port": "{{proxy_port}}",
 							"path": [
-								"forward"
+								"0.2",
+								"get_virtual_account"
 							],
 							"query": [
 								{
@@ -4361,10 +4299,6 @@
 									"value": "true",
 									"description": "Requests that proxy send back debug information about request and response.",
 									"disabled": true
-								},
-								{
-									"key": "label",
-									"value": "get_virtual_account"
 								}
 							]
 						},
@@ -4375,26 +4309,6 @@
 				{
 					"name": "Update Virtual Account",
 					"request": {
-						"auth": {
-							"type": "apikey",
-							"apikey": [
-								{
-									"key": "value",
-									"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
-									"type": "string"
-								},
-								{
-									"key": "key",
-									"value": "Authorization",
-									"type": "string"
-								},
-								{
-									"key": "in",
-									"value": "header",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [
 							{
@@ -4423,7 +4337,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"virtual_account_id\" : \"{{virtual_account_id}}\",\n    \"virtual_account_name\" : \"{{virtual_account_name}}\",\n    \"ach_credit_enabled\": \"{{ach_credit_enabled}}\",\n    \"ach_debit_enabled\": \"{{ach_debit_enabled}}\"\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\",\n        \"created\":{{$timestamp}},\n        \"reference\":{{$timestamp}}\n    },\n    \"virtual_account_id\" : \"{{virtual_account_id}}\",\n    \"virtual_account_name\" : \"{{virtual_account_name}}\",\n    \"ach_credit_enabled\": \"{{ach_credit_enabled}}\",\n    \"ach_debit_enabled\": \"{{ach_debit_enabled}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4431,14 +4345,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward?label=update_virtual_account",
-							"protocol": "http",
+							"raw": "{{backend_url}}/0.2/update_virtual_account",
 							"host": [
-								"localhost"
+								"{{backend_url}}"
 							],
-							"port": "{{proxy_port}}",
 							"path": [
-								"forward"
+								"0.2",
+								"update_virtual_account"
 							],
 							"query": [
 								{
@@ -4446,10 +4359,6 @@
 									"value": "true",
 									"description": "Requests that proxy send back debug information about request and response.",
 									"disabled": true
-								},
-								{
-									"key": "label",
-									"value": "update_virtual_account"
 								}
 							]
 						},
@@ -4460,21 +4369,6 @@
 				{
 					"name": "Close Virtual Account",
 					"request": {
-						"auth": {
-							"type": "apikey",
-							"apikey": [
-								{
-									"key": "key",
-									"value": "Authorization",
-									"type": "string"
-								},
-								{
-									"key": "value",
-									"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [
 							{
@@ -4487,39 +4381,40 @@
 								"key": "X-Set-Epoch",
 								"value": "header.created",
 								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
-								"type": "text"
+								"type": "text",
+								"disabled": true
 							},
 							{
 								"key": "X-Set-UUID",
 								"value": "header.reference",
 								"description": "Sets a random UUID4 string on specified JSON key.",
-								"type": "text"
+								"type": "text",
+								"disabled": true
 							},
 							{
 								"key": "Content-Type",
 								"value": "application/json",
-								"type": "text"
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"virtual_account_id\": \"{{user_virtual_account_id}}\",\n    \"account_number\": \"{{user_virtual_account_number}}\"\n\n}"
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\",\n        \"created\":{{$timestamp}},\n        \"reference\":{{$timestamp}}\n    },\n    \"virtual_account_id\": \"{{user_virtual_account_id}}\",\n    \"account_number\": \"{{user_virtual_account_number}}\"\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
 						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward?label=close_virtual_account",
-							"protocol": "http",
+							"raw": "{{backend_url}}/0.2/close_virtual_account",
 							"host": [
-								"localhost"
+								"{{backend_url}}"
 							],
-							"port": "{{proxy_port}}",
 							"path": [
-								"forward"
-							],
-							"query": [
-								{
-									"key": "label",
-									"value": "close_virtual_account"
-								}
+								"0.2",
+								"close_virtual_account"
 							]
 						}
 					},
