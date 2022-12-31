@@ -3,8 +3,7 @@
 		"_postman_id": "f9f3eba6-6c4a-40f2-a7dc-8980e29fd248",
 		"name": "Sila API v0.2 - JWT OAuth Edition",
 		"description": "These endpoints are designed to work with our lightweight local proxy server. The local server signs and forwards requests to the main API host.\n\nAuthentication of requests made to the main API host is performed using ETH signatures. For more information, visit our docs at https://docs.silamoney.com/docs/process-overview.\n",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "11558014"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -3170,7 +3169,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"created\":{{$timestamp}},\n        \"reference\":{{$timestamp}},\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"wallet_id\": \"{{wallet_id}}\"\n}",
+							"raw": "{\n    \"header\": {\n        \"created\":{{$timestamp}},\n        \"reference\":{{$timestamp}},\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"wallet_id\": \"{{wallet_id}}\",\n    \"nickname\": \"{{wallet_name}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3233,7 +3232,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"created\":{{$timestamp}},\n        \"reference\":{{$timestamp}},\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"nickname\": \"Default Wallet\"\n}",
+							"raw": "{\n    \"header\": {\n        \"created\":{{$timestamp}},\n        \"reference\":{{$timestamp}},\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"wallet_id\": \"{{second_wallet_id}}\",\n    \"nickname\": \"the_new_nickname\",\n    \"default\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3296,7 +3295,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"created\":{{$timestamp}},\n        \"reference\":{{$timestamp}},\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"wallet_verification_signature\": \"\",\n    \"wallet\": {\n        \"blockchain_address\": \"{{user_address2}}\",\n        \"default\":true\n    }\n}",
+							"raw": "{\n    \"header\": {\n        \"created\":{{$timestamp}},\n        \"reference\":{{$timestamp}},\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"wallet\": {\n        \"nickname\": \"{{second_wallet_name}}\",\n        \"default\": false\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3326,7 +3325,7 @@
 					"response": []
 				},
 				{
-					"name": "Get Sila Balance",
+					"name": "Get Sila Balance (No auth)",
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -3349,6 +3348,48 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"address\": \"{{user_address}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backend_url}}/0.2/get_sila_balance",
+							"host": [
+								"{{backend_url}}"
+							],
+							"path": [
+								"0.2",
+								"get_sila_balance"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Gets details about the wallet used to sign the request. Includes balance and whether wallet is whitelisted."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Sila Balance (JWT)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3411,7 +3452,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"created\":{{$timestamp}},\n        \"reference\":{{$timestamp}},\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+							"raw": "{\n    \"header\": {\n        \"created\":{{$timestamp}},\n        \"reference\":{{$timestamp}},\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"wallet_id\": \"{{second_wallet_id}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
