@@ -4467,7 +4467,7 @@
 			]
 		},
 		{
-			"name": "Get Access Token",
+			"name": "Get Authentication Token",
 			"request": {
 				"auth": {
 					"type": "basic",
@@ -4496,13 +4496,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{backend_url}}/0.2/access_token",
+					"raw": "{{backend_url}}/0.2/auth_token",
 					"host": [
 						"{{backend_url}}"
 					],
 					"path": [
 						"0.2",
-						"access_token"
+						"auth_token"
 					]
 				}
 			},
