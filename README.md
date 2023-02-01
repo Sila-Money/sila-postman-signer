@@ -10,7 +10,7 @@ Either:
 * [Docker](https://docs.docker.com/get-docker/) is installed.  (see: [Running in a Docker container](#run-the-signer-server-in-a-docker-container))
 
 or: (see: [Building and running from source](#building-and-running-the-signer-server-from-source))
-* Python 3.6+ 
+* Python 3.8.6 
 * python [venv](https://docs.python.org/3.6/library/venv.html) module (seems to not ship with Ubuntu)
 * bash
 * the ability to run `make` commands from a Makefile.
