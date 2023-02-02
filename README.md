@@ -10,8 +10,8 @@ Either:
 * [Docker](https://docs.docker.com/get-docker/) is installed.  (see: [Running in a Docker container](#run-the-signer-server-in-a-docker-container))
 
 or: (see: [Building and running from source](#building-and-running-the-signer-server-from-source))
-* Python 3.8
-* python [venv](https://docs.python.org/3.8/library/venv.html) module (seems to not ship with Ubuntu)
+* Python 3.9.13
+* python [venv](https://docs.python.org/3.9.13/library/venv.html) module (seems to not ship with Ubuntu)
 * bash
 * the ability to run `make` commands from a Makefile.
 
@@ -19,7 +19,7 @@ or: (see: [Building and running from source](#building-and-running-the-signer-se
 **NOTE**: the signer-server default port is **8181**
 
 ### Run the signer-server in a Docker container
-This option eliminates the requirement for a Python 3.8 installation.
+This option eliminates the requirement for a Python 3.9.13 installation.
 
 You'll need [Docker](https://docs.docker.com/get-docker/) installed in order to build and run Docker images and containers.
 1. Build the Docker image (should only need to be done once): 
@@ -34,7 +34,7 @@ Make the signer-server accessible on (for example) port 3001 of the container:
  
 `docker run -p 3001:8181 sila-signer-server`
 ### Building and running the signer-server from source
-1. Have a copy of **Python 3.8** installed; later versions of Python may be supported, but are untested.  We recommend [pyenv](https://github.com/pyenv/pyenv) for managing multiple Python versions. 
+1. Have a copy of **Python 3.9.13** installed; later versions of Python may be supported, but are untested.  We recommend [pyenv](https://github.com/pyenv/pyenv) for managing multiple Python versions. 
 1. Clone me into a local directory. Change directory into my root (same directory as `Makefile`).
 1. From the terminal, run `make venv`. This will install all dependencies into a local environment and only needs to be done once.
 1. From the terminal, run `make runserver`
