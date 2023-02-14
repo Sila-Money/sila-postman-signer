@@ -32,7 +32,6 @@ def modify_json_request_body(
             file_name_key, mime_type_key = [x.strip() for x in str(set_file_metadata_field[0]).lower().split(',')]
             file_storage = set_file_metadata_field[1]
             set_value_in_dict(json_dict, [file_name_key], file_storage.filename)
-            set_value_in_dict(json_dict, [mime_type_key], file_storage.mimetype)
 
         request_body = json.dumps(json_dict)
     return request_body
