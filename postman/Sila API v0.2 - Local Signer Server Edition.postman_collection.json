@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "e85ca58c-b1ca-43cf-9896-edc2e796f232",
+		"_postman_id": "6a550709-c2ef-49cb-84dd-2587d668cbaa",
 		"name": "Sila API v0.2 - Local Signer Server Edition",
 		"description": "These endpoints are designed to work with our lightweight local proxy server. The local server signs and forwards requests to the main API host.\n\nAuthentication of requests made to the main API host is performed using ETH signatures. For more information, visit our docs at https://docs.silamoney.com/docs/process-overview.\n",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17606271"
 	},
 	"item": [
 		{
@@ -5239,91 +5240,91 @@
 		{
 			"name": "Virtual Accounts",
 			"item": [
-                {
-                    "name": "Get Virtual Accounts",
-                    "request": {
-                        "auth": {
-                            "type": "apikey",
-                            "apikey": [
-                                {
-                                    "key": "value",
-                                    "value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
-                                    "type": "string"
-                                },
-                                {
-                                    "key": "key",
-                                    "value": "Authorization",
-                                    "type": "string"
-                                },
-                                {
-                                    "key": "in",
-                                    "value": "header",
-                                    "type": "string"
-                                }
-                            ]
-                        },
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "type": "text",
-                                "value": "application/json"
-                            },
-                            {
-                                "description": "Forwards to this endpoint on main API host.",
-                                "key": "X-Forward-To-URL",
-                                "type": "text",
-                                "value": "{{host}}/0.2/get_virtual_accounts"
-                            },
-                            {
-                                "description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
-                                "key": "X-Set-Epoch",
-                                "type": "text",
-                                "value": "header.created"
-                            },
-                            {
-                                "description": "Sets a random UUID4 string on specified JSON key.",
-                                "key": "X-Set-UUID",
-                                "type": "text",
-                                "value": "header.reference"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
-                            "options": {
-                                "raw": {
-                                  "language": "json"
-                                }
-                            }
-                        },
-                        "url": {
-                            "raw": "http://localhost:{{proxy_port}}/forward?label=get_virtual_accounts",
-                            "protocol": "http",
-                            "host": [
-                                "localhost"
-                            ],
-                            "port": "{{proxy_port}}",
-                            "path": [
-                                "forward"
-                            ],
-                            "query": [
-                                {
-                                    "key": "debug",
-                                    "value": "true",
-                                    "description": "Requests that proxy send back debug information about request and response.",
-                                    "disabled": true
-                                },
-                                {
-                                    "key": "label",
-                                    "value": "get_virtual_accounts"
-                                }
-                            ]
-                        },
-                        "description": "This endpoint is used for retrieving all of the virtual accounts that are allocated to an end user."
-                    },
-                    "response": []
-                },
+				{
+					"name": "Get Virtual Accounts",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/get_virtual_accounts"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=get_virtual_accounts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "get_virtual_accounts"
+								}
+							]
+						},
+						"description": "This endpoint is used for retrieving all of the virtual accounts that are allocated to an end user."
+					},
+					"response": []
+				},
 				{
 					"name": "Open Virtual Account",
 					"request": {
@@ -5579,74 +5580,74 @@
 					},
 					"response": []
 				},
-                {
-                    "name": "Close Virtual Account",
-                    "request": {
-                        "auth": {
-                            "type": "apikey",
-                            "apikey": [
-                                {
-                                    "key": "key",
-                                    "value": "Authorization",
-                                    "type": "string"
-                                },
-                                {
-                                    "key": "value",
-                                    "value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
-                                    "type": "string"
-                                }
-                            ]
-                        },
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "X-Forward-To-URL",
-                                "value": "{{host}}/0.2/close_virtual_account",
-                                "description": "Forwards to this endpoint on main API host.",
-                                "type": "text"
-                            },
-                            {
-                                "key": "X-Set-Epoch",
-                                "value": "header.created",
-                                "description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
-                                "type": "text"
-                            },
-                            {
-                                "key": "X-Set-UUID",
-                                "value": "header.reference",
-                                "description": "Sets a random UUID4 string on specified JSON key.",
-                                "type": "text"
-                            },
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json",
-                                "type": "text"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"virtual_account_id\": \"{{user_virtual_account_id}}\",\n    \"account_number\": \"{{user_virtual_account_number}}\"\n\n}"
-                        },
-                        "url": {
-                            "raw": "http://localhost:{{proxy_port}}/forward?label=close_virtual_account",
-                            "protocol": "http",
-                            "host": [
-                                "localhost"
-                            ],
-                            "port": "{{proxy_port}}",
-                            "path": [
-                                "forward"
-                            ],
-                            "query": [
-                                {
-                                    "key": "label",
-                                    "value": "close_virtual_account"
-                                }
-                            ]
-                        }
-                    },
-                    "response": []
-                }
+				{
+					"name": "Close Virtual Account",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "private-key; Authsignature={{app_private_key}}; Usersignature={{user_private_key}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Forward-To-URL",
+								"value": "{{host}}/0.2/close_virtual_account",
+								"description": "Forwards to this endpoint on main API host.",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-Epoch",
+								"value": "header.created",
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-UUID",
+								"value": "header.reference",
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"virtual_account_id\": \"{{user_virtual_account_id}}\",\n    \"account_number\": \"{{user_virtual_account_number}}\"\n\n}"
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=close_virtual_account",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "label",
+									"value": "close_virtual_account"
+								}
+							]
+						}
+					},
+					"response": []
+				}
 			]
 		},
 		{
@@ -5821,6 +5822,91 @@
 						"description": "Get Wallet Statements Data according to provided wallet uuid and date range."
 					},
 					"response": []
+				},
+				{
+					"name": "Get Statement Transactions",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "private-key; Authsignature={{app_private_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "Forwards to this endpoint on main API host.",
+								"key": "X-Forward-To-URL",
+								"type": "text",
+								"value": "{{host}}/0.2/get_wallet_statement_data"
+							},
+							{
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"key": "X-Set-Epoch",
+								"type": "text",
+								"value": "header.created"
+							},
+							{
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"key": "X-Set-UUID",
+								"type": "text",
+								"value": "header.reference"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"wallet_id\":\"{{wallet_uuid}}\",\n    \"month\": \"03-2023\",\n    \"page\": 1,\n    \"per_page\": 100\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=get_statement_transactions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "get_statement_transactions"
+								}
+							]
+						},
+						"description": "Get Wallet Statements Data according to provided wallet uuid and date range."
+					},
+					"response": []
 				}
 			]
 		},
@@ -5908,7 +5994,7 @@
 		},
 		{
 			"key": "user_address2",
-			"value": ""
+			"value": "0x635D9F49311843926EC12aC70943cfe0b32B60B4"
 		},
 		{
 			"key": "bank_account_name",
