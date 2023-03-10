@@ -1,4 +1,4 @@
-FROM python:3.9.13
+FROM python:3.12.0a5
 
 LABEL Author="SilaMoney"
 LABEL Version="1.1.0"
