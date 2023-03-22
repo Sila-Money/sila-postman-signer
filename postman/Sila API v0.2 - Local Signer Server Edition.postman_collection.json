@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "cc6da07d-97ed-4c06-8d62-da32780088e5",
+		"_postman_id": "f5e4178c-e7ed-4e02-a3d6-a240d81310f5",
 		"name": "Sila API v0.2 - Local Signer Server Edition",
 		"description": "These endpoints are designed to work with our lightweight local proxy server. The local server signs and forwards requests to the main API host.\n\nAuthentication of requests made to the main API host is performed using ETH signatures. For more information, visit our docs at https://docs.silamoney.com/docs/process-overview.\n",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -5829,7 +5829,7 @@
 			"name": "Cards",
 			"item": [
 				{
-					"name": "Add Cards",
+					"name": "Add Card",
 					"event": [
 						{
 							"listen": "test",
@@ -5934,7 +5934,7 @@
 					"response": []
 				},
 				{
-					"name": "Create Testing Token",
+					"name": "Create CKO Testing Token",
 					"event": [
 						{
 							"listen": "test",
@@ -6004,7 +6004,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\"\n    },\n    \"type\": \"card\",\n    \"number\": 4659105569051157,\n    \"expiry_month\": 12, \n    \"expiry_year\": 2027,\n    \"cvv\": 956\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\"\n    },\n    \"type\": \"card\",\n    \"card_number\": 4659105569051157,\n    \"expiry_month\": 12, \n    \"expiry_year\": 2027,\n    \"cvv\": 956\n}",
 							"options": {
 								"raw": {
 									"language": "json"
