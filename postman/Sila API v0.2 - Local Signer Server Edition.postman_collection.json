@@ -6087,7 +6087,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\"\n    },\n    \"type\": \"card\",\n    \"card_number\": 4659105569051157,\n    \"expiry_month\": 12, \n    \"expiry_year\": 2027,\n    \"cvv\": 956\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\"\n    },\n    \"cko_public_key\": \"{{cko_public_key}}\",\n    \"type\": \"card\",\n    \"card_number\": 4659105569051157,\n    \"expiry_month\": 12, \n    \"expiry_year\": 2027,\n    \"cvv\": 956\n}",
 							"options": {
 								"raw": {
 									"language": "json"
