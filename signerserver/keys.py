@@ -1,6 +1,6 @@
 """Logic for ETH private keys, signatures, and appropriate message hashing."""
 
-import sha3
+import hashlib
 import uuid
 
 from eth_account import Account
@@ -8,7 +8,7 @@ from eth_account import Account
 
 def hash_message(msg):
     """Hashes a message string using the SHA3 Keccak256 algorithm; returns the hash."""
-    k = sha3.keccak_256()
+    k = hashlib.new('sha3_256')
     k.update(msg)
     return k.hexdigest()
 
