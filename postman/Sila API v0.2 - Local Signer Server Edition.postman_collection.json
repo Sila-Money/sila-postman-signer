@@ -5612,7 +5612,7 @@
 								"description": "Forwards to this endpoint on main API host.",
 								"key": "X-Forward-To-URL",
 								"type": "text",
-								"value": "{{host}}/0.2/get_virtual_account"
+								"value": "{{host}}/0.2/update_virtual_account"
 							},
 							{
 								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
