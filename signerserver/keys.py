@@ -1,16 +1,16 @@
 """Logic for ETH private keys, signatures, and appropriate message hashing."""
 
-import hashlib
 import uuid
 
 from eth_account import Account
+from eth_utils import keccak
+from web3 import Web3
 
 
 def hash_message(msg):
     """Hashes a message string using the SHA3 Keccak256 algorithm; returns the hash."""
-    k = hashlib.new('sha3_256')
-    k.update(msg)
-    return k.hexdigest()
+    encrypted = keccak(msg)
+    return Web3.to_hex(encrypted)[2:]
 
 
 def sign_message(msg, private_key):
