@@ -1,4 +1,4 @@
-FROM python:3.9.13-buster
+FROM python:3.9-bookworm
 
 LABEL Author="SilaMoney"
 LABEL Version="1.1.0"
