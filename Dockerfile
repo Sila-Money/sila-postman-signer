@@ -1,4 +1,4 @@
-FROM python:3.9-bookworm
+FROM python:3.9-slim
 
 LABEL Author="SilaMoney"
 LABEL Version="1.1.0"
