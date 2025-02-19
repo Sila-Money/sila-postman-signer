@@ -1537,7 +1537,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"flow\": \"<uuid of KYC flow>\"\n}",
+									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"flow\": \"{{kyc_flow_uuid}}\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1792,7 +1792,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n}, \n    \"verification_uuid\": <uuid of KYCRequest>, //required\n    \"update\": <\"entity\" or \"document\">, //required\n    \"doc_ids\": [<list of document uuids>] //required following document uploads; optional if updating entity data only\n}",
+									"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n}, \n    \"verification_uuid\": \"{{verification_uuid}}\",\n    \"update\": \"document\",\n    \"doc_ids\": [\"{{document_uuid1}}\", \"{{document_uuid2}}\"]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -3197,91 +3197,6 @@
 						"description": "Checks status of identity verification and blockchain address allowlisting for the given user_handle (can belong to an individual or a business)."
 					},
 					"response": []
-				},
-				{
-					"name": "Ach Funds Availability",
-					"request": {
-						"auth": {
-							"type": "apikey",
-							"apikey": [
-								{
-									"key": "value",
-									"value": "private-key; Authsignature={{app_b_pkey}}",
-									"type": "string"
-								},
-								{
-									"key": "key",
-									"value": "Authorization",
-									"type": "string"
-								},
-								{
-									"key": "in",
-									"value": "header",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "X-Forward-To-URL",
-								"value": "{{host}}/0.2/ach_funds_availability",
-								"description": "Forwards to this endpoint on main API host.",
-								"type": "text"
-							},
-							{
-								"key": "X-Set-Epoch",
-								"value": "header.created",
-								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
-								"type": "text"
-							},
-							{
-								"key": "X-Set-UUID",
-								"value": "header.reference",
-								"description": "Sets a random UUID4 string on specified JSON key.",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }, \n     \"transactions\": [\"list of transaction UUIDs\"],\n     \"submission_time\": 1234567890,\n     \"ach_type\": \"NEXT_DAY or SAME_DAY\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward?label=ach_funds_availability",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{proxy_port}}",
-							"path": [
-								"forward"
-							],
-							"query": [
-								{
-									"key": "debug",
-									"value": "true",
-									"description": "Requests that proxy send back debug information about request and response.",
-									"disabled": true
-								},
-								{
-									"key": "label",
-									"value": "ach_funds_availability"
-								}
-							]
-						},
-						"description": "Checks status of identity verification and blockchain address allowlisting for the given user_handle (can belong to an individual or a business)."
-					},
-					"response": []
 				}
 			]
 		},
@@ -3511,7 +3426,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"plaid_token\": \"sandbox\",\n    \"account_name\": \"{{bank_account_name}}\",\n    \"plaid_token_type\": \"{{plaid_token_type}}\"\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    },\n    \"provider_token\": \"processor-xxx-xxx\",\n    \"provider_token_type\": \"processor\",\n    \"provider\": \"plaid\",\n    \"account_type\": \"CHECKING\",\n    \"account_name\": \"Custom Account Name\", \n    \"selected_account_id\": \"selected_account_id\"\n    \n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3519,7 +3434,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:{{proxy_port}}/forward?label=link_account_plaid",
+							"raw": "http://localhost:{{proxy_port}}/forward?label=link_account",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -3530,15 +3445,14 @@
 							],
 							"query": [
 								{
-									"key": "label",
-									"value": "link_account_plaid",
-									"description": "Adds an informative label to request (helpful in proxy logs)."
-								},
-								{
 									"key": "debug",
 									"value": "true",
 									"description": "Requests that proxy send back debug information about request and response.",
 									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "link_account"
 								}
 							]
 						},
@@ -4433,7 +4347,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n  }, \n    \"amount\": 1000, //required\n    \"source_id\": \"<ID to uniquely identify where funds are originating from>\", // required\n    \"destination_id\": \"<ID to uniquely identify the destination of funds>\", // required\n    \"route\": \"<how you want payment sent>\", // required for card transactions\n    \"route_selection_behavior\": \"fastest or cheapest\", // optional, ACHNow only\n    \"description\": \"transaction descriptor\", // optional\n    \"transaction_idempotency_id\": \"<UUID to uniquely identify a transaction for idempotency>\", // optional\n    \"customer_reference\": \"customer chosen reference string\", // optional\n    \"ach_attributes\": { // for ACH transactions, optional\n    \"ach_descriptor\": \"ach descriptor in the NACHA file\", // optional\n    \"sec_code\": \"3-character SEC code\" // optional\n    }\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n  }, \n    \"amount\": 1000, //required\n    \"source_id\": \"{{payment_instrument_1}}\",\n    \"destination_id\": \"{{payment_instrument_2}}\",\n    \"route\": \"fednow\", // required for card transactions\n    \"route_selection_behavior\": \"cheapest\", // optional, ACHNow only\n    \"description\": \"transaction descriptor\", // optional\n    \"transaction_idempotency_id\": \"{{transaction_uuid}}\", // optional\n    \"customer_reference\": \"customer chosen reference string\", // optional\n    \"ach_attributes\": { // for ACH transactions, optional\n    \"ach_descriptor\": \"ach descriptor in the NACHA file\", // optional\n    \"sec_code\": \"3-character SEC code\" // optional\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4888,6 +4802,91 @@
 								}
 							]
 						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ach Funds Availability",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "private-key; Authsignature={{app_b_pkey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Forward-To-URL",
+								"value": "{{host}}/0.2/ach_funds_availability",
+								"description": "Forwards to this endpoint on main API host.",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-Epoch",
+								"value": "header.created",
+								"description": "Sets epoch on specified JSON key. (Dots indicate nested dictionaries.)",
+								"type": "text"
+							},
+							{
+								"key": "X-Set-UUID",
+								"value": "header.reference",
+								"description": "Sets a random UUID4 string on specified JSON key.",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\",\n        \"user_handle\": \"{{user_handle}}\"\n    }, \n     \"transactions\": [\"{{transaction_uuid1}}\", \"{{transaction_uuid2}}\"],\n     \"submission_time\": 1234567890,\n     \"ach_type\": \"NEXT_DAY or SAME_DAY\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{proxy_port}}/forward?label=ach_funds_availability",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{proxy_port}}",
+							"path": [
+								"forward"
+							],
+							"query": [
+								{
+									"key": "debug",
+									"value": "true",
+									"description": "Requests that proxy send back debug information about request and response.",
+									"disabled": true
+								},
+								{
+									"key": "label",
+									"value": "ach_funds_availability"
+								}
+							]
+						},
+						"description": "Checks status of identity verification and blockchain address allowlisting for the given user_handle (can belong to an individual or a business)."
 					},
 					"response": []
 				}
@@ -5479,7 +5478,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"header\": {\n    \"auth_handle\": \"{{app_handle}}\", \n    \"user_handle\":\"{{user_handle}}\"\n    },\n    \"wallet_id\":\"<wallet_id>\",\n    \"month\": \"03-2023\",\n    \"page\": 1,\n    \"per_page\": 50\n}",
+							"raw": "{\n  \"header\": {\n    \"auth_handle\": \"{{app_handle}}\", \n    \"user_handle\":\"{{user_handle}}\"\n    },\n    \"wallet_id\":\"{{wallet_id}}\",\n    \"month\": \"03-2023\",\n    \"page\": 1,\n    \"per_page\": 50\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -6419,7 +6418,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\"\n    },\n    \"bank_account_id\": \"<bank account UUID>\"\n}",
+							"raw": "{\n    \"header\": {\n        \"app_handle\": \"{{app_handle}}\"\n    },\n    \"bank_account_id\": \"{{bank_account_id}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
